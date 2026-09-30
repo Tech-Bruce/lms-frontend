@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../api";
+import { FiCalendar, FiClock, FiBell, FiPlus, FiCheckCircle } from "react-icons/fi";
 
 const MentorDashboard = () => {
   const [newSlot, setNewSlot] = useState({ start: "", end: "" });
@@ -48,58 +49,74 @@ const MentorDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Mentor Dashboard</h1>
-        <p className="text-gray-600 mb-8">Manage your availability and view bookings</p>
+    <div className="min-h-screen bg-[#070B14] text-white p-6 sm:p-10 relative overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute top-[-20%] left-[-10%] h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-blue-600/10 blur-[120px]" />
+      </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="mb-10">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/[0.07] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee]" />
+            Control Panel
+          </div>
+          <h1 className="text-4xl font-semibold tracking-tight text-white mb-2 sm:text-5xl">
+            Mentor <span className="bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent">Dashboard</span>
+          </h1>
+          <p className="text-slate-400 text-lg">Manage your availability and view upcoming sessions.</p>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Slot Booking Card */}
           <div className="flex-1">
             <div 
-              className={`rounded-xl shadow-md border cursor-pointer transition-all duration-300 overflow-hidden ${
-                openSection === "slots" ? "bg-blue-50 border-blue-200" : "bg-white border-gray-200"
+              className={`rounded-[24px] border border-white/[0.09] transition-all duration-300 overflow-hidden backdrop-blur-md ${
+                openSection === "slots" ? "bg-white/[0.04]" : "bg-white/[0.02]"
               }`}
             >
               <div
-                className="px-5 py-4 flex justify-between items-center font-semibold text-lg bg-white"
+                className="px-6 py-5 flex justify-between items-center font-semibold text-lg cursor-pointer hover:bg-white/[0.02] transition-colors"
                 onClick={() => setOpenSection(openSection === "slots" ? null : "slots")}
               >
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  Slot Booking
+                <div className="flex items-center text-white">
+                  <div className="h-10 w-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center mr-4">
+                    <FiCalendar className="text-cyan-400 h-5 w-5" />
+                  </div>
+                  Slot Management
                 </div>
-                <span className="text-gray-500">{openSection === "slots" ? "▲" : "▼"}</span>
+                <span className="text-slate-400 text-sm font-mono">{openSection === "slots" ? "CLOSE" : "OPEN"}</span>
               </div>
 
               {openSection === "slots" && (
-                <div className="p-5 bg-white">
+                <div className="p-6 pt-2 border-t border-white/[0.05]">
                   {/* Slot Creation Form */}
                   <form
                     onSubmit={handleCreateSlot}
-                    className="bg-gray-50 p-5 rounded-lg mb-6 border border-gray-200"
+                    className="bg-[#0A111E] p-6 rounded-2xl mb-8 border border-white/[0.08]"
                   >
-                    <h3 className="text-lg font-semibold mb-4 text-gray-700">Create New Slot</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300 mb-5 flex items-center gap-2">
+                      <FiPlus className="text-cyan-400" /> Create New Slot
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                        <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wide">Start Time</label>
                         <input
                           type="datetime-local"
                           value={newSlot.start}
                           onChange={(e) => setNewSlot({ ...newSlot, start: e.target.value })}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full bg-[#111C2B] border border-white/[0.1] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all [color-scheme:dark]"
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                        <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wide">End Time</label>
                         <input
                           type="datetime-local"
                           value={newSlot.end}
                           onChange={(e) => setNewSlot({ ...newSlot, end: e.target.value })}
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full bg-[#111C2B] border border-white/[0.1] rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all [color-scheme:dark]"
                           required
                         />
                       </div>
@@ -107,51 +124,55 @@ const MentorDashboard = () => {
                     <button
                       type="submit"
                       disabled={createSlotMutation.isPending}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                      className="w-full sm:w-auto px-8 py-3 bg-cyan-400 text-[#07121D] font-bold rounded-xl hover:bg-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-[#0A111E] disabled:opacity-50 transition-colors shadow-[0_5px_20px_rgba(34,211,238,0.2)]"
                     >
-                      {createSlotMutation.isPending ? "Creating..." : "Create Slot"}
+                      {createSlotMutation.isPending ? "Creating..." : "Publish Slot"}
                     </button>
                   </form>
 
                   {/* Slots List */}
-                  <h3 className="text-lg font-semibold mb-4 text-gray-700">My Slots</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300 mb-5">My Schedule</h3>
                   <div className="space-y-4">
                     {isLoading ? (
-                      <div className="text-center py-4">
-                        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
-                        <p className="mt-2 text-gray-600">Loading slots...</p>
+                      <div className="text-center py-10 bg-white/[0.02] rounded-2xl border border-white/[0.05]">
+                        <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-t-cyan-400 border-white/10"></div>
+                        <p className="mt-4 text-sm text-slate-400">Loading schedule...</p>
                       </div>
                     ) : mySlots.length === 0 ? (
-                      <div className="text-center py-6 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p className="mt-2 text-gray-600">No slots created yet.</p>
+                      <div className="text-center py-12 bg-white/[0.02] rounded-2xl border border-dashed border-white/[0.1]">
+                        <FiClock className="h-10 w-10 mx-auto text-slate-500 mb-3" />
+                        <p className="text-slate-400">No slots published yet.</p>
                       </div>
                     ) : (
                       mySlots.map((slot) => (
                         <div
                           key={slot._id}
-                          className={`p-4 rounded-lg border ${
+                          className={`p-5 rounded-xl border transition-colors ${
                             slot.booked
-                              ? "bg-red-50 border-red-200"
-                              : "bg-green-50 border-green-200"
+                              ? "bg-rose-500/5 border-rose-500/20"
+                              : "bg-emerald-500/5 border-emerald-500/20 hover:border-emerald-500/40"
                           }`}
                         >
-                          <div className="flex justify-between items-start">
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                             <div>
-                              <p className="font-medium">
+                              <p className="text-white font-medium mb-1">
                                 {new Date(slot.start).toLocaleDateString()} 
-                                <span className="text-gray-500 mx-2">•</span>
-                                {new Date(slot.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(slot.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                <span className="text-slate-500 mx-2">•</span>
+                                <span className="text-cyan-300">
+                                  {new Date(slot.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                                <span className="text-slate-500 mx-1">-</span>
+                                <span className="text-cyan-300">
+                                  {new Date(slot.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
                               </p>
-                              <p className={`text-sm font-medium ${slot.booked ? "text-red-600" : "text-green-600"}`}>
-                                {slot.booked ? "Booked" : "Available"}
+                              <p className={`text-xs font-bold uppercase tracking-wider ${slot.booked ? "text-rose-400" : "text-emerald-400"}`}>
+                                {slot.booked ? "Unavailable" : "Open for booking"}
                               </p>
                             </div>
                             {slot.booked && (
-                              <span className="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                                Reserved
+                              <span className="inline-flex items-center gap-1.5 bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-bold px-3 py-1.5 rounded-lg">
+                                <FiCheckCircle /> Reserved
                               </span>
                             )}
                           </div>
@@ -165,65 +186,68 @@ const MentorDashboard = () => {
           </div>
 
           {/* Notifications Card */}
-          <div className="flex-1">
+          <div className="flex-1 lg:max-w-md">
             <div 
-              className={`rounded-xl shadow-md border cursor-pointer transition-all duration-300 overflow-hidden ${
-                openSection === "notifications" ? "bg-yellow-50 border-yellow-200" : "bg-white border-gray-200"
+              className={`rounded-[24px] border border-white/[0.09] transition-all duration-300 overflow-hidden backdrop-blur-md ${
+                openSection === "notifications" ? "bg-white/[0.04]" : "bg-white/[0.02]"
               }`}
             >
               <div
-                className="px-5 py-4 flex justify-between items-center font-semibold text-lg bg-white"
+                className="px-6 py-5 flex justify-between items-center font-semibold text-lg cursor-pointer hover:bg-white/[0.02] transition-colors"
                 onClick={() => setOpenSection(openSection === "notifications" ? null : "notifications")}
               >
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                  </svg>
-                  Notifications
+                <div className="flex items-center text-white relative">
+                  <div className="h-10 w-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center mr-4">
+                    <FiBell className="text-amber-400 h-5 w-5" />
+                  </div>
+                  Alerts
                   {notifications.length > 0 && (
-                    <span className="ml-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-1 left-7 bg-amber-500 text-[#07121D] shadow-[0_0_10px_rgba(245,158,11,0.5)] text-[10px] font-black rounded-full h-5 w-5 flex items-center justify-center">
                       {notifications.length}
                     </span>
                   )}
                 </div>
-                <span className="text-gray-500">{openSection === "notifications" ? "▲" : "▼"}</span>
+                <span className="text-slate-400 text-sm font-mono">{openSection === "notifications" ? "CLOSE" : "OPEN"}</span>
               </div>
 
               {openSection === "notifications" && (
-                <div className="p-5 bg-white">
+                <div className="p-6 pt-2 border-t border-white/[0.05]">
                   {notifications.length === 0 ? (
-                    <div className="text-center py-6 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                      </svg>
-                      <p className="mt-2 text-gray-600">No bookings yet.</p>
+                    <div className="text-center py-12 bg-white/[0.02] rounded-2xl border border-dashed border-white/[0.1]">
+                      <FiBell className="h-10 w-10 mx-auto text-slate-500 mb-3" />
+                      <p className="text-slate-400">No new bookings yet.</p>
                     </div>
                   ) : (
                     <ul className="space-y-4">
                       {notifications.map((slot) => (
                         <li
                           key={slot._id}
-                          className="p-4 border border-yellow-200 bg-yellow-50 rounded-lg shadow-sm"
+                          className="p-5 border border-amber-500/20 bg-[#0A111E] rounded-2xl shadow-lg relative overflow-hidden"
                         >
-                          <div className="flex items-start">
-                            <div className="flex-shrink-0">
-                              <div className="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                          <div className="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                          <div className="flex flex-col">
+                            <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                              <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+                              {slot.student.name} booked a session
+                            </h4>
+                            
+                            <div className="space-y-2 bg-[#111C2B] border border-white/5 p-4 rounded-xl">
+                              <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                                <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Timing</span>
+                                <span className="text-sm font-medium text-slate-300">
+                                  {new Date(slot.start).toLocaleDateString()} • {new Date(slot.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
                               </div>
-                            </div>
-                            <div className="ml-3">
-                              <p className="font-medium text-gray-900">{slot.student.name} booked a session</p>
-                              <p className="text-sm text-gray-500">
-                                {new Date(slot.start).toLocaleDateString()} • {new Date(slot.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(slot.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                              </p>
-                              <p className="mt-1 text-sm">
-                                <span className="font-medium">Goals:</span> {slot.student.goals}
-                              </p>
-                              <p className="text-sm">
-                                <span className="font-medium">Contact:</span> {slot.student.email}
-                              </p>
+                              <div className="flex flex-col gap-1 pt-1">
+                                <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Student Goals</span>
+                                <p className="text-sm text-slate-300 italic bg-white/[0.02] p-2 rounded">"{slot.student.goals}"</p>
+                              </div>
+                              <div className="flex justify-between items-center pt-2">
+                                <span className="text-xs text-slate-500 uppercase tracking-wider font-bold">Contact</span>
+                                <a href={`mailto:${slot.student.email}`} className="text-sm font-medium text-cyan-400 hover:underline">
+                                  {slot.student.email}
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </li>

@@ -1,9 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import SplashScreen from './components/SplashScreen';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -16,7 +20,8 @@ import RegisterPage from './pages/RegisterPage';
 import CoursesPage from './pages/CoursesPage';
 import CourseDetailPage from './pages/CourseDetailPage';
 
-import Adminblog from './pages/Admin/adminblog'
+import Adminblog from './pages/Admin/adminblog';
+import AdminBookings from './pages/Admin/AdminBookings';
 
 import ProfilePage from './pages/ProfilePage';
 import InstructorDashboard from './pages/InstructorDashboard';
@@ -36,57 +41,86 @@ import Allinstructors from './pages/Admin/Allinstructors';
 
 
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
+    <div className="flex flex-col min-h-screen">
+      {!isAdminRoute && <Navbar />}
 
-        <main className="flex-grow">
-          <Routes>
-            {/* Public Pages */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/mentorship" element={<Mentorship />} />
+      <main className="flex-grow">
+        <Routes>
+          {/* Public Pages */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/mentorship" element={<Mentorship />} />
 
-            {/* Authentication */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+          {/* Authentication */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
 
-            {/* Courses */}
-            <Route path="/courses" element={<CoursesPage />} />
-            <Route path="/courses/:courseId" element={<CourseDetailPage />} />
-            <Route path="/courses/module/builder/:courseId" element={<ModuleList />} />
-            <Route path="/lession/:moduleId/builder" element={<LessionLIst />} />
-            <Route path="/modules/:moduleId/lessons/create" element={<LessonFormPage />} />
-            <Route path="/modules/:moduleId/lessons/:lessonId/edit" element={<LessonFormPage />} />
-            <Route path="/courses/:courseId/learning" element={<Learning />} />
-            {/* Profile / Instructor */}
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/InstructorDashboard" element={<InstructorDashboard />} />
-            <Route path="/MentorDashboard" element={<MentorDashboard />} />
+          {/* Courses */}
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/courses/:courseId" element={<CourseDetailPage />} />
+          <Route path="/courses/module/builder/:courseId" element={<ModuleList />} />
+          <Route path="/lession/:moduleId/builder" element={<LessionLIst />} />
+          <Route path="/modules/:moduleId/lessons/create" element={<LessonFormPage />} />
+          <Route path="/modules/:moduleId/lessons/:lessonId/edit" element={<LessonFormPage />} />
+          <Route path="/courses/:courseId/learning" element={<Learning />} />
+          {/* Profile / Instructor */}
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/InstructorDashboard" element={<InstructorDashboard />} />
+          <Route path="/MentorDashboard" element={<MentorDashboard />} />
 
-            {/* Admin Layout with Sidebar */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<AdminDashboardPage />} />
-              <Route path="instructors" element={<InstructorDetails />} />
-              <Route path="courses" element={<AdminCourseManagement />} />
-              <Route path="blogs" element={<Adminblog />} />
-              <Route path="allstudents" element={<AllStudents />} />
-              <Route path="allinstructors" element={<Allinstructors />} />
-            </Route>
+          {/* Admin Layout with Sidebar */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboardPage />} />
+            <Route path="instructors" element={<InstructorDetails />} />
+            <Route path="courses" element={<AdminCourseManagement />} />
+            <Route path="blogs" element={<Adminblog />} />
+            <Route path="allstudents" element={<AllStudents />} />
+            <Route path="allinstructors" element={<Allinstructors />} />
+            <Route path="bookings" element={<AdminBookings />} />
+          </Route>
 
 
-            
-          </Routes>
-        </main>
+          
+        </Routes>
+      </main>
 
-        <Footer />
-      </div>
-      <ToastContainer />
-    </Router>
+      {!isAdminRoute && <Footer />}
+    </div>
+  );
+}
+
+function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Show splash screen for 2.5 seconds
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {loading ? (
+        <SplashScreen key="splash" />
+      ) : (
+        <motion.div key="main" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col min-h-screen">
+          <Router>
+            <ScrollToTop />
+            <AppContent />
+            <ToastContainer />
+          </Router>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 

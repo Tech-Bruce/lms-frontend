@@ -18,7 +18,7 @@ export default function AllStudents() {
     const fetchData = async () => {
       try {
         const studentsRes = await axios.get(
-          "http://localhost:8000/api/v1/admin/students"
+          `${import.meta.env.VITE_API_URL}/admin/students`
         );
         const allStudents = studentsRes.data.students || [];
 
@@ -26,7 +26,7 @@ export default function AllStudents() {
           allStudents.map(async (student) => {
             try {
               const enrollmentsRes = await axios.get(
-                `http://localhost:8000/api/v1/students/enrollments/${student._id}`
+                `${import.meta.env.VITE_API_URL}/students/enrollments/${student._id}`
               );
               const studentEnrollments = enrollmentsRes.data.enrollments || [];
 

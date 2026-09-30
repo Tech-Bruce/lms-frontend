@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { FiMail, FiLock, FiLogIn, FiShield } from 'react-icons/fi';
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -25,108 +26,125 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-center">
-          <h1 className="text-2xl font-bold text-white flex items-center justify-center">
-            <svg className="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            Welcome Back
-          </h1>
-          <p className="text-blue-100 mt-1">Please enter your credentials to login</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="you@example.com"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="••••••••"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                Forgot password?
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-            >
-              Sign in
-              <svg className="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-              </svg>
-            </button>
-          </div>
-        </form>
-
-        <div className="bg-gray-50 px-6 py-4 rounded-b-xl">
-          <div className="text-sm text-center text-gray-500">
-            Don't have an account?{' '}
-            <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
-            </a>
-          </div>
-        </div>
+    <main className="min-h-screen bg-[#070B14] pt-28 flex items-center justify-center p-4 sm:p-8 relative overflow-hidden text-white font-sans">
+      {/* Ambient Orbs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-cyan-500/[0.08] blur-[120px]" />
+        <div className="absolute -right-40 -bottom-40 h-[600px] w-[600px] rounded-full bg-blue-600/[0.08] blur-[120px]" />
       </div>
-    </div>
+
+      <div className="max-w-6xl w-full bg-[#0A111E]/80 backdrop-blur-xl border border-white/[0.08] rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[600px]">
+        
+        {/* Left Side: Branding Content */}
+        <div className="md:w-5/12 p-10 md:p-14 flex flex-col justify-center bg-gradient-to-br from-cyan-900/10 to-[#0A111E] border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500" />
+          
+          <div className="relative z-10">
+            <div className="w-16 h-16 bg-cyan-400/10 border border-cyan-400/20 rounded-2xl flex items-center justify-center mb-8 shadow-[0_0_15px_rgba(34,211,238,0.15)]">
+              <FiShield className="w-8 h-8 text-cyan-400" />
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-[1.1]">
+              Welcome Back to the <br/>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Brigade</span>
+            </h2>
+            
+            <p className="text-slate-400 text-lg leading-relaxed mb-8">
+              Access your personalized dashboard, continue your courses, and connect with elite cybersecurity mentors.
+            </p>
+
+            <div className="flex items-center space-x-3 text-sm font-medium text-slate-500">
+              <span className="h-px w-8 bg-slate-700"></span>
+              <span>Secure Login Portal</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side: Form */}
+        <div className="md:w-7/12 p-10 md:p-14 flex flex-col justify-center bg-[#070C15]/50">
+          <div className="max-w-md w-full mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-2">Sign In</h3>
+            <p className="text-slate-400 mb-8 text-sm">Please enter your credentials to access your account.</p>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <FiMail className="text-slate-500" />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    onChange={handleChange}
+                    className="w-full pl-11 pr-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all duration-200 text-white placeholder-slate-600"
+                    placeholder="you@example.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <FiLock className="text-slate-500" />
+                  </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    onChange={handleChange}
+                    className="w-full pl-11 pr-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all duration-200 text-white placeholder-slate-600"
+                    placeholder="••••••••"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4 bg-white/[0.05] border-white/20 rounded text-cyan-500 focus:ring-cyan-500/50"
+                  />
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-400 cursor-pointer hover:text-slate-300">
+                    Remember me
+                  </label>
+                </div>
+                <a href="#" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors">
+                  Forgot password?
+                </a>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3.5 px-4 bg-cyan-400 text-[#07121D] font-bold rounded-xl hover:bg-cyan-300 transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] mt-4"
+              >
+                Sign In <FiLogIn className="text-lg" />
+              </button>
+            </form>
+
+            <p className="mt-8 text-center text-sm text-slate-400">
+              Don't have an account?{' '}
+              <Link to="/register" className="font-semibold text-cyan-400 hover:text-cyan-300 transition-colors">
+                Sign up now
+              </Link>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </main>
   );
 };
 

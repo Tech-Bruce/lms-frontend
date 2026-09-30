@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { 
+  Calendar, 
+  User, 
+  ArrowRight, 
+  X, 
+  Search, 
+  FileText, 
+  Video, 
+  Image, 
+  BookOpen
+} from "lucide-react";
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
+  const [activePost, setActivePost] = useState(null); // For rich preview modal
 
-  const API_URL = "http://localhost:8000/api/v1/blogs";
-  const BASE_URL = "http://localhost:8000"; // for images/videos/docs
+  const API_URL = `${import.meta.env.VITE_API_URL}/blogs`;
+  const BASE_URL = import.meta.env.VITE_API_UPLOAD_URL.replace('/uploads', ''); 
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -23,31 +37,38 @@ const Blog = () => {
     fetchBlogs();
   }, []);
 
+  // Filter posts
+  const filteredPosts = blogPosts.filter((post) => {
+    const matchesSearch = 
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = selectedType === "all" || post.type === selectedType;
+    return matchesSearch && matchesType;
+  });
+
   // Skeleton loader component
   const SkeletonLoader = () => (
-    <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2">
+    <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2 z-10 relative">
       {[...Array(6)].map((_, index) => (
         <div
           key={index}
-          className="flex flex-col rounded-xl shadow-lg overflow-hidden bg-white border border-gray-100 animate-pulse"
+          className="flex flex-col rounded-3xl border border-white/[0.05] bg-white/[0.02] overflow-hidden animate-pulse"
         >
-          <div className="w-full h-60 bg-gray-200"></div>
-          <div className="flex-1 p-6 flex flex-col justify-between">
-            <div className="flex-1">
-              <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
-              <div className="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
+          <div className="w-full h-52 bg-white/[0.05]"></div>
+          <div className="p-6 flex-grow flex flex-col justify-between space-y-6">
+            <div className="space-y-3">
+              <div className="h-4 bg-white/[0.05] rounded w-1/4"></div>
+              <div className="h-6 bg-white/[0.05] rounded w-3/4"></div>
               <div className="space-y-2">
-                <div className="h-4 bg-gray-200 rounded"></div>
-                <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                <div className="h-4 bg-white/[0.05] rounded"></div>
+                <div className="h-4 bg-white/[0.05] rounded w-5/6"></div>
               </div>
             </div>
-            <div className="mt-6 flex items-center">
-              <div className="flex-shrink-0">
-                <div className="h-10 w-10 rounded-full bg-gray-200"></div>
-              </div>
-              <div className="ml-3 space-y-2">
-                <div className="h-3 bg-gray-200 rounded w-24"></div>
-                <div className="h-3 bg-gray-200 rounded w-16"></div>
+            <div className="flex items-center space-x-3 pt-4 border-t border-white/[0.05]">
+              <div className="h-10 w-10 rounded-full bg-white/[0.05]"></div>
+              <div className="space-y-1.5 flex-grow">
+                <div className="h-3 bg-white/[0.05] rounded w-20"></div>
+                <div className="h-3 bg-white/[0.05] rounded w-12"></div>
               </div>
             </div>
           </div>
@@ -57,136 +78,267 @@ const Blog = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
-            Cyber Security Brigade <span className="text-blue-600">Blog</span>
-          </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
-            Insights, tutorials, and news from the cybersecurity world
-          </p>
+    <div className="min-h-screen bg-[#070B14] pt-32 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden text-white">
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute left-1/2 top-0 h-[650px] w-[850px] -translate-x-1/2 rounded-full bg-cyan-500/[0.07] blur-[110px]" />
+        <div className="absolute right-[-200px] top-[400px] h-[600px] w-[600px] rounded-full bg-indigo-600/[0.07] blur-[120px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
         
+        {/* Banner header with gradient grid */}
+        <div className="text-center mb-16 mt-8">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee]" />
+            Cyber Security Brigade
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Knowledge & <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">Insights</span>
+          </h1>
+          <p className="mt-6 max-w-2xl mx-auto text-base leading-8 text-slate-400 sm:text-lg">
+            Explore professional guides, dynamic security reports, and training articles authored by our experts.
+          </p>
         </div>
 
+        {/* Filter Controls Panel */}
+        <div className="bg-[#0A111E] rounded-2xl border border-white/[0.09] p-4 sm:p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl backdrop-blur-md">
+          {/* Search */}
+          <div className="relative w-full md:max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+            <input
+              type="text"
+              placeholder="Search publications..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all duration-200 text-white placeholder-slate-500"
+            />
+          </div>
+
+          {/* Chips Filter */}
+          <div className="flex flex-wrap items-center gap-3 justify-center">
+            {[
+              { id: "all", label: "All Formats" },
+              { id: "poster", label: "Posters", icon: Image },
+              { id: "video", label: "Videos", icon: Video },
+              { id: "document", label: "Documents", icon: FileText }
+            ].map((type) => {
+              const active = selectedType === type.id;
+              const Icon = type.icon;
+              return (
+                <button
+                  key={type.id}
+                  onClick={() => setSelectedType(type.id)}
+                  className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 border ${
+                    active
+                      ? "bg-cyan-400/10 text-cyan-300 border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                      : "bg-white/5 text-slate-400 border-transparent hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {Icon && <Icon className="w-3.5 h-3.5" />}
+                  <span>{type.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Content list */}
         {loading ? (
           <SkeletonLoader />
-        ) : blogPosts.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center rounded-full bg-gray-100 p-4 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+        ) : filteredPosts.length === 0 ? (
+          <div className="text-center py-20 bg-[#0A111E] rounded-3xl border border-white/[0.09] shadow-sm space-y-4 backdrop-blur-md">
+            <div className="inline-flex p-4 bg-cyan-400/10 rounded-2xl border border-cyan-400/20 text-cyan-400 mb-2">
+              <BookOpen className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-2">No blog posts available</h3>
-            <p className="text-gray-500">Check back later for new content.</p>
+            <h3 className="text-2xl font-semibold text-white">No matching publications</h3>
+            <p className="text-slate-400 text-sm max-w-sm mx-auto font-medium">
+              We couldn't find any articles matching your filters. Try checking alternative search tags.
+            </p>
           </div>
         ) : (
           <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2">
-            {blogPosts.map((post) => (
-              <div
-                key={post._id}
-                className="flex flex-col rounded-xl shadow-lg overflow-hidden bg-white border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-              >
-                {/* Poster (Image) */}
-                {post.type === "poster" && (
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={`${BASE_URL}${post.fileUrl}`}
-                      alt={post.title}
-                      className="w-full h-60 object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {post.type}
-                      </span>
-                    </div>
-                  </div>
-                )}
+            {filteredPosts.map((post) => {
+              let TypeIcon = FileText;
+              let badgeColor = "bg-cyan-400/10 text-cyan-300 border-cyan-400/20";
+              if (post.type === "poster") {
+                TypeIcon = Image;
+                badgeColor = "bg-blue-400/10 text-blue-300 border-blue-400/20";
+              }
+              if (post.type === "video") {
+                TypeIcon = Video;
+                badgeColor = "bg-indigo-400/10 text-indigo-300 border-indigo-400/20";
+              }
 
-                {/* Video */}
-                {post.type === "video" && (
-                  <div className="relative">
-                    <video
-                      controls
-                      className="w-full h-60 object-contain bg-gray-900"
-                      poster={`${BASE_URL}${post.thumbnailUrl || ''}`}
-                    >
-                      <source
+              return (
+                <div
+                  key={post._id}
+                  className="flex flex-col bg-[#0A111E] border border-white/[0.09] rounded-3xl overflow-hidden hover:border-cyan-400/30 hover:bg-white/[0.035] hover:-translate-y-1.5 transition-all duration-300 group shadow-lg"
+                >
+                  {/* Media Content Area */}
+                  {post.type === "poster" && post.fileUrl && (
+                    <div className="relative overflow-hidden h-52 bg-[#050810]">
+                      <img
                         src={`${BASE_URL}${post.fileUrl}`}
-                        type="video/mp4"
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <source
-                        src={`${BASE_URL}${post.fileUrl}`}
-                        type="video/webm"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                    <div className="absolute top-4 right-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                        {post.type}
-                      </span>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Document */}
-                {post.type === "document" && (
-                  <div className="relative">
+                  {post.type === "video" && post.fileUrl && (
+                    <div className="relative h-52 bg-black flex items-center justify-center">
+                      <video
+                        controls
+                        className="w-full h-full object-cover"
+                        poster={`${BASE_URL}${post.thumbnailUrl || ''}`}
+                      >
+                        <source src={`${BASE_URL}${post.fileUrl}`} type="video/mp4" />
+                        <source src={`${BASE_URL}${post.fileUrl}`} type="video/webm" />
+                      </video>
+                    </div>
+                  )}
+
+                  {post.type === "document" && post.fileUrl && (
                     <a
                       href={`${BASE_URL}${post.fileUrl}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full h-60 flex flex-col items-center justify-center bg-gray-100 text-blue-600 font-semibold hover:bg-gray-200 transition-colors duration-300"
+                      className="w-full h-52 flex flex-col items-center justify-center bg-[#070C15] border-b border-white/[0.05] text-cyan-400 font-semibold hover:bg-white/[0.03] transition-colors duration-200 space-y-3 group"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>View Document</span>
+                      <div className="p-4 bg-cyan-400/10 rounded-2xl text-cyan-400 group-hover:scale-110 transition-transform duration-200 border border-cyan-400/20">
+                        <FileText className="w-8 h-8" />
+                      </div>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Document Attachment</span>
                     </a>
-                    <div className="absolute top-4 right-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        {post.type}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Blog Details */}
-                <div className="flex-1 p-6 flex flex-col justify-between">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <p className="mt-3 text-gray-600 line-clamp-3">
-                      {post.description}
-                    </p>
-                  </div>
-                  <div className="mt-6 flex items-center pt-4 border-t border-gray-100">
-                    <div className="flex-shrink-0">
-                      <span className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white font-medium shadow-sm">
-                        {post.createdBy ? post.createdBy.charAt(0).toUpperCase() : "A"}
-                      </span>
+                  {/* Body details */}
+                  <div className="flex-1 p-8 flex flex-col justify-between space-y-5">
+                    <div className="space-y-4 flex-grow">
+                      <div className="flex items-center justify-between">
+                        <span className={`px-2.5 py-1 inline-flex items-center text-[10px] font-bold uppercase tracking-widest rounded border ${badgeColor}`}>
+                          <TypeIcon className="w-3 h-3 mr-1.5" />
+                          {post.type}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-white line-clamp-2 leading-snug group-hover:text-cyan-400 transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-sm text-slate-400 leading-relaxed font-medium line-clamp-3">
+                        {post.description}
+                      </p>
                     </div>
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-900">
-                        {post.createdBy || "Unknown Author"}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {new Date(post.createdAt).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
-                      </p>
+
+                    <div className="pt-5 border-t border-white/[0.07] flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="h-10 w-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-300 font-bold text-sm">
+                          {post.createdBy ? post.createdBy.charAt(0).toUpperCase() : "A"}
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-slate-200">
+                            {post.createdBy || "Security Editor"}
+                          </p>
+                          <p className="text-[11px] text-slate-500 font-medium flex items-center mt-0.5">
+                            <Calendar className="w-3 h-3 mr-1" />
+                            {new Date(post.createdAt).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </p>
+                        </div>
+                      </div>
+
+                      {post.content && (
+                        <button
+                          onClick={() => setActivePost(post)}
+                          className="inline-flex items-center justify-center p-2.5 rounded-xl bg-white/5 hover:bg-cyan-400 hover:text-[#07121D] border border-white/10 text-slate-300 transition-all duration-300"
+                          title="Read Full Post"
+                        >
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
+
       </div>
+
+      {/* Rich Preview Modal */}
+      {activePost && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/90 backdrop-blur-sm transition-opacity duration-200">
+          <div className="bg-[#0C1423] rounded-3xl border border-white/[0.09] shadow-[0_35px_100px_rgba(0,0,0,0.8)] max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden relative transition-transform duration-200">
+            {/* Modal Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyan-500/15 blur-[80px] pointer-events-none" />
+
+            {/* Modal Header */}
+            <div className="p-8 border-b border-white/10 flex justify-between items-start relative z-10">
+              <div className="space-y-3 pr-8">
+                <span className="px-2.5 py-1 inline-flex items-center text-[10px] font-bold uppercase tracking-wider rounded bg-cyan-400/10 text-cyan-300 border border-cyan-400/20">
+                  {activePost.type}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                  {activePost.title}
+                </h2>
+                <div className="flex items-center space-x-4 text-xs text-slate-400 font-medium pt-2">
+                  <span className="flex items-center">
+                    <User className="w-4 h-4 mr-1.5" />
+                    {activePost.createdBy}
+                  </span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1.5" />
+                    {new Date(activePost.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+              
+              <button
+                onClick={() => setActivePost(null)}
+                className="p-2.5 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors flex-shrink-0 bg-white/5 border border-white/5"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Content Scrollable Area */}
+            <div className="p-8 overflow-y-auto flex-grow prose prose-invert prose-slate max-w-none prose-sm sm:prose-base focus:outline-none relative z-10 scrollbar-thin scrollbar-thumb-white/10">
+              {activePost.description && (
+                <div className="italic text-slate-400 border-l-4 border-cyan-500/50 pl-4 mb-8 text-lg">
+                  {activePost.description}
+                </div>
+              )}
+              {/* Rich-Text content compiled from editor */}
+              <div 
+                dangerouslySetInnerHTML={{ __html: activePost.content }}
+                className="tiptap-content-renderer"
+              />
+            </div>
+
+            {/* Inline stylesheet mimicking the Tiptap output structure for Dark Mode */}
+            <style>{`
+              .tiptap-content-renderer h1 { font-size: 1.8em; font-weight: 800; margin: 1em 0 0.5em; line-height: 1.25; color: #ffffff; }
+              .tiptap-content-renderer h2 { font-size: 1.4em; font-weight: 700; margin: 1em 0 0.5em; line-height: 1.3; color: #f8fafc; }
+              .tiptap-content-renderer h3 { font-size: 1.2em; font-weight: 600; margin: 1em 0 0.5em; line-height: 1.4; color: #e2e8f0; }
+              .tiptap-content-renderer p { margin: 0.8em 0; line-height: 1.7; color: #cbd5e1; }
+              .tiptap-content-renderer ul { list-style-type: disc; padding-left: 1.5em; margin: 0.8em 0; color: #cbd5e1; }
+              .tiptap-content-renderer ol { list-style-type: decimal; padding-left: 1.5em; margin: 0.8em 0; color: #cbd5e1; }
+              .tiptap-content-renderer li { margin: 0.3em 0; color: #cbd5e1; }
+              .tiptap-content-renderer blockquote { border-left: 4px solid #334155; margin: 1em 0; padding-left: 1.2em; color: #94a3b8; font-style: italic; background: rgba(255,255,255,0.02); padding-top: 0.5em; padding-bottom: 0.5em; border-radius: 0 8px 8px 0; }
+              .tiptap-content-renderer pre { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 1.2em; margin: 1em 0; overflow-x: auto; font-family: monospace; font-size: 0.9em; color: #38bdf8; }
+              .tiptap-content-renderer img { max-width: 100%; height: auto; border-radius: 12px; margin: 1.5em 0; border: 1px solid rgba(255,255,255,0.1); }
+              .tiptap-content-renderer a { color: #22d3ee; text-decoration: underline; text-underline-offset: 2px; }
+              .tiptap-content-renderer a:hover { color: #67e8f9; }
+            `}</style>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const mentorshipApi = createApi({
   reducerPath: "mentorshipApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/v1/mentorship" }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_API_URL}/mentorship` }),
   endpoints: (builder) => ({
     getMentors: builder.query({
       query: () => "/mentors",

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/lms.png";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import logo from "../assets/log.png";
 import api from "../api";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
@@ -11,6 +12,7 @@ const Navbar = () => {
   const [courses, setCourses] = useState([]);
 
   const dropdownRef = useRef(null);
+  const location = useLocation();
 
   const user = useSelector((state) => state?.lms_auth.user);
   const roleIcons = {
@@ -92,111 +94,123 @@ const Navbar = () => {
     }
   };
 
+  const isActive = (path) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
+
+  const NavItem = ({ to, children }) => {
+    const active = isActive(to);
+    return (
+      <Link to={to} className="relative group px-4 py-2 flex items-center justify-center">
+        {active && (
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40"></div>
+        )}
+        <div className={`absolute inset-0 rounded-full transition-all duration-300 ${active ? 'bg-[#030712]/60 border border-cyan-500/50' : 'group-hover:bg-white/10'}`}></div>
+        <span className={`relative z-10 font-semibold transition-colors duration-300 ${active ? 'text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : 'text-gray-200 group-hover:text-white'}`}>
+          {children}
+        </span>
+      </Link>
+    );
+  };
+
   return (
-    <nav className="bg-gradient-to-r from-black to-indigo-500 shadow-xl sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-transparent absolute w-full top-0 z-50 transition-all duration-300">
+      <div className="w-full px-4 sm:px-8 lg:px-12 mt-2">
         <div className="flex justify-between h-16 items-center">
           {/* Logo and Title */}
           <div
             onClick={handleNavigate}
-            className="flex items-center space-x-2 cursor-pointer transition-transform hover:scale-105"
+            className="group flex items-center space-x-3 cursor-pointer"
           >
-            <img
-              src={logo}
-              alt="Logo"
-              className="h-12 w-12 object-cover  border-white shadow-md"
-            />
-            <span className="text-2xl font-bold text-white">
-            Cyber Security Brigade
+            <div className="relative">
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-500"></div>
+              <motion.img
+                layoutId="main-logo"
+                src={logo}
+                alt="Logo"
+                className="relative h-12 w-12 object-cover"
+              />
+            </div>
+            <span className="text-2xl font-black text-white tracking-tight group-hover:text-cyan-300 transition-colors duration-300">
+              CSB
             </span>
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link
-              to="/"
-              className="text-gray-100 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-800"
-            >
-              Home
-            </Link>
-            <Link
-              to="/about"
-              className="text-gray-100 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-800"
-            >
-              About
-            </Link>
+          <div className="hidden md:flex items-center space-x-2">
+            <NavItem to="/">Home</NavItem>
+            <NavItem to="/about">About</NavItem>
 
             {/* Courses Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div 
+              className="relative" 
+              ref={dropdownRef}
+              onMouseEnter={() => setIsCoursesDropdownOpen(true)}
+              onMouseLeave={() => setIsCoursesDropdownOpen(false)}
+            >
               <button
                 onClick={toggleCoursesDropdown}
-                className="text-gray-100 hover:text-white font-medium flex items-center px-3 py-2 rounded-lg hover:bg-blue-800 transition-colors duration-200"
+                className="relative group px-4 py-2 flex items-center justify-center"
               >
-                Courses
-                <svg
-                  className={`ml-1 h-4 w-4 transition-transform ${
-                    isCoursesDropdownOpen ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                {isActive("/courses") && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40"></div>
+                )}
+                <div className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive("/courses") ? 'bg-[#030712]/60 border border-cyan-500/50' : 'group-hover:bg-white/10'}`}></div>
+                <span className={`relative z-10 font-semibold flex items-center transition-colors duration-300 ${isActive("/courses") ? 'text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : 'text-gray-200 group-hover:text-white'}`}>
+                  Courses
+                  <svg
+                    className={`ml-1 h-4 w-4 transition-transform ${
+                      isCoursesDropdownOpen ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </span>
               </button>
 
               {isCoursesDropdownOpen && (
-                <div className="absolute z-10 mt-2 w-56 rounded-lg shadow-xl bg-white py-2 border border-gray-200 animate-fadeIn">
-                  <div className="px-4 py-2 text-xs font-semibold text-gray-500 border-b border-gray-100">
-                    AVAILABLE COURSES
+                <div className="absolute z-10 pt-2 w-56 animate-fadeIn">
+                  <div className="rounded-2xl shadow-[0_0_40px_rgba(34,211,238,0.15)] bg-[#0a0d18]/95 backdrop-blur-xl py-2 border border-white/10">
+                    <div className="px-4 py-2 text-xs font-black tracking-widest text-cyan-500/70 border-b border-white/5 uppercase">
+                      Available Courses
+                    </div>
+                    {courses.map((course) => (
+                      <Link
+                        key={course.id}
+                        to={course.path}
+                        className="block px-4 py-3 text-sm text-gray-300 hover:bg-cyan-900/20 hover:text-cyan-300 transition-colors duration-150"
+                        onClick={() => setIsCoursesDropdownOpen(false)}
+                      >
+                        <div className="font-semibold">{course.title}</div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {course.category}
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                  {courses.map((course) => (
-                    <Link
-                      key={course.id}
-                      to={course.path}
-                      className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-150"
-                      onClick={() => setIsCoursesDropdownOpen(false)}
-                    >
-                      <div className="font-medium">{course.title}</div>
-                      <div className="text-xs text-gray-500">
-                        {course.category}
-                      </div>
-                    </Link>
-                  ))}
                 </div>
               )}
             </div>
 
-            <Link
-              to="/blog"
-              className="text-gray-100 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-800"
-            >
-              Blog
-            </Link>
-            <Link
-              to="/mentorship"
-              className="text-gray-100 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-800"
-            >
-              Mentorship
-            </Link>
-            <Link
-              to="/contact"
-              className="text-gray-100 hover:text-white font-medium transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-800"
-            >
-              Contact
-            </Link>
+            <NavItem to="/blog">Blog</NavItem>
+            <NavItem to="/mentorship">Mentorship</NavItem>
+            <NavItem to="/contact">Contact</NavItem>
           </div>
 
           {/* Desktop Auth Section */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <div className="flex items-center space-x-3 bg-blue-800/50 rounded-full pl-1 pr-4 py-1 shadow-inner">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center space-x-3 bg-[#0a0d18]/80 border border-white/10 backdrop-blur-md rounded-full pl-1 pr-4 py-1 shadow-lg hover:border-cyan-500/30 transition-all duration-300">
+                <div onClick={handleNavigate} className="flex items-center gap-3 cursor-pointer group/profile">
                   {/* Avatar Container */}
                   <div className="relative h-10 w-10">
                     {/* Strike Badge */}
@@ -205,27 +219,27 @@ const Navbar = () => {
                         {user?.strike}
                       </div>
                     )}
-                    <div className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 text-white font-semibold text-lg uppercase shadow-lg border-2 border-white">
+                    <div className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-indigo-600 text-white font-semibold text-lg uppercase shadow-[0_0_15px_rgba(34,211,238,0.4)] border border-white/20 group-hover/profile:shadow-[0_0_20px_rgba(34,211,238,0.6)] transition-all">
                       {user?.name?.charAt(0)}
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-white font-medium text-sm">
-                    {user?.name}
-                  </span>
-                  {user?.role && (
-                    <span
-                      className={`text-xs font-medium flex items-center space-x-1 ${roleIcons[user.role]?.color}`}
-                    >
-                      <span>{roleIcons[user.role]?.icon}</span>
-                      <span>{roleIcons[user.role]?.label}</span>
+                  <div className="flex flex-col">
+                    <span className="text-white font-medium text-sm group-hover/profile:text-cyan-300 transition-colors">
+                      {user?.name}
                     </span>
-                  )}
+                    {user?.role && (
+                      <span
+                        className={`text-xs font-medium flex items-center space-x-1 ${roleIcons[user.role]?.color}`}
+                      >
+                        <span>{roleIcons[user.role]?.icon}</span>
+                        <span>{roleIcons[user.role]?.label}</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="ml-2 px-4 py-1.5 bg-red-500 text-white text-sm rounded-full hover:bg-red-600 transition-colors duration-200 shadow-md"
+                  className="ml-2 px-4 py-1.5 bg-white/5 border border-white/10 text-gray-300 text-sm rounded-full hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-300 shadow-md"
                 >
                   Logout
                 </button>
@@ -234,13 +248,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-gray-100 hover:text-white font-medium transition-colors duration-200 px-4 py-2 rounded-lg hover:bg-blue-800"
+                  className="relative text-gray-200 hover:text-cyan-400 font-semibold transition-all duration-300 px-4 py-2 hover:-translate-y-1"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-5 py-2.5 rounded-full hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold px-6 py-2.5 rounded-full hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 hover:scale-105"
                 >
                   Sign Up
                 </Link>
@@ -252,7 +266,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-blue-800 focus:outline-none transition-colors duration-200"
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-cyan-400 focus:outline-none transition-colors duration-200"
             >
               {!isMobileMenuOpen ? (
                 <svg
@@ -292,28 +306,28 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-b from-blue-900 to-indigo-900 shadow-xl animate-slideIn">
+        <div className="md:hidden bg-[#0a0d18]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)] animate-slideIn">
           <div className="px-4 py-4 space-y-1">
             <Link
               to="/"
               onClick={toggleMobileMenu}
-              className="block text-white hover:bg-blue-800 px-4 py-3 rounded-lg transition-colors duration-200"
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
               Home
             </Link>
             <Link
               to="/about"
               onClick={toggleMobileMenu}
-              className="block text-white hover:bg-blue-800 px-4 py-3 rounded-lg transition-colors duration-200"
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/about") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
               About
             </Link>
 
             {/* Mobile Courses Dropdown */}
-            <div className="px-4 py-3 rounded-lg hover:bg-blue-800 transition-colors duration-200">
+            <div className={`px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/courses") ? 'bg-cyan-900/10 border border-cyan-500/10' : 'hover:bg-white/5'}`}>
               <button
                 onClick={toggleCoursesDropdown}
-                className="w-full text-left text-white flex justify-between items-center"
+                className={`w-full text-left flex justify-between items-center ${isActive("/courses") ? 'text-cyan-300' : 'text-gray-300'}`}
               >
                 <span>Courses</span>
                 <svg
@@ -333,13 +347,13 @@ const Navbar = () => {
                 </svg>
               </button>
               {isCoursesDropdownOpen && (
-                <div className="pl-4 mt-2 space-y-2 border-l-2 border-blue-700 ml-2">
+                <div className="pl-4 mt-3 space-y-2 border-l-2 border-cyan-500/30 ml-2">
                   {courses.map((course) => (
                     <Link
                       key={course.id}
                       to={course.path}
                       onClick={toggleMobileMenu}
-                      className="block text-blue-200 hover:text-white py-2 transition-colors duration-200"
+                      className="block text-gray-400 hover:text-cyan-300 py-2 transition-colors duration-200 text-sm font-medium"
                     >
                       {course.title}
                     </Link>
@@ -351,29 +365,29 @@ const Navbar = () => {
             <Link
               to="/blog"
               onClick={toggleMobileMenu}
-              className="block text-white hover:bg-blue-800 px-4 py-3 rounded-lg transition-colors duration-200"
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/blog") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
               Blog
             </Link>
             <Link
               to="/mentorship"
               onClick={toggleMobileMenu}
-              className="block text-white hover:bg-blue-800 px-4 py-3 rounded-lg transition-colors duration-200"
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/mentorship") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
               Mentorship
             </Link>
             <Link
               to="/contact"
               onClick={toggleMobileMenu}
-              className="block text-white hover:bg-blue-800 px-4 py-3 rounded-lg transition-colors duration-200"
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/contact") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
               Contact
             </Link>
 
             {/* Mobile Auth Section */}
-            <div className="pt-4 border-t border-blue-700 mt-2">
+            <div className="pt-4 border-t border-white/10 mt-2">
               {user ? (
-                <div className="px-4 py-3 bg-blue-800/50 rounded-lg">
+                <div className="px-4 py-3 bg-white/5 rounded-xl border border-white/10">
                   <div className="flex items-center space-x-3">
                     <div className="relative h-10 w-10">
                       {user?.strike > 0 && (
@@ -381,12 +395,12 @@ const Navbar = () => {
                           {user?.strike}
                         </div>
                       )}
-                      <div className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 text-white font-semibold text-lg uppercase shadow-lg border-2 border-white">
+                      <div className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-indigo-600 text-white font-semibold text-lg uppercase shadow-[0_0_15px_rgba(34,211,238,0.4)] border border-white/20">
                         {user?.name?.charAt(0)}
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="text-white font-medium">{user.name}</div>
+                      <div className="text-white font-semibold">{user.name}</div>
                       {user.role && (
                         <div
                           className={`text-xs font-medium flex items-center space-x-1 ${roleIcons[user.role]?.color}`}
@@ -398,7 +412,7 @@ const Navbar = () => {
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="px-3 py-1.5 bg-red-500 text-white text-sm rounded-full hover:bg-red-600 transition-colors duration-200"
+                      className="px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 text-sm font-semibold rounded-lg hover:bg-red-500 hover:text-white transition-all duration-200"
                     >
                       Logout
                     </button>
@@ -409,14 +423,14 @@ const Navbar = () => {
                   <Link
                     to="/login"
                     onClick={toggleMobileMenu}
-                    className="text-center text-white bg-blue-800 hover:bg-blue-700 py-3 rounded-lg transition-colors duration-200"
+                    className="text-center text-gray-300 bg-white/5 hover:bg-white/10 hover:text-white font-semibold py-3 rounded-xl transition-all duration-200 border border-white/10"
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
                     onClick={toggleMobileMenu}
-                    className="text-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 rounded-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-200"
+                    className="text-center bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold py-3 rounded-xl hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300"
                   >
                     Sign Up
                   </Link>
@@ -428,7 +442,7 @@ const Navbar = () => {
       )}
 
       {/* Add these styles for animations */}
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -455,10 +469,9 @@ const Navbar = () => {
         .animate-slideIn {
           animation: slideIn 0.3s ease-out;
         }
-      `}</style>
+      `}} />
     </nav>
   );
 };
 
 export default Navbar;
- 
