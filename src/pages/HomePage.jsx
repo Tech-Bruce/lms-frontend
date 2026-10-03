@@ -22,95 +22,40 @@ import logo from "../assets/logo.png";
 import { useEffect, useState, useRef } from 'react';
 import api from '../api';
 import { VIDEOS } from '../constants/videos';
+import imgCinematic from "../assets/Cinematic .png";
+import imgOrbital from "../assets/Orbital .png";
+import imgLuminous from "../assets/Luminous .png";
 import FeaturedCourses from '../components/FeaturedCourses';
 import WhoBenefits from '../components/WhoBenefits';
 import FeaturesSection from '../components/FeaturesSection';
 
-const TerminalMockup = () => {
-  const [logs, setLogs] = useState([
-    "SYS_INIT: Boot sequence initiated...",
-    "SYS_MEM: Allocating secure memory blocks.",
-    "NET_CFG: Establishing encrypted tunnel...",
-    "SYS_CHK: Kernel integrity verified.",
-    "MODULE: Penetration testing suite active.",
-    "MODULE: Threat intelligence feed synced.",
-    "SEC_KEY: Master certificate loaded.",
-    "AUTH_SEQ: Verifying credentials...",
-    "AUTH_SEQ: Access granted. Welcome.",
-    "SYS_INIT: Brigade Core Systems active...",
-    "SEC_PORTAL: Sandbox loaded successfully.",
-    "STATUS: Defenses operational. System ready."
-  ]);
-
-  const containerRef = useRef(null);
-
-  const scrollToBottom = () => {
-    if (containerRef.current) {
-      // Use smooth scrolling if supported, otherwise just set scrollTop
-      containerRef.current.scrollTo({
-        top: containerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-  };
+const BackgroundSlider = () => {
+  const images = [imgLuminous, imgCinematic];
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [logs]);
-
-  useEffect(() => {
-    const messages = [
-      "NET_SCAN: Port 443 scanning complete. 0 vulnerabilities found.",
-      "IDS_ALERT: Intrusion signature analysis: 100% SECURE.",
-      "LAB_SYNC: Wireshark packet capture demo running...",
-      "THREAT_INTEL: Feed updated. 2026 threats blocked.",
-      "SYS_MEM: Lab cluster allocation active.",
-      "SEC_KEY: Certificate loaded. Welcome student.",
-      "SYS_READY: Become a defender. Complete your enrollment."
-    ];
-    const interval = setInterval(() => {
-      setLogs(prev => {
-        const nextLogs = [...prev, messages[Math.floor(Math.random() * messages.length)]];
-        if (nextLogs.length > 30) {
-          return nextLogs.slice(1);
-        }
-        return nextLogs;
-      });
-    }, 3500);
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="w-full max-w-2xl bg-gray-950/70 backdrop-blur-xl border border-cyan-500/40 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(8,145,178,0.25)] font-mono text-sm md:text-base text-cyan-400">
-      <div className="bg-gray-900 px-4 py-2 border-b border-gray-800 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-          <span className="text-gray-400 text-xs ml-2 select-none">brigade_terminal.sh</span>
-        </div>
-        <div className="text-gray-500 text-[10px]">v2.6.8</div>
-      </div>
-      <div ref={containerRef} className="p-4 space-y-2 h-96 overflow-y-auto scrollbar-none flex flex-col">
-        {logs.map((log, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`flex items-start space-x-1.5 ${
-              log.includes("ALERT") ? "text-rose-400" : log.includes("STATUS") ? "text-emerald-400" : "text-cyan-400"
-            }`}
-          >
-            <span className="text-cyan-600 select-none">&gt;</span>
-            <span className="break-all">{log}</span>
-          </motion.div>
-        ))}
-      </div>
-    </div>
+    <>
+      {images.map((img, index) => (
+        <motion.div
+          key={img}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: index === currentIndex ? 1 : 0 }}
+          transition={{ duration: 1.5 }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <img src={img} alt="Cybersecurity Background" className="w-full h-full object-cover object-center" />
+        </motion.div>
+      ))}
+    </>
   );
 };
-
 const CountUp = ({ end, duration = 2, suffix = "" }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -199,7 +144,7 @@ const HomePage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white overflow-hidden selection:bg-cyan-500 selection:text-black">
+    <div className="min-h-screen bg-background text-text-main overflow-hidden selection:bg-primary-cyan selection:text-background">
       {/* Pop-up Form */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4">
@@ -339,19 +284,11 @@ const HomePage = () => {
       )}
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden min-h-[92vh] flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
         {/* Animated Cyber Grid */}
         <div className="absolute inset-0 z-0">
-          {/* Background Video */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src={VIDEOS.VIDEO_1} type="video/mp4" />
-          </video>
+          {/* Looping Background Images */}
+          <BackgroundSlider />
           {/* Dark overlay so text remains readable */}
           <div className="absolute inset-0 bg-gray-950/50"></div>
           
@@ -382,66 +319,57 @@ const HomePage = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* LEFT: Text Content */}
+          <div className="flex flex-col">
+            {/* Text Content */}
             <motion.div
               initial={{ y: 25, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col text-center lg:text-left space-y-6"
+              className="flex flex-col text-left space-y-6 lg:space-y-8 lg:max-w-3xl mt-12 md:mt-0"
             >
-              <div className="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-1.5 text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-2 w-max mx-auto lg:mx-0">
-                <FiTerminal className="w-4 h-4 animate-pulse text-cyan-400" />
-                <span>Next-Gen Cybersecurity Institute</span>
+              <div className="inline-flex items-center space-x-2 bg-primary-cyan/10 border border-primary-cyan/30 rounded-full px-4 py-1.5 text-primary-cyan text-xs sm:text-sm font-semibold tracking-wider uppercase mb-2 w-max mx-0">
+                <FiShield className="w-4 h-4 text-primary-cyan" />
+                <span>HANDS-ON DEFENSIVE CYBERSECURITY</span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                Cyber Security <br className="hidden sm:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
-                  Brigade
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
+                Build the skills to <br className="hidden md:inline" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-cyan to-primary-blue">
+                  defend what matters.
                 </span>
               </h1>
               
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-300 max-w-xl mx-auto lg:mx-0">
-                Master professional hacking, threat operations, and systems defense with confidence.
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 max-w-xl mx-0 leading-relaxed">
+                Every alert tells a story. Learn to investigate it.
               </h2>
               
-              <p className="text-base sm:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0">
-                Traditional cybersecurity education is outdated. We provide sandbox environments, live labs, and expert defense simulations to launch your high-demand security career.
+              <p className="text-sm sm:text-base md:text-lg text-text-muted max-w-2xl mx-0 leading-relaxed">
+                Build practical cybersecurity skills through realistic investigations, hands-on missions, threat hunting, detection engineering and incident response.
               </p>
               
-              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 justify-center lg:justify-start pt-4">
+              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 justify-start pt-6 md:pt-8 w-full sm:w-auto">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={openModal}
-                  className="px-8 py-4 rounded-xl text-black bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 shadow-lg shadow-cyan-500/20 transition-all text-base font-bold tracking-wide"
+                  className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl text-background bg-gradient-to-r from-primary-cyan to-primary-blue hover:from-cyan-300 hover:to-blue-400 shadow-lg shadow-cyan-500/20 transition-all text-sm sm:text-base font-bold tracking-wide w-full sm:w-auto text-center"
                 >
-                  Join the Brigade
+                  Start Learning
                 </motion.button>
                 
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
+                  className="w-full sm:w-auto"
                 >
                   <Link
                     to="/courses"
-                    className="px-8 py-4 rounded-xl text-cyan-300 border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400 transition-all text-base font-bold tracking-wide flex justify-center items-center h-full w-full"
+                    className="px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl text-primary-cyan border border-primary-cyan/30 bg-primary-cyan/5 hover:bg-primary-cyan/10 hover:border-primary-cyan transition-all text-sm sm:text-base font-bold tracking-wide flex justify-center items-center h-full w-full"
                   >
-                    Browse Labs
+                    Explore Missions
                   </Link>
                 </motion.div>
               </div>
-            </motion.div>
-
-            {/* RIGHT: Logo and Terminal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="flex items-center justify-center lg:justify-end w-full"
-            >
-              <TerminalMockup />
             </motion.div>
           </div>
         </div>
@@ -478,7 +406,7 @@ const HomePage = () => {
       </div>
 
       {/* Featured Courses Section */}
-      <FeaturedCourses courses={featuredCourses} />
+      <FeaturedCourses courses={courses} />
 
       {/* Who Benefits Section */}
       <WhoBenefits />
@@ -487,56 +415,68 @@ const HomePage = () => {
       <FeaturesSection />
 
       {/* CTA Section */}
-      <div className="relative overflow-hidden py-20 md:py-28 border-t border-gray-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-900/10 to-blue-900/10"></div>
-        {/* CTA Grid removed as per request */}
+      <div className="relative py-24 md:py-32 border-t border-white/5 overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl max-h-[400px] bg-primary-cyan/5 blur-[120px] rounded-full"></div>
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwWiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9zdmc+')] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)] opacity-50"></div>
+        </div>
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center px-4 relative z-10 space-y-6"
-        >
-          <div className="inline-block px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full">
-            <span className="text-cyan-400 font-semibold text-xs uppercase tracking-widest">Mission Control</span>
-          </div>
-          
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
-            Ready to secure your future?
-          </h2>
-          
-          <p className="text-base sm:text-lg text-gray-400 max-w-xl mx-auto leading-relaxed">
-            Gain immediate hands-on defense capabilities. Join the next operational class cohort of cybersecurity experts.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                to="/Mentorship"
-                className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-800 text-base font-bold rounded-xl text-white bg-gray-900 hover:bg-gray-850 hover:border-cyan-500/50 transition-all"
-              >
-                Mentorship Support
-                <FiArrowRight className="ml-2 w-5 h-5 text-cyan-400" />
-              </Link>
-            </motion.div>
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative bg-surface/40 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 md:p-16 text-center overflow-hidden shadow-2xl"
+          >
+            {/* Inner Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50"></div>
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary-cyan/20 blur-[60px] rounded-full"></div>
+            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-primary-blue/20 blur-[60px] rounded-full"></div>
             
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <button
-                onClick={openModal}
-                className="inline-flex items-center justify-center px-8 py-3.5 text-base font-bold rounded-xl text-black bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20"
-              >
-                Access Secure Gateway
-              </button>
-            </motion.div>
-          </div>
-        </motion.div>
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-8">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span className="text-cyan-400 font-semibold text-xs uppercase tracking-widest">Mission Control</span>
+              </div>
+              
+              <h2 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6 tracking-tight">
+                Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">secure</span> your future?
+              </h2>
+              
+              <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mb-10">
+                Gain immediate hands-on defense capabilities. Join the next operational class cohort of cybersecurity experts.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={openModal}
+                  className="w-full sm:w-auto px-8 py-4 text-base font-bold rounded-2xl text-background bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] flex items-center justify-center gap-2"
+                >
+                  <FiLock className="w-5 h-5" />
+                  Access Secure Gateway
+                </motion.button>
+                
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
+                >
+                  <Link
+                    to="/Mentorship"
+                    className="flex items-center justify-center gap-2 px-8 py-4 border border-white/10 text-base font-bold rounded-2xl text-white bg-white/5 hover:bg-white/10 hover:border-cyan-500/30 transition-all w-full"
+                  >
+                    Mentorship Support
+                    <FiArrowRight className="w-5 h-5 text-cyan-400" />
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

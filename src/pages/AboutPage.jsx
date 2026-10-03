@@ -69,24 +69,21 @@ const Icon = ({ name, className = 'h-6 w-6' }) => {
 const strengths = [
   {
     number: '01',
-    icon: 'users',
-    title: 'Mentorship that feels personal',
-    description:
-      'Learn with guidance from people who understand the challenges you face at every stage of your journey.',
+    icon: 'target',
+    title: 'Learn the fundamentals',
+    description: 'Build the knowledge required to understand modern security operations.',
   },
   {
     number: '02',
-    icon: 'terminal',
-    title: 'Practice beyond the classroom',
-    description:
-      'Apply what you learn through hands-on labs, realistic exercises, and practical security workflows.',
+    icon: 'search',
+    title: 'Investigate real scenarios',
+    description: 'Work with alerts, logs, endpoints, email, threat intelligence and evidence.',
   },
   {
     number: '03',
-    icon: 'target',
-    title: 'Skills with a clear purpose',
-    description:
-      'Build a strong foundation, explore security roles, and focus on skills you can explain and demonstrate.',
+    icon: 'shield',
+    title: 'Build operational skills',
+    description: 'Practice the workflows used by SOC analysts, incident responders and threat hunters.',
   },
 ];
 
@@ -118,15 +115,17 @@ const disciplines = [
 ];
 
 const approach = [
-  'Industry-focused learning paths',
-  'Live guidance and meaningful feedback',
-  'Hands-on labs and realistic scenarios',
-  'Portfolio and career preparation',
+  'LEARN',
+  'UNDERSTAND',
+  'INVESTIGATE',
+  'PRACTICE',
+  'RESPOND',
+  'PROVE',
 ];
 
 const AboutPage = () => {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#070B14] text-white">
+    <main className="min-h-screen overflow-hidden bg-background text-text-main">
       {/* Ambient background */}
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -162,9 +161,9 @@ const AboutPage = () => {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
                 to="/courses"
-                className="group inline-flex items-center gap-3 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-bold text-[#07121D] shadow-[0_12px_35px_rgba(34,211,238,0.18)] transition hover:-translate-y-0.5 hover:bg-cyan-300"
+                className="group inline-flex items-center gap-3 rounded-xl bg-primary-cyan px-6 py-3.5 text-sm font-bold text-[#07121D] shadow-[0_12px_35px_rgba(34,211,238,0.18)] transition hover:-translate-y-0.5 hover:bg-cyan-300"
               >
-                Explore Courses
+                Explore Academy
                 <Icon
                   name="arrow"
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -183,7 +182,7 @@ const AboutPage = () => {
           {/* Cyber dashboard visual; pure CSS/SVG, no image dependency */}
           <div className="relative mx-auto w-full max-w-[560px]">
             <div className="absolute -inset-5 rounded-[2.5rem] bg-cyan-500/[0.06] blur-3xl" />
-            <div className="relative overflow-hidden rounded-[28px] border border-cyan-300/15 bg-[#0C1423] p-4 shadow-[0_35px_100px_rgba(0,0,0,0.4)] sm:p-6">
+            <div className="relative overflow-hidden rounded-[28px] border border-cyan-300/15 bg-surface p-4 shadow-[0_35px_100px_rgba(0,0,0,0.4)] sm:p-6">
               <div
                 className="pointer-events-none absolute inset-0 opacity-[0.08]"
                 style={{
@@ -310,12 +309,10 @@ const AboutPage = () => {
               Our approach
             </p>
             <h2 className="max-w-xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-              From learning the concepts to applying them with confidence.
+              How we build defenders
             </h2>
-            <p className="mt-6 max-w-lg text-base leading-8 text-slate-400">
-              We connect strong fundamentals with hands-on practice. Whether
-              you're exploring your first security role or expanding your
-              existing skills, your learning should have a clear direction.
+            <p className="mt-6 max-w-lg text-base leading-8 text-slate-400 font-bold">
+              Knowledge is the beginning. Capability is the goal.
             </p>
           </div>
 
@@ -374,7 +371,7 @@ const AboutPage = () => {
           {disciplines.map((item) => (
             <article
               key={item.title}
-              className="group rounded-2xl border border-white/[0.09] bg-gradient-to-b from-[#111C2B] to-[#0B1320] p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/35"
+              className="group rounded-2xl border border-white/[0.09] bg-surface2 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/35"
             >
               <div className="mb-14 flex items-start justify-between">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-400/[0.09] text-cyan-300">

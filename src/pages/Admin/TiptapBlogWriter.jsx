@@ -66,7 +66,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'text-blue-600 underline cursor-pointer',
+          class: 'text-primary-cyan underline cursor-pointer',
         },
       }),
       Image.configure({
@@ -79,7 +79,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
       }),
       Highlight.configure({
         HTMLAttributes: {
-          class: 'bg-yellow-200 px-1 rounded',
+          class: 'bg-primary-cyan/20 px-1 rounded text-primary-cyan',
         },
       }),
     ],
@@ -128,10 +128,10 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
       disabled={disabled}
       title={title}
       type="button"
-      className={`p-2 rounded-md transition-colors duration-200 ${
+      className={`p-2 rounded-md transition-colors duration-200 border ${
         isActive
-          ? 'bg-blue-100 text-blue-700 border border-blue-300'
-          : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-800'
+          ? 'bg-primary-cyan/20 text-primary-cyan border-primary-cyan/50'
+          : 'bg-surface text-slate-400 border-white/10 hover:bg-white/5 hover:text-white'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
     >
       {children}
@@ -139,17 +139,17 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white">
+    <div className="max-w-4xl mx-auto p-6 bg-surface border border-white/10 rounded-xl">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Blog Writer</h2>
-        <p className="text-gray-600">Create and edit your blog posts with rich text formatting</p>
+        <h2 className="text-2xl font-bold text-white mb-2">Blog Writer</h2>
+        <p className="text-text-muted">Create and edit your blog posts with rich text formatting</p>
       </div>
 
       {/* Toolbar */}
-      <div className="border border-gray-200 rounded-t-lg bg-gray-50 p-3">
+      <div className="border border-white/10 rounded-t-lg bg-surface2 p-3">
         <div className="flex flex-wrap gap-2">
           {/* Text Formatting */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2 mr-2">
+          <div className="flex gap-1 border-r border-white/10 pr-2 mr-2">
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleBold().run()}
               isActive={editor.isActive('bold')}
@@ -181,7 +181,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
           </div>
 
           {/* Headings */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2 mr-2">
+          <div className="flex gap-1 border-r border-white/10 pr-2 mr-2">
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
               isActive={editor.isActive('heading', { level: 1 })}
@@ -206,7 +206,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
           </div>
 
           {/* Text Alignment */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2 mr-2">
+          <div className="flex gap-1 border-r border-white/10 pr-2 mr-2">
             <ToolbarButton
               onClick={() => editor.chain().focus().setTextAlign('left').run()}
               isActive={editor.isActive({ textAlign: 'left' })}
@@ -231,7 +231,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
           </div>
 
           {/* Lists */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2 mr-2">
+          <div className="flex gap-1 border-r border-white/10 pr-2 mr-2">
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleBulletList().run()}
               isActive={editor.isActive('bulletList')}
@@ -256,7 +256,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
           </div>
 
           {/* Media & Links */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2 mr-2">
+          <div className="flex gap-1 border-r border-white/10 pr-2 mr-2">
             <ToolbarButton
               onClick={setLink}
               isActive={editor.isActive('link')}
@@ -300,7 +300,7 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
       </div>
 
       {/* Editor */}
-      <div className="border-x border-b border-gray-200 rounded-b-lg bg-white min-h-[500px]">
+      <div className="border-x border-b border-white/10 rounded-b-lg bg-background min-h-[500px] text-slate-300">
         <EditorContent 
           editor={editor}
         />
@@ -343,19 +343,20 @@ const TiptapBlogWriter = ({onSave,initialContent=""}) => {
             margin: 0.5em 0;
           }
           .ProseMirror blockquote {
-            border-left: 4px solid #ddd;
+            border-left: 4px solid #334155;
             margin: 1em 0;
             padding-left: 1em;
-            color: #666;
+            color: #94a3b8;
             font-style: italic;
           }
           .ProseMirror pre {
-            background: #f4f4f4;
+            background: #020617;
             border-radius: 4px;
             padding: 1em;
             margin: 1em 0;
             overflow-x: auto;
             font-family: 'Courier New', Courier, monospace;
+            border: 1px solid rgba(255,255,255,0.1);
           }
           .ProseMirror p {
             margin: 1em 0;

@@ -41,17 +41,15 @@ const AssignCourseForm = ({ instructor_id }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow rounded-md">
-      <h2 className="text-xl font-bold mb-4 text-gray-700">Assign Course</h2>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="w-full">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {/* Course selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Select Course</label>
+          <label className="block text-sm font-medium text-slate-300 mb-1">Select Course</label>
           <select
             value={courseId}
             onChange={(e) => setCourseId(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white transition-all [&>option]:bg-surface"
           >
             <option value="">-- Select Course --</option>
             {courses.map(course => (
@@ -64,11 +62,11 @@ const AssignCourseForm = ({ instructor_id }) => {
 
         {/* Role selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Select Role</label>
+          <label className="block text-sm font-medium text-slate-300 mb-1">Select Role</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white transition-all [&>option]:bg-surface"
           >
             <option value="Lead-Instructor">Lead-Instructor</option>
             <option value="Assistant">Assistant</option>
@@ -79,13 +77,13 @@ const AssignCourseForm = ({ instructor_id }) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+          className="w-full mt-4 px-4 py-2 bg-primary-cyan hover:bg-cyan-300 text-[#07121D] rounded-xl font-bold transition-colors"
         >
           Assign Course
         </button>
 
         {/* Message */}
-        {message && <p className="text-center text-sm text-gray-600">{message}</p>}
+        {message && <p className="text-center text-sm text-primary-cyan mt-2">{message}</p>}
       </form>
     </div>
   );

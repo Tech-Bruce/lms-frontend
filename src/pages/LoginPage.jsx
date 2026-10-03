@@ -26,17 +26,17 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#070B14] pt-28 flex items-center justify-center p-4 sm:p-8 relative overflow-hidden text-white font-sans">
+    <main className="min-h-screen bg-background pt-32 pb-16 px-4 sm:px-8 flex flex-col relative overflow-hidden text-text-main font-sans">
       {/* Ambient Orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-cyan-500/[0.08] blur-[120px]" />
         <div className="absolute -right-40 -bottom-40 h-[600px] w-[600px] rounded-full bg-blue-600/[0.08] blur-[120px]" />
       </div>
 
-      <div className="max-w-6xl w-full bg-[#0A111E]/80 backdrop-blur-xl border border-white/[0.08] rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[600px]">
+      <div className="max-w-6xl w-full mx-auto my-auto bg-surface/80 backdrop-blur-xl border border-white/[0.08] rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[500px]">
         
         {/* Left Side: Branding Content */}
-        <div className="md:w-5/12 p-10 md:p-14 flex flex-col justify-center bg-gradient-to-br from-cyan-900/10 to-[#0A111E] border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden">
+        <div className="md:w-5/12 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-primary-cyan/10 to-surface border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500" />
           
           <div className="relative z-10">
@@ -45,12 +45,12 @@ const LoginPage = () => {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-[1.1]">
-              Welcome Back to the <br/>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Brigade</span>
+              Welcome <br/>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-cyan to-primary-blue">back.</span>
             </h2>
             
-            <p className="text-slate-400 text-lg leading-relaxed mb-8">
-              Access your personalized dashboard, continue your courses, and connect with elite cybersecurity mentors.
+            <p className="text-text-muted text-lg leading-relaxed mb-8">
+              Continue building your defensive cybersecurity skills.
             </p>
 
             <div className="flex items-center space-x-3 text-sm font-medium text-slate-500">
@@ -61,7 +61,7 @@ const LoginPage = () => {
         </div>
 
         {/* Right Side: Form */}
-        <div className="md:w-7/12 p-10 md:p-14 flex flex-col justify-center bg-[#070C15]/50">
+        <div className="md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-surface2/50">
           <div className="max-w-md w-full mx-auto">
             <h3 className="text-2xl font-bold text-white mb-2">Sign In</h3>
             <p className="text-slate-400 mb-8 text-sm">Please enter your credentials to access your account.</p>
@@ -128,7 +128,7 @@ const LoginPage = () => {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 bg-cyan-400 text-[#07121D] font-bold rounded-xl hover:bg-cyan-300 transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] mt-4"
+                className="w-full py-3.5 px-4 bg-primary-cyan text-background font-bold rounded-xl hover:bg-cyan-300 transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,217,255,0.2)] hover:shadow-[0_0_25px_rgba(37,217,255,0.3)] mt-4"
               >
                 Sign In <FiLogIn className="text-lg" />
               </button>

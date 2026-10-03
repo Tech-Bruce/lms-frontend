@@ -23,6 +23,7 @@ import {
   FiChevronUp,
 } from "react-icons/fi";
 import api from "../api";
+import imgLuminous from "../assets/Luminous .png";
 
 const localizer = momentLocalizer(moment);
 
@@ -71,15 +72,15 @@ const StudentMentorship = () => {
 
   if (isError)
     return (
-      <div className="min-h-screen bg-[#070B14] flex items-center justify-center">
-        <div className="text-center p-8 bg-red-500/10 border border-red-500/20 rounded-2xl backdrop-blur-md">
-          <div className="bg-red-500/20 p-4 rounded-full inline-flex mb-4">
-            <FiX className="h-8 w-8 text-red-400" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center p-8 bg-critical/10 border border-critical/20 rounded-2xl backdrop-blur-md">
+          <div className="bg-critical/20 p-4 rounded-full inline-flex mb-4">
+            <FiX className="h-8 w-8 text-critical" />
           </div>
-          <p className="text-lg text-gray-300">Error fetching mentors</p>
+          <p className="text-lg text-text-main">Error fetching mentors</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-6 px-6 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/30 transition-colors"
+            className="mt-6 px-6 py-2 bg-critical/20 text-critical border border-critical/30 rounded-lg hover:bg-critical/30 transition-colors"
           >
             Try Again
           </button>
@@ -179,52 +180,65 @@ const StudentMentorship = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#070B14] text-white pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute left-1/2 top-0 h-[650px] w-[850px] -translate-x-1/2 rounded-full bg-cyan-500/[0.07] blur-[110px]" />
-        <div className="absolute right-[-200px] top-[400px] h-[600px] w-[600px] rounded-full bg-blue-600/[0.07] blur-[120px]" />
-      </div>
+    <main className="min-h-screen bg-background text-text-main pb-20 relative overflow-hidden">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={imgLuminous} 
+            alt="Mentorship Background" 
+            className="absolute inset-0 w-full h-full object-cover object-center" 
+          />
+          <div className="absolute inset-0 bg-gray-950/30"></div>
+          {/* Glowing orbs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+        </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section */}
-        <div className="text-center mb-20">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee]" />
-            One-to-One Program
-          </div>
-          <h1 className="max-w-3xl mx-auto text-5xl font-semibold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.5rem]">
-            Master your craft with <br />
-            <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">
-              expert mentorship.
-            </span>
-          </h1>
-          <p className="mt-7 max-w-2xl mx-auto text-base leading-8 text-slate-400 sm:text-lg">
-            Get personalized guidance from experienced cybersecurity professionals who have been in the trenches and know exactly what it takes to succeed.
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="flex flex-col text-left space-y-6 lg:space-y-8 lg:max-w-4xl mt-8 md:mt-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary-cyan/20 bg-primary-cyan/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-cyan w-max">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-cyan shadow-[0_0_12px_#25D9FF]" />
+              One-to-One Program
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-semibold leading-[1.08] tracking-tight text-white">
+              Master your craft with <br className="hidden md:inline" />
+              <span className="bg-gradient-to-r from-primary-cyan via-sky-400 to-primary-blue bg-clip-text text-transparent">
+                expert mentorship.
+              </span>
+            </h1>
+            
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
+              Get personalized guidance from experienced cybersecurity professionals who have been in the trenches and know exactly what it takes to succeed.
+            </p>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-6">
-            <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3">
-              <FiUser className="text-cyan-400 h-5 w-5" />
-              <span className="text-sm font-medium text-slate-300">Industry Experts</span>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3">
-              <FiClock className="text-cyan-400 h-5 w-5" />
-              <span className="text-sm font-medium text-slate-300">Flexible Scheduling</span>
-            </div>
-            <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3">
-              <FiTarget className="text-cyan-400 h-5 w-5" />
-              <span className="text-sm font-medium text-slate-300">Career-Focused</span>
+            <div className="flex flex-wrap gap-4 mt-6">
+              <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3 backdrop-blur-md">
+                <FiUser className="text-primary-cyan h-5 w-5" />
+                <span className="text-sm font-medium text-text-main">Industry Experts</span>
+              </div>
+              <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3 backdrop-blur-md">
+                <FiClock className="text-primary-cyan h-5 w-5" />
+                <span className="text-sm font-medium text-text-main">Flexible Scheduling</span>
+              </div>
+              <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-3 backdrop-blur-md">
+                <FiTarget className="text-primary-cyan h-5 w-5" />
+                <span className="text-sm font-medium text-text-main">Career-Focused</span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-16">
 
         {/* Mentor Cards Section */}
         <div className="mb-24">
           <div className="flex items-center justify-between mb-10">
             <div>
               <h2 className="text-3xl font-semibold tracking-tight text-white">Available Mentors</h2>
-              <p className="mt-2 text-sm text-slate-400">Book a 1-on-1 session with our elite defensive and offensive experts.</p>
+              <p className="mt-2 text-sm text-text-muted">Book a 1-on-1 session with our elite defensive and offensive experts.</p>
             </div>
           </div>
 
@@ -278,7 +292,7 @@ const StudentMentorship = () => {
 
                       {/* Slot Details (shown when expanded) */}
                       {isExpanded && (
-                        <div className="mb-6 bg-[#0A111E] border border-white/10 p-5 rounded-2xl shadow-inner">
+                        <div className="mb-6 bg-surface border border-white/10 p-5 rounded-2xl shadow-inner">
                           {mentor?.profile?.availability?.length > 0 ? (
                             <>
                               <p className="text-sm font-medium text-slate-300 mb-4 flex items-center gap-2">
@@ -393,14 +407,14 @@ const StudentMentorship = () => {
           <div className="fixed z-50 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
               <div
-                className="fixed inset-0 transition-opacity bg-[#030712]/90 backdrop-blur-sm"
+                className="fixed inset-0 transition-opacity bg-background/90 backdrop-blur-sm"
                 aria-hidden="true"
                 onClick={closeModal}
               ></div>
 
               <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-              <div className="inline-block align-bottom bg-[#0C1423] border border-white/[0.09] rounded-[24px] text-left overflow-hidden shadow-[0_35px_100px_rgba(0,0,0,0.8)] transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative">
+              <div className="inline-block align-bottom bg-surface border border-white/[0.09] rounded-[24px] text-left overflow-hidden shadow-[0_35px_100px_rgba(0,0,0,0.8)] transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full relative">
                 
                 {/* Modal Glow */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyan-500/20 blur-[80px] pointer-events-none" />
@@ -417,7 +431,7 @@ const StudentMentorship = () => {
 
                   {!bookingConfirmed ? (
                     <>
-                      <div className="bg-[#111C2B] border border-white/[0.07] p-5 rounded-2xl mb-8">
+                      <div className="bg-surface2 border border-white/[0.07] p-5 rounded-2xl mb-8">
                         <div className="flex items-center gap-4 mb-4">
                            <div className="h-10 w-10 rounded-lg bg-cyan-400/10 flex items-center justify-center text-cyan-300 font-bold border border-cyan-400/20">
                              {selectedMentor?.name?.charAt(0) || "M"}
@@ -458,7 +472,7 @@ const StudentMentorship = () => {
                               value={studentDetails.name}
                               onChange={handleInputChange}
                               required
-                              className="w-full pl-10 pr-4 py-3 bg-[#0A111E] border border-white/10 rounded-xl focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-white placeholder-slate-500 outline-none transition-all"
+                              className="w-full pl-10 pr-4 py-3 bg-background border border-white/10 rounded-xl focus:ring-2 focus:ring-primary-cyan/50 focus:border-primary-cyan text-white placeholder-slate-500 outline-none transition-all"
                               placeholder="Enter your full name"
                             />
                           </div>
@@ -478,7 +492,7 @@ const StudentMentorship = () => {
                               value={studentDetails.email}
                               onChange={handleInputChange}
                               required
-                              className="w-full pl-10 pr-4 py-3 bg-[#0A111E] border border-white/10 rounded-xl focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-white placeholder-slate-500 outline-none transition-all"
+                              className="w-full pl-10 pr-4 py-3 bg-background border border-white/10 rounded-xl focus:ring-2 focus:ring-primary-cyan/50 focus:border-primary-cyan text-white placeholder-slate-500 outline-none transition-all"
                               placeholder="you@example.com"
                             />
                           </div>
@@ -494,7 +508,7 @@ const StudentMentorship = () => {
                             onChange={handleInputChange}
                             rows="3"
                             required
-                            className="w-full px-4 py-3 bg-[#0A111E] border border-white/10 rounded-xl focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 text-white placeholder-slate-500 outline-none transition-all resize-none"
+                            className="w-full px-4 py-3 bg-background border border-white/10 rounded-xl focus:ring-2 focus:ring-primary-cyan/50 focus:border-primary-cyan text-white placeholder-slate-500 outline-none transition-all resize-none"
                             placeholder="What do you hope to achieve? (e.g. Resume review, interview prep, technical guidance)"
                           />
                         </div>

@@ -10,6 +10,7 @@ import {
   Image, 
   BookOpen
 } from "lucide-react";
+import imgMidnight from "../assets/Midnight glass research network.png";
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -78,31 +79,44 @@ const Blog = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#070B14] pt-32 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden text-white">
-      {/* Ambient background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute left-1/2 top-0 h-[650px] w-[850px] -translate-x-1/2 rounded-full bg-cyan-500/[0.07] blur-[110px]" />
-        <div className="absolute right-[-200px] top-[400px] h-[600px] w-[600px] rounded-full bg-indigo-600/[0.07] blur-[120px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-        
-        {/* Banner header with gradient grid */}
-        <div className="text-center mb-16 mt-8">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee]" />
-            Cyber Security Brigade
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            Knowledge & <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">Insights</span>
-          </h1>
-          <p className="mt-6 max-w-2xl mx-auto text-base leading-8 text-slate-400 sm:text-lg">
-            Explore professional guides, dynamic security reports, and training articles authored by our experts.
-          </p>
+    <div className="min-h-screen bg-background pb-16 relative overflow-hidden text-text-main">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={imgMidnight} 
+            alt="Blog Background" 
+            className="absolute inset-0 w-full h-full object-cover object-center" 
+          />
+          <div className="absolute inset-0 bg-gray-950/30"></div>
+          {/* Glowing orbs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
         </div>
 
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="flex flex-col text-left space-y-6 lg:space-y-8 lg:max-w-3xl mt-8 md:mt-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary-cyan/20 bg-primary-cyan/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-cyan w-max">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-cyan shadow-[0_0_12px_#25D9FF]" />
+              Cyber Security Brigade
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              Knowledge & <br className="hidden md:inline" />
+              <span className="bg-gradient-to-r from-primary-cyan via-sky-400 to-primary-blue bg-clip-text text-transparent">Insights</span>
+            </h1>
+            
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
+              Explore professional guides, dynamic security reports, and training articles authored by our experts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10 pt-16">
+
         {/* Filter Controls Panel */}
-        <div className="bg-[#0A111E] rounded-2xl border border-white/[0.09] p-4 sm:p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl backdrop-blur-md">
+        <div className="bg-surface rounded-2xl border border-white/[0.09] p-4 sm:p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl backdrop-blur-md">
           {/* Search */}
           <div className="relative w-full md:max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
@@ -111,7 +125,7 @@ const Blog = () => {
               placeholder="Search publications..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all duration-200 text-white placeholder-slate-500"
+              className="w-full pl-12 pr-4 py-3 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan/50 focus:border-primary-cyan transition-all duration-200 text-white placeholder-slate-500"
             />
           </div>
 
@@ -131,7 +145,7 @@ const Blog = () => {
                   onClick={() => setSelectedType(type.id)}
                   className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 border ${
                     active
-                      ? "bg-cyan-400/10 text-cyan-300 border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                      ? "bg-primary-cyan/10 text-primary-cyan border-primary-cyan/30 shadow-[0_0_15px_rgba(37,217,255,0.1)]"
                       : "bg-white/5 text-slate-400 border-transparent hover:text-white hover:bg-white/10"
                   }`}
                 >
@@ -147,8 +161,8 @@ const Blog = () => {
         {loading ? (
           <SkeletonLoader />
         ) : filteredPosts.length === 0 ? (
-          <div className="text-center py-20 bg-[#0A111E] rounded-3xl border border-white/[0.09] shadow-sm space-y-4 backdrop-blur-md">
-            <div className="inline-flex p-4 bg-cyan-400/10 rounded-2xl border border-cyan-400/20 text-cyan-400 mb-2">
+          <div className="text-center py-20 bg-surface rounded-3xl border border-white/[0.09] shadow-sm space-y-4 backdrop-blur-md">
+            <div className="inline-flex p-4 bg-primary-cyan/10 rounded-2xl border border-primary-cyan/20 text-primary-cyan mb-2">
               <BookOpen className="w-10 h-10" />
             </div>
             <h3 className="text-2xl font-semibold text-white">No matching publications</h3>
@@ -160,7 +174,7 @@ const Blog = () => {
           <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2">
             {filteredPosts.map((post) => {
               let TypeIcon = FileText;
-              let badgeColor = "bg-cyan-400/10 text-cyan-300 border-cyan-400/20";
+              let badgeColor = "bg-primary-cyan/10 text-primary-cyan border-primary-cyan/20";
               if (post.type === "poster") {
                 TypeIcon = Image;
                 badgeColor = "bg-blue-400/10 text-blue-300 border-blue-400/20";
@@ -173,7 +187,7 @@ const Blog = () => {
               return (
                 <div
                   key={post._id}
-                  className="flex flex-col bg-[#0A111E] border border-white/[0.09] rounded-3xl overflow-hidden hover:border-cyan-400/30 hover:bg-white/[0.035] hover:-translate-y-1.5 transition-all duration-300 group shadow-lg"
+                  className="flex flex-col bg-surface border border-white/[0.09] rounded-3xl overflow-hidden hover:border-primary-cyan/30 hover:bg-white/[0.035] hover:-translate-y-1.5 transition-all duration-300 group shadow-lg"
                 >
                   {/* Media Content Area */}
                   {post.type === "poster" && post.fileUrl && (
@@ -204,9 +218,9 @@ const Blog = () => {
                       href={`${BASE_URL}${post.fileUrl}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full h-52 flex flex-col items-center justify-center bg-[#070C15] border-b border-white/[0.05] text-cyan-400 font-semibold hover:bg-white/[0.03] transition-colors duration-200 space-y-3 group"
+                      className="w-full h-52 flex flex-col items-center justify-center bg-background border-b border-white/[0.05] text-primary-cyan font-semibold hover:bg-white/[0.03] transition-colors duration-200 space-y-3 group"
                     >
-                      <div className="p-4 bg-cyan-400/10 rounded-2xl text-cyan-400 group-hover:scale-110 transition-transform duration-200 border border-cyan-400/20">
+                      <div className="p-4 bg-primary-cyan/10 rounded-2xl text-primary-cyan group-hover:scale-110 transition-transform duration-200 border border-primary-cyan/20">
                         <FileText className="w-8 h-8" />
                       </div>
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Document Attachment</span>
@@ -223,17 +237,17 @@ const Blog = () => {
                         </span>
                       </div>
                       
-                      <h3 className="text-xl font-bold text-white line-clamp-2 leading-snug group-hover:text-cyan-400 transition-colors">
+                      <h3 className="text-xl font-bold text-white line-clamp-2 leading-snug group-hover:text-primary-cyan transition-colors">
                         {post.title}
                       </h3>
-                      <p className="text-sm text-slate-400 leading-relaxed font-medium line-clamp-3">
+                      <p className="text-sm text-text-muted leading-relaxed font-medium line-clamp-3">
                         {post.description}
                       </p>
                     </div>
 
                     <div className="pt-5 border-t border-white/[0.07] flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <div className="h-10 w-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-300 font-bold text-sm">
+                        <div className="h-10 w-10 rounded-xl bg-primary-cyan/10 border border-primary-cyan/20 flex items-center justify-center text-primary-cyan font-bold text-sm">
                           {post.createdBy ? post.createdBy.charAt(0).toUpperCase() : "A"}
                         </div>
                         <div>
@@ -254,7 +268,7 @@ const Blog = () => {
                       {post.content && (
                         <button
                           onClick={() => setActivePost(post)}
-                          className="inline-flex items-center justify-center p-2.5 rounded-xl bg-white/5 hover:bg-cyan-400 hover:text-[#07121D] border border-white/10 text-slate-300 transition-all duration-300"
+                          className="inline-flex items-center justify-center p-2.5 rounded-xl bg-white/5 hover:bg-primary-cyan hover:text-background border border-white/10 text-slate-300 transition-all duration-300"
                           title="Read Full Post"
                         >
                           <ArrowRight className="w-4 h-4" />
@@ -273,14 +287,14 @@ const Blog = () => {
       {/* Rich Preview Modal */}
       {activePost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/90 backdrop-blur-sm transition-opacity duration-200">
-          <div className="bg-[#0C1423] rounded-3xl border border-white/[0.09] shadow-[0_35px_100px_rgba(0,0,0,0.8)] max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden relative transition-transform duration-200">
+          <div className="bg-surface2 rounded-3xl border border-white/[0.09] shadow-[0_35px_100px_rgba(0,0,0,0.8)] max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden relative transition-transform duration-200">
             {/* Modal Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-cyan-500/15 blur-[80px] pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary-cyan/15 blur-[80px] pointer-events-none" />
 
             {/* Modal Header */}
             <div className="p-8 border-b border-white/10 flex justify-between items-start relative z-10">
               <div className="space-y-3 pr-8">
-                <span className="px-2.5 py-1 inline-flex items-center text-[10px] font-bold uppercase tracking-wider rounded bg-cyan-400/10 text-cyan-300 border border-cyan-400/20">
+                <span className="px-2.5 py-1 inline-flex items-center text-[10px] font-bold uppercase tracking-wider rounded bg-primary-cyan/10 text-primary-cyan border border-primary-cyan/20">
                   {activePost.type}
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">

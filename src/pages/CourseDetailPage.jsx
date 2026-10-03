@@ -213,18 +213,18 @@ const CourseDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#05060F] text-gray-200 pb-20 font-sans">
+    <div className="min-h-screen bg-background text-text-main pb-20 font-sans">
       
       {/* =========================================
           HERO SECTION (Dark professional header)
       ========================================== */}
-      <section className="bg-[#0A0E17] border-b border-white/5 pt-36 pb-16 lg:pb-24 px-5 sm:px-6 lg:px-8">
+      <section className="bg-surface/50 border-b border-white/5 pt-36 pb-16 lg:pb-24 px-5 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
           {/* Breadcrumb */}
           <div className="flex items-center gap-3 text-sm text-gray-500 mb-8 font-medium">
             <Link to="/courses" className="hover:text-white transition-colors">
-              Courses
+              Academy
             </Link>
             <span>/</span>
             <span className="text-gray-300 truncate max-w-xs">{course.title}</span>
@@ -236,13 +236,13 @@ const CourseDetailPage = () => {
             <div className="max-w-3xl">
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 {course.level && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-md bg-blue-500/10 text-blue-400 text-xs font-semibold uppercase tracking-wide border border-blue-500/20">
+                  <span className="inline-flex items-center px-3 py-1 rounded-md bg-primary-blue/10 text-primary-cyan text-xs font-semibold uppercase tracking-wide border border-primary-blue/20">
                     {course.level}
                   </span>
                 )}
                 {course.duration && (
-                  <span className="inline-flex items-center gap-2 text-sm text-gray-400 font-medium">
-                    <FiClock className="text-gray-500" />
+                  <span className="inline-flex items-center gap-2 text-sm text-text-muted font-medium">
+                    <FiClock className="text-text-muted" />
                     {course.duration}
                   </span>
                 )}
@@ -258,24 +258,24 @@ const CourseDetailPage = () => {
 
               <div className="flex flex-wrap gap-8 mt-10">
                 <div className="flex items-center gap-3">
-                  <FiBookOpen className="text-blue-500 text-xl" />
+                  <FiBookOpen className="text-primary-cyan text-xl" />
                   <div>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Delivery</p>
-                    <p className="text-sm font-semibold text-gray-200">Online Structured</p>
+                    <p className="text-xs text-text-muted font-medium uppercase tracking-wide">Delivery</p>
+                    <p className="text-sm font-semibold text-text-main">Online Structured</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <FiAward className="text-blue-500 text-xl" />
+                  <FiAward className="text-primary-cyan text-xl" />
                   <div>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Outcome</p>
-                    <p className="text-sm font-semibold text-gray-200">Applied Knowledge</p>
+                    <p className="text-xs text-text-muted font-medium uppercase tracking-wide">Outcome</p>
+                    <p className="text-sm font-semibold text-text-main">Applied Knowledge</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <FiShield className="text-blue-500 text-xl" />
+                  <FiShield className="text-primary-cyan text-xl" />
                   <div>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Access</p>
-                    <p className="text-sm font-semibold text-gray-200">Enterprise Grade</p>
+                    <p className="text-xs text-text-muted font-medium uppercase tracking-wide">Access</p>
+                    <p className="text-sm font-semibold text-text-main">Enterprise Grade</p>
                   </div>
                 </div>
               </div>
@@ -319,7 +319,7 @@ const CourseDetailPage = () => {
                 Structured learning modules designed for comprehensive mastery.
               </p>
 
-              <div className="border border-white/10 rounded-xl overflow-hidden bg-[#0A0E17]">
+              <div className="border border-white/10 rounded-xl overflow-hidden bg-surface">
                 {course.syllabus?.length > 0 ? (
                   course.syllabus.map((item, index) => (
                     <div
@@ -361,10 +361,10 @@ const CourseDetailPage = () => {
             <div className="lg:sticky lg:top-28 space-y-6">
               
               {/* Enrollment Card */}
-              <div className="bg-[#111520] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="bg-surface2 border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
                 
                 {/* Thumbnail */}
-                <div className="relative aspect-video bg-[#05060F]">
+                <div className="relative aspect-video bg-background">
                   <img
                     src={`${uploadurl}/course/${course.thumbnail}`}
                     alt={course.title}
@@ -389,11 +389,11 @@ const CourseDetailPage = () => {
                   <button
                     onClick={handleEnrollClick}
                     disabled={isProcessing}
-                    className="w-full h-12 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold transition-colors flex items-center justify-center mb-4"
+                    className="w-full h-12 rounded-lg bg-primary-cyan hover:bg-cyan-300 disabled:opacity-50 text-background font-semibold transition-colors flex items-center justify-center mb-4 shadow-[0_0_15px_rgba(37,217,255,0.3)]"
                   >
                     {isProcessing ? 'Processing...' : 'Enroll Now'}
                   </button>
-                  <p className="text-center text-xs text-gray-500 font-medium">
+                  <p className="text-center text-xs text-text-muted font-medium">
                     Full lifetime access upon enrollment
                   </p>
 
@@ -421,17 +421,17 @@ const CourseDetailPage = () => {
               </div>
 
               {/* Enterprise Support Card */}
-              <div className="bg-[#111520] border border-white/10 rounded-2xl p-6">
+              <div className="bg-surface2 border border-white/10 rounded-2xl p-6">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
-                    <FiUsers className="text-gray-400 text-lg" />
+                    <FiUsers className="text-primary-cyan text-lg" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-white mb-1">Training for Teams?</h3>
-                    <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                    <p className="text-xs text-text-muted leading-relaxed mb-3">
                       Get this course plus comprehensive management tools for your enterprise.
                     </p>
-                    <Link to="/contact" className="text-sm text-blue-400 font-medium hover:text-blue-300">
+                    <Link to="/contact" className="text-sm text-primary-cyan font-medium hover:text-cyan-300">
                       Contact Sales &rarr;
                     </Link>
                   </div>
@@ -447,45 +447,45 @@ const CourseDetailPage = () => {
       {/* Checkout Modal */}
       {showCheckoutModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-[#111520] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden relative">
+          <div className="bg-surface2 border border-white/10 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden relative">
             <button 
               onClick={() => setShowCheckoutModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2"
+              className="absolute top-4 right-4 text-text-muted hover:text-white transition-colors p-2"
             >
               <FiX className="text-xl" />
             </button>
             <div className="p-6 sm:p-8">
               <h2 className="text-2xl font-bold text-white mb-2">Checkout Details</h2>
-              <p className="text-gray-400 text-sm mb-6">Please confirm your details before proceeding to payment.</p>
+              <p className="text-text-muted text-sm mb-6">Please confirm your details before proceeding to payment.</p>
               
               <form onSubmit={initiatePayment} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Full Name</label>
+                  <label className="block text-xs font-semibold text-text-muted uppercase tracking-wide mb-1">Full Name</label>
                   <input 
                     type="text"
                     required
                     value={checkoutForm.name}
                     onChange={(e) => setCheckoutForm({...checkoutForm, name: e.target.value})}
-                    className="w-full bg-[#05060F] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full bg-background border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-cyan transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Email Address</label>
+                  <label className="block text-xs font-semibold text-text-muted uppercase tracking-wide mb-1">Email Address</label>
                   <input 
                     type="email"
                     required
                     value={checkoutForm.email}
                     onChange={(e) => setCheckoutForm({...checkoutForm, email: e.target.value})}
-                    className="w-full bg-[#05060F] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full bg-background border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-cyan transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Phone Number (Optional)</label>
+                  <label className="block text-xs font-semibold text-text-muted uppercase tracking-wide mb-1">Phone Number (Optional)</label>
                   <input 
                     type="tel"
                     value={checkoutForm.phone}
                     onChange={(e) => setCheckoutForm({...checkoutForm, phone: e.target.value})}
-                    className="w-full bg-[#05060F] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder:text-gray-600"
+                    className="w-full bg-background border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-cyan transition-colors placeholder:text-gray-600"
                     placeholder="+1 234 567 8900"
                   />
                 </div>
@@ -493,7 +493,7 @@ const CourseDetailPage = () => {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full mt-6 h-12 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold transition-colors flex items-center justify-center shadow-lg"
+                  className="w-full mt-6 h-12 rounded-lg bg-primary-cyan hover:bg-cyan-300 disabled:opacity-50 text-background font-semibold transition-colors flex items-center justify-center shadow-[0_0_15px_rgba(37,217,255,0.3)]"
                 >
                   {isProcessing ? 'Processing...' : `Proceed to Pay $${course.price}`}
                 </button>

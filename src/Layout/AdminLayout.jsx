@@ -13,7 +13,7 @@ const AdminLayout = () => {
   }, [location]);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-800 relative overflow-hidden">
+    <div className="flex min-h-screen bg-background text-text-main relative overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -29,13 +29,13 @@ const AdminLayout = () => {
 
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* Mobile Header */}
-        <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-gray-200 shadow-sm z-30">
-          <div className="font-bold text-xl text-slate-800">Admin Panel</div>
+        <div className="lg:hidden flex items-center justify-between p-4 bg-surface border-b border-white/10 shadow-sm z-30">
+          <div className="font-bold text-xl text-white">Admin Panel</div>
           <button 
             onClick={() => setIsSidebarOpen(true)} 
-            className="p-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+            className="p-2 bg-white/5 hover:bg-white/10 rounded-xl transition-colors"
           >
-            <Menu className="w-6 h-6 text-slate-700" />
+            <Menu className="w-6 h-6 text-slate-300" />
           </button>
         </div>
         

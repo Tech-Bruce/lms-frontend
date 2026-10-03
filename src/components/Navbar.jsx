@@ -107,7 +107,7 @@ const Navbar = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40"></div>
         )}
         <div className={`absolute inset-0 rounded-full transition-all duration-300 ${active ? 'bg-[#030712]/60 border border-cyan-500/50' : 'group-hover:bg-white/10'}`}></div>
-        <span className={`relative z-10 font-semibold transition-colors duration-300 ${active ? 'text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : 'text-gray-200 group-hover:text-white'}`}>
+        <span className={`relative z-10 font-semibold transition-colors duration-300 ${active ? 'text-primary-cyan drop-shadow-[0_0_8px_rgba(37,217,255,0.8)]' : 'text-gray-200 group-hover:text-white'}`}>
           {children}
         </span>
       </Link>
@@ -132,76 +132,22 @@ const Navbar = () => {
                 className="relative h-12 w-12 object-cover"
               />
             </div>
-            <span className="text-2xl font-black text-white tracking-tight group-hover:text-cyan-300 transition-colors duration-300">
-              CSB
-            </span>
+            <div className="flex flex-col leading-none group-hover:text-cyan-300 transition-colors duration-300">
+              <span className="text-lg md:text-xl font-black text-white tracking-tight">
+                Cyber Security
+              </span>
+              <span className="text-sm md:text-base font-bold text-cyan-400 tracking-wider">
+                Brigade
+              </span>
+            </div>
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1 text-sm">
             <NavItem to="/">Home</NavItem>
             <NavItem to="/about">About</NavItem>
-
-            {/* Courses Dropdown */}
-            <div 
-              className="relative" 
-              ref={dropdownRef}
-              onMouseEnter={() => setIsCoursesDropdownOpen(true)}
-              onMouseLeave={() => setIsCoursesDropdownOpen(false)}
-            >
-              <button
-                onClick={toggleCoursesDropdown}
-                className="relative group px-4 py-2 flex items-center justify-center"
-              >
-                {isActive("/courses") && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40"></div>
-                )}
-                <div className={`absolute inset-0 rounded-full transition-all duration-300 ${isActive("/courses") ? 'bg-[#030712]/60 border border-cyan-500/50' : 'group-hover:bg-white/10'}`}></div>
-                <span className={`relative z-10 font-semibold flex items-center transition-colors duration-300 ${isActive("/courses") ? 'text-cyan-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]' : 'text-gray-200 group-hover:text-white'}`}>
-                  Courses
-                  <svg
-                    className={`ml-1 h-4 w-4 transition-transform ${
-                      isCoursesDropdownOpen ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </span>
-              </button>
-
-              {isCoursesDropdownOpen && (
-                <div className="absolute z-10 pt-2 w-56 animate-fadeIn">
-                  <div className="rounded-2xl shadow-[0_0_40px_rgba(34,211,238,0.15)] bg-[#0a0d18]/95 backdrop-blur-xl py-2 border border-white/10">
-                    <div className="px-4 py-2 text-xs font-black tracking-widest text-cyan-500/70 border-b border-white/5 uppercase">
-                      Available Courses
-                    </div>
-                    {courses.map((course) => (
-                      <Link
-                        key={course.id}
-                        to={course.path}
-                        className="block px-4 py-3 text-sm text-gray-300 hover:bg-cyan-900/20 hover:text-cyan-300 transition-colors duration-150"
-                        onClick={() => setIsCoursesDropdownOpen(false)}
-                      >
-                        <div className="font-semibold">{course.title}</div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          {course.category}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <NavItem to="/blog">Blog</NavItem>
+            <NavItem to="/courses">Academy</NavItem>
+            <NavItem to="/blog">Community / Blog</NavItem>
             <NavItem to="/mentorship">Mentorship</NavItem>
             <NavItem to="/contact">Contact</NavItem>
           </div>
@@ -254,9 +200,9 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold px-6 py-2.5 rounded-full hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 hover:scale-105"
+                  className="bg-gradient-to-r from-primary-cyan to-primary-blue text-background font-semibold px-6 py-2.5 rounded-full hover:shadow-[0_0_20px_rgba(37,217,255,0.4)] transition-all duration-300 hover:scale-105"
                 >
-                  Sign Up
+                  Get Started
                 </Link>
               </>
             )}
@@ -329,7 +275,7 @@ const Navbar = () => {
                 onClick={toggleCoursesDropdown}
                 className={`w-full text-left flex justify-between items-center ${isActive("/courses") ? 'text-cyan-300' : 'text-gray-300'}`}
               >
-                <span>Courses</span>
+                <span>Academy</span>
                 <svg
                   className={`ml-1 h-4 w-4 transition-transform ${
                     isCoursesDropdownOpen ? "rotate-180" : ""
@@ -367,7 +313,7 @@ const Navbar = () => {
               onClick={toggleMobileMenu}
               className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/blog") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
-              Blog
+              Community / Blog
             </Link>
             <Link
               to="/mentorship"
@@ -430,9 +376,9 @@ const Navbar = () => {
                   <Link
                     to="/register"
                     onClick={toggleMobileMenu}
-                    className="text-center bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-semibold py-3 rounded-xl hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300"
+                    className="text-center bg-gradient-to-r from-primary-cyan to-primary-blue text-background font-semibold py-3 rounded-xl hover:shadow-[0_0_20px_rgba(37,217,255,0.4)] transition-all duration-300"
                   >
-                    Sign Up
+                    Get Started
                   </Link>
                 </div>
               )}

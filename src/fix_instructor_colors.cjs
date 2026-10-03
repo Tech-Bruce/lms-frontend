@@ -1,57 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
-import axios from "../api";
-import {
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getFilteredRowModel,
-  flexRender,
-} from "@tanstack/react-table";
-import { 
-  Users, 
-  Search, 
-  SlidersHorizontal, 
-  Edit3, 
-  X, 
-  Check, 
-  AlertTriangle 
-} from "lucide-react";
+const fs = require('fs');
+const file = '/Users/nivi/Desktop/Projects/gesdemn/LMS/Frontend/src/pages/InstructorDetails.jsx';
+let content = fs.readFileSync(file, 'utf8');
 
-const courseMap = {
-  "6875fe6491444202a0b0ee5d": "React Development",
-};
-
-const UserManagement = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [roleFilter, setRoleFilter] = useState("all");
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [editUser, setEditUser] = useState(null);
-
-  // Fetch all users
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get("/users");
-        setUsers(res.data.users || res.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
-
-  // Filter by role
-  const filteredUsers = useMemo(() => {
-    if (roleFilter === "all") return users;
-    return users.filter((user) => user.role === roleFilter);
-  }, [users, roleFilter]);
-
-  // Table Columns
-  const columns = useMemo(
+// Replace columns
+content = content.replace(/const columns = useMemo\([\s\S]*?\],\s*\[\]\s*\);/, `const columns = useMemo(
     () => [
       {
         header: "Name",
@@ -84,13 +36,13 @@ const UserManagement = () => {
           const role = info.getValue();
           return (
             <span
-              className={`inline-flex px-2.5 py-0.5 text-xs font-bold rounded-lg border ${
+              className={\`inline-flex px-2.5 py-0.5 text-xs font-bold rounded-lg border \${
                 role === "student"
                   ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
                   : role === "instructor"
                   ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                   : "bg-purple-500/10 text-purple-400 border-purple-500/20"
-              }`}
+              }\`}
             >
               {role.charAt(0).toUpperCase() + role.slice(1)}
             </span>
@@ -104,13 +56,13 @@ const UserManagement = () => {
           const isActive = info.getValue();
           return (
             <span
-              className={`inline-flex items-center px-2.5 py-0.5 text-xs font-bold rounded-lg border ${
+              className={\`inline-flex items-center px-2.5 py-0.5 text-xs font-bold rounded-lg border \${
                 isActive 
                   ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
                   : "bg-rose-500/10 text-rose-400 border-rose-500/20"
-              }`}
+              }\`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${isActive ? "bg-emerald-400" : "bg-rose-400"}`} />
+              <span className={\`w-1.5 h-1.5 rounded-full mr-1.5 \${isActive ? "bg-emerald-400" : "bg-rose-400"}\`} />
               {isActive ? "Active" : "Inactive"}
             </span>
           );
@@ -118,23 +70,10 @@ const UserManagement = () => {
       },
     ],
     []
-  );
+  );`);
 
-  const table = useReactTable({
-    data: filteredUsers,
-    columns,
-    state: { globalFilter },
-    pagination: {
-      pageIndex: 0,
-      pageSize: 20
-    },
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
-  });
-
-  return (
+// Replace return block
+content = content.replace(/return \(\s*<div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300">[\s\S]*\);\s*};\s*export default UserManagement;/m, `return (
     <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-300 bg-background text-text-main p-6 sm:p-8 rounded-[2rem] border border-white/5">
       
       {/* Header section */}
@@ -189,7 +128,7 @@ const UserManagement = () => {
         </div>
       ) : (
         <div className="bg-surface rounded-2xl border border-white/5 shadow-sm overflow-hidden transition-all duration-200">
-          <div className="px-6 py-4.5 bg-white/[0.02] border-b border-white/5 flex items-center justify-between p-4">
+          <div className="px-6 py-4.5 bg-white/[0.02] border-b border-white/5 flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-1.5 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-lg">
                 <Users className="w-4 h-4" />
@@ -312,7 +251,7 @@ const UserManagement = () => {
                     updatedData.password = editUser.password;
                   }
 
-                  await axios.put(`/users/${editUser._id}`, updatedData);
+                  await axios.put(\`/users/\${editUser._id}\`, updatedData);
 
                   const res = await axios.get("/users");
                   setUsers(res.data.users || res.data);
@@ -440,4 +379,7 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
+`);
 
+fs.writeFileSync(file, content);
+console.log("Updated InstructorDetails colors");

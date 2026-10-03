@@ -61,27 +61,27 @@ const Sidebar = ({ onClose }) => {
   ];
 
   return (
-    <div className="h-screen w-64 bg-slate-900 text-slate-100 shadow-2xl flex-shrink-0 flex flex-col justify-between sticky top-0 border-r border-slate-800">
+    <div className="h-screen w-64 bg-surface text-slate-100 shadow-2xl flex-shrink-0 flex flex-col justify-between sticky top-0 border-r border-white/10 z-50">
       {/* Upper Brand Section */}
       <div>
         {/* Header / Logo */}
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <Link to="/" onClick={onClose} className="flex items-center space-x-3 group">
-            <div className="bg-gradient-to-tr from-indigo-500 to-violet-500 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">
-              <Compass className="w-6 h-6 text-white animate-pulse" />
+            <div className="bg-gradient-to-tr from-primary-cyan to-primary-blue p-2.5 rounded-xl shadow-lg shadow-primary-cyan/20 group-hover:scale-105 transition-transform duration-200">
+              <Compass className="w-6 h-6 text-[#07121D] animate-pulse" />
             </div>
             <div>
               <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-300">
                 Gesdemn LMS
               </span>
-              <p className="text-[10px] text-indigo-400 font-semibold tracking-wider uppercase">
+              <p className="text-[10px] text-primary-cyan font-semibold tracking-wider uppercase">
                 Control Hub
               </p>
             </div>
           </Link>
           <button 
             onClick={onClose} 
-            className="lg:hidden p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+            className="lg:hidden p-2 rounded-lg bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -106,8 +106,8 @@ const Sidebar = ({ onClose }) => {
                 onClick={onClose}
                 className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   active
-                    ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/25"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                    ? "bg-gradient-to-r from-primary-cyan/20 to-primary-blue/20 text-primary-cyan border border-primary-cyan/30 shadow-lg shadow-primary-cyan/10"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
                 }`}
               >
                 <Icon className={`w-5 h-5 mr-3 transition-transform duration-200 ${active ? "scale-110" : ""}`} />
@@ -119,10 +119,10 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       {/* Footer Profile Section */}
-      <div className="p-4 border-t border-slate-800 bg-slate-950/40">
+      <div className="p-4 border-t border-white/10 bg-background/40">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-md">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary-cyan to-primary-blue flex items-center justify-center text-[#07121D] font-bold shadow-md">
               A
             </div>
             <div className="overflow-hidden w-32">
@@ -132,7 +132,7 @@ const Sidebar = ({ onClose }) => {
           </div>
           <Link 
             to="/" 
-            className="p-2 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-lg text-slate-500 hover:text-critical hover:bg-white/5 transition-colors"
             title="Exit Panel"
           >
             <LogOut className="w-5 h-5" />

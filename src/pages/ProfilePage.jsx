@@ -6,9 +6,9 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const ProgressBar = ({ progress, className = "" }) => {
   return (
-    <div className={`w-full bg-[#0a0d18] rounded-full h-3 overflow-hidden shadow-inner border border-white/5 ${className}`}>
+    <div className={`w-full bg-surface rounded-full h-3 overflow-hidden shadow-inner border border-white/5 ${className}`}>
       <div 
-        className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 rounded-full transition-all duration-1000 ease-out relative"
+        className="h-full bg-gradient-to-r from-primary-cyan via-primary-blue to-indigo-600 rounded-full transition-all duration-1000 ease-out relative"
         style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
       >
         <div className="absolute top-0 inset-x-0 h-1/2 bg-white/20 rounded-full"></div>
@@ -27,7 +27,7 @@ const CyberStatCard = ({ icon: Icon, title, value, subtitle, accent = "cyan" }) 
   const theme = accentConfig[accent];
 
   return (
-    <div className="relative group bg-[#0a0d18]/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
+    <div className="relative group bg-surface/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
       <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 bg-${accent}-500`}></div>
       <div className="relative z-10 flex items-center justify-between">
         <div className="space-y-1">
@@ -50,7 +50,7 @@ const CyberCourseCard = ({courseId, course, progress }) => {
   const navigate = useNavigate();
   
   return (
-    <div onClick={() => navigate(`/courses/${courseId}/learning`)} className="group relative bg-[#0a0d18]/60 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-cyan-500/50 cursor-pointer transition-all duration-500 overflow-hidden flex flex-col h-full hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]">
+    <div onClick={() => navigate(`/courses/${courseId}/learning`)} className="group relative bg-surface/60 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-primary-cyan/50 cursor-pointer transition-all duration-500 overflow-hidden flex flex-col h-full hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]">
       
       {/* Dynamic Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px] opacity-20 group-hover:opacity-40 transition-opacity"></div>
@@ -149,12 +149,12 @@ const ProfilePage = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#030712] flex items-center justify-center p-6">
-        <div className="bg-[#0a0d18]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 text-center max-w-md shadow-2xl">
-          <Shield className="w-16 h-16 text-cyan-500 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-3xl p-10 text-center max-w-md shadow-2xl">
+          <Shield className="w-16 h-16 text-primary-cyan mx-auto mb-6 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
           <h2 className="text-2xl font-black text-white mb-3">Authentication Required</h2>
-          <p className="text-slate-400 mb-8 text-sm">You must establish a secure connection to access the terminal.</p>
-          <Link to="/login" className="block w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]">
+          <p className="text-text-muted mb-8 text-sm">You must establish a secure connection to access the terminal.</p>
+          <Link to="/login" className="block w-full py-3 bg-primary-cyan hover:bg-cyan-400 text-background font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]">
             Initialize Login
           </Link>
         </div>
@@ -163,7 +163,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-200 font-sans pb-24 selection:bg-cyan-500/30 overflow-hidden relative">
+    <div className="min-h-screen bg-background text-text-main font-sans pb-24 selection:bg-primary-cyan/30 overflow-hidden relative">
       
       {/* Cyber Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
@@ -178,9 +178,9 @@ const ProfilePage = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-white/10 pb-8">
             <div className="flex items-center gap-5">
               <div className="relative group cursor-default">
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
-                <div className="relative w-16 h-16 bg-[#0a0d18] border border-white/20 rounded-2xl flex items-center justify-center shadow-2xl">
-                  <Cpu className="w-8 h-8 text-cyan-400" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary-cyan to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                <div className="relative w-16 h-16 bg-surface border border-white/20 rounded-2xl flex items-center justify-center shadow-2xl">
+                  <Cpu className="w-8 h-8 text-primary-cyan" />
                 </div>
               </div>
               <div>
@@ -195,7 +195,7 @@ const ProfilePage = () => {
             </div>
             
             {!loading && (
-              <div className="flex items-center gap-4 bg-[#0a0d18]/50 p-2 rounded-2xl border border-white/5 backdrop-blur-md">
+              <div className="flex items-center gap-4 bg-surface/50 p-2 rounded-2xl border border-white/5 backdrop-blur-md">
                 <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#FF5E00] to-[#FF9500] rounded-xl shadow-[0_0_15px_rgba(255,94,0,0.3)] border border-white/20">
                   <Flame className="w-4 h-4 text-yellow-200 animate-pulse" />
                   <div className="flex items-baseline gap-1">
@@ -243,14 +243,14 @@ const ProfilePage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               
               {/* Identity Card */}
-              <div className="lg:col-span-8 bg-[#0a0d18]/80 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-                <div className="absolute -right-32 -top-32 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
+              <div className="lg:col-span-8 bg-surface/80 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+                <div className="absolute -right-32 -top-32 w-96 h-96 bg-primary-cyan/5 rounded-full blur-3xl"></div>
                 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 relative z-10 mb-8">
                   <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-indigo-500 rounded-full blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
-                    <div className="w-28 h-28 bg-[#030712] border-2 border-white/20 rounded-full flex items-center justify-center relative z-10 shadow-inner overflow-hidden">
-                      <User className="w-12 h-12 text-slate-500 group-hover:text-cyan-400 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-primary-cyan to-indigo-500 rounded-full blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
+                    <div className="w-28 h-28 bg-background border-2 border-white/20 rounded-full flex items-center justify-center relative z-10 shadow-inner overflow-hidden">
+                      <User className="w-12 h-12 text-slate-500 group-hover:text-primary-cyan transition-colors duration-300" />
                     </div>
                   </div>
                   <div className="space-y-3">
@@ -273,7 +273,7 @@ const ProfilePage = () => {
               </div>
 
               {/* Mastery Card */}
-              <div className="lg:col-span-4 bg-gradient-to-br from-[#0a0d18] to-slate-900 rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-center items-center text-center">
+              <div className="lg:col-span-4 bg-gradient-to-br from-surface to-slate-900 rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-center items-center text-center">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent"></div>
                 
                 <h3 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
@@ -308,12 +308,12 @@ const ProfilePage = () => {
             <div className="pt-8">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-black text-white flex items-center gap-3">
-                  <span className="w-1.5 h-6 bg-cyan-500 rounded-full shadow-[0_0_10px_rgba(6,182,212,0.8)]"></span>
+                  <span className="w-1.5 h-6 bg-primary-cyan rounded-full shadow-[0_0_10px_rgba(6,182,212,0.8)]"></span>
                   Active Matrix
                 </h2>
-                <Link to="/courses" className="group flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-cyan-400 transition-colors">
-                  Access Directory 
-                  <span className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors"><ChevronRight className="w-3 h-3" /></span>
+                <Link to="/courses" className="group flex items-center gap-2 text-sm font-bold text-text-muted hover:text-primary-cyan transition-colors">
+                  Explore Academy 
+                  <span className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary-cyan/20 transition-colors"><ChevronRight className="w-3 h-3" /></span>
                 </Link>
               </div>
 
@@ -332,15 +332,15 @@ const ProfilePage = () => {
                   ))}
                 </div>
               ) : (
-                <div className="bg-[#0a0d18]/40 border border-dashed border-white/20 rounded-3xl p-16 text-center backdrop-blur-sm">
-                  <div className="w-20 h-20 bg-[#030712] border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner text-slate-500">
+                <div className="bg-surface/40 border border-dashed border-white/20 rounded-3xl p-16 text-center backdrop-blur-sm">
+                  <div className="w-20 h-20 bg-background border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-inner text-slate-500">
                     <Terminal className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-black text-white mb-3">No Active Protocols</h3>
-                  <p className="text-slate-400 max-w-md mx-auto mb-8 text-sm leading-relaxed">
-                    Your training matrix is currently empty. Access the directory to inject new learning modules into your neural interface.
+                  <p className="text-text-muted max-w-md mx-auto mb-8 text-sm leading-relaxed">
+                    Your training matrix is currently empty. Access the Academy to inject new learning modules into your neural interface.
                   </p>
-                  <Link to="/courses" className="inline-flex px-8 py-3.5 bg-white text-[#030712] rounded-xl font-black hover:bg-cyan-400 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]">
+                  <Link to="/courses" className="inline-flex px-8 py-3.5 bg-white text-background rounded-xl font-black hover:bg-primary-cyan transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]">
                     Initialize Training
                   </Link>
                 </div>

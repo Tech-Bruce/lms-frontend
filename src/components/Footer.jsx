@@ -24,9 +24,14 @@ const Footer = () => {
                 <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-500"></div>
                 <img src={logo} alt="Cyber Security Brigade Logo" className="relative h-14 w-auto object-contain" />
               </div>
-              <span className="text-2xl font-black text-white tracking-tight group-hover:text-cyan-300 transition-colors duration-300">
-                Brigade
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold tracking-wider text-white transition-colors">
+                  Cyber Security
+                </span>
+                <span className="text-sm font-semibold tracking-[0.2em] text-primary-cyan uppercase -mt-1 group-hover:text-white transition-colors duration-300">
+                  Brigade
+                </span>
+              </div>
             </Link>
             <p className="text-gray-400 text-lg leading-relaxed max-w-md font-medium">
               Elite cybersecurity training platform engineering the next generation of threat defenders and security architects.

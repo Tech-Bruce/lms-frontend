@@ -136,21 +136,21 @@ const AllInstructors = () => {
   const totalPages = Math.ceil(filtered.length / instructorsPerPage);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-background text-text-main">
       <div className="max-w-7xl mx-auto px-4 py-8 relative">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-12">
           <div className="text-left mb-6 sm:mb-0">
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-4xl font-bold text-white mb-3">
                Expert Instructors / Mentors
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl">
+            <p className="text-lg text-text-muted max-w-2xl">
               Discover and manage world-class educators and mentors
             </p>
           </div>
           <button 
             onClick={() => setIsAddModalOpen(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-1"
+            className="flex items-center gap-2 bg-primary-cyan hover:bg-cyan-300 text-[#07121D] px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-primary-cyan/30 transition-all duration-300 transform hover:-translate-y-1"
           >
             <Plus className="w-5 h-5" />
             Add Mentor
@@ -158,27 +158,27 @@ const AllInstructors = () => {
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6 mb-8">
+        <div className="bg-surface backdrop-blur-sm rounded-2xl shadow-lg border border-white/10 p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search instructors by name or email..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan focus:border-transparent transition-all duration-200 text-white placeholder-slate-500"
                 />
               </div>
             </div>
             <div className="lg:w-80">
               <div className="relative">
-                <Award className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Award className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
                 <select
                   value={expertiseFilter}
                   onChange={(e) => setExpertiseFilter(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan focus:border-transparent appearance-none text-white transition-all duration-200 [&>option]:bg-surface"
                 >
                   <option value="">All Expertise Areas</option>
                   {[...new Set(instructors.flatMap((ins) => ins.profile?.expertise || []))].map((exp) => (
@@ -194,7 +194,7 @@ const AllInstructors = () => {
 
         {/* Results Summary */}
         <div className="mb-6">
-          <p className="text-gray-600">
+          <p className="text-text-muted">
             Showing {currentInstructors.length} of {filtered.length} instructors
           </p>
         </div>
@@ -203,20 +203,20 @@ const AllInstructors = () => {
         {currentInstructors.length === 0 ? (
           <div className="text-center py-16">
             <div className="mb-6">
-              <User className="w-24 h-24 text-gray-300 mx-auto" />
+              <User className="w-24 h-24 text-slate-500 mx-auto" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No instructors found</h3>
-            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+            <h3 className="text-xl font-semibold text-white mb-2">No instructors found</h3>
+            <p className="text-text-muted">Try adjusting your search or filter criteria</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentInstructors.map((ins) => (
               <div
                 key={ins._id}
-                className="group bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 overflow-hidden"
+                className="group bg-surface backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/10 overflow-hidden"
               >
                 {/* Card Header with Gradient */}
-                <div className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 h-24">
+                <div className="relative bg-gradient-to-r from-primary-cyan/80 to-primary-blue/80 h-24">
                   <div className="absolute inset-0 bg-black/10"></div>
                   {/* Profile Image */}
                   <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
@@ -243,10 +243,10 @@ const AllInstructors = () => {
                 <div className="pt-16 pb-6 px-6">
                   {/* Name and Email */}
                   <div className="text-center mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary-cyan transition-colors duration-300">
                       {ins.name}
                     </h3>
-                    <div className="flex items-center justify-center text-gray-600 mb-1">
+                    <div className="flex items-center justify-center text-text-muted mb-1">
                       <Mail className="w-4 h-4 mr-2" />
                       <span className="text-sm">{ins.email}</span>
                     </div>
@@ -256,7 +256,7 @@ const AllInstructors = () => {
                     <div className="space-y-4">
                       {/* Experience Badge */}
                       <div className="flex justify-center">
-                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary-cyan/10 text-primary-cyan text-sm font-medium">
                           <Clock className="w-4 h-4 mr-1" />
                           {ins.profile.experience} years experience
                         </div>
@@ -265,20 +265,20 @@ const AllInstructors = () => {
                       {/* Expertise Tags */}
                       <div>
                         <div className="flex items-center mb-2">
-                          <Award className="w-4 h-4 text-gray-500 mr-2" />
-                          <span className="text-sm font-medium text-gray-700">Expertise</span>
+                          <Award className="w-4 h-4 text-slate-500 mr-2" />
+                          <span className="text-sm font-medium text-slate-300">Expertise</span>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {ins.profile.expertise.slice(0, 3).map((skill, index) => (
                             <span
                               key={index}
-                              className="px-2 py-1 bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 text-xs rounded-lg font-medium border border-purple-200"
+                              className="px-2 py-1 bg-surface2 text-primary-cyan text-xs rounded-lg font-medium border border-white/10"
                             >
                               {skill}
                             </span>
                           ))}
                           {ins.profile.expertise.length > 3 && (
-                            <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-lg font-medium">
+                            <span className="px-2 py-1 bg-white/5 text-slate-400 text-xs rounded-lg font-medium">
                               +{ins.profile.expertise.length - 3} more
                             </span>
                           )}
@@ -287,17 +287,17 @@ const AllInstructors = () => {
 
                       {/* Bio */}
                       <div>
-                        <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+                        <p className="text-sm text-text-muted leading-relaxed line-clamp-3">
                           {ins.profile.bio}
                         </p>
                       </div>
 
                       {/* Availability Info */}
                       {ins.profile?.availability && ins.profile.availability.length > 0 && (
-                        <div className="bg-gray-50 rounded-lg p-3 text-sm max-h-32 overflow-y-auto">
-                          <div className="font-semibold text-gray-700 mb-1">Availability:</div>
+                        <div className="bg-surface2 rounded-lg p-3 text-sm max-h-32 overflow-y-auto border border-white/5">
+                          <div className="font-semibold text-white mb-1">Availability:</div>
                           {ins.profile.availability.map((slot, idx) => (
-                            <div key={idx} className="text-gray-600 flex flex-wrap items-center mt-1">
+                            <div key={idx} className="text-slate-400 flex flex-wrap items-center mt-1">
                               {slot.date && <><Calendar className="w-3 h-3 mr-1" /> <span className="mr-3">{slot.date}</span></>}
                               {slot.time && <><Clock className="w-3 h-3 mr-1" /> <span>{slot.time}</span></>}
                             </div>
@@ -307,8 +307,8 @@ const AllInstructors = () => {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <User className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                      <p className="text-gray-500 text-sm">Profile information not available</p>
+                      <User className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+                      <p className="text-text-muted text-sm">Profile information not available</p>
                     </div>
                   )}
 
@@ -316,13 +316,13 @@ const AllInstructors = () => {
                   <div className="pt-4 flex gap-2">
                     <button 
                       onClick={() => handleEditClick(ins)}
-                      className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-4 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                      className="flex-1 bg-white/5 text-white py-2 px-4 rounded-xl font-medium border border-white/10 hover:bg-primary-cyan hover:text-[#07121D] transition-all duration-300"
                     >
                       Edit
                     </button>
                     <button 
                       onClick={() => handleDeleteMentor(ins._id)}
-                      className="flex-1 bg-gradient-to-r from-red-500 to-red-600 text-white py-2 px-4 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                      className="flex-1 bg-critical/10 text-critical py-2 px-4 rounded-xl font-medium border border-critical/20 hover:bg-critical hover:text-white transition-all duration-300"
                     >
                       Delete
                     </button>
@@ -373,13 +373,13 @@ const AllInstructors = () => {
 
       {/* Add Mentor Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gray-50/50">
-              <h2 className="text-xl font-bold text-gray-800">Add New Mentor</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/90 backdrop-blur-sm">
+          <div className="bg-surface rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-white/10 animate-in fade-in zoom-in duration-200">
+            <div className="flex justify-between items-center p-6 border-b border-white/10 bg-surface2">
+              <h2 className="text-xl font-bold text-white">Add New Mentor</h2>
               <button 
                 onClick={() => setIsAddModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-slate-400 hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -388,36 +388,36 @@ const AllInstructors = () => {
             <form onSubmit={handleAddMentor} className="p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
                   <input
                     type="text"
                     value={newMentor.name}
                     onChange={(e) => setNewMentor({...newMentor, name: e.target.value})}
                     placeholder="Enter full name"
                     required
-                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white placeholder-slate-500 transition-all"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Email Address</label>
                   <input
                     type="email"
                     value={newMentor.email}
                     onChange={(e) => setNewMentor({...newMentor, email: e.target.value})}
                     placeholder="Enter email address"
                     required
-                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white placeholder-slate-500 transition-all"
                   />
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Availability Slots</label>
+                    <label className="block text-sm font-medium text-slate-300">Availability Slots</label>
                     <button 
                       type="button" 
                       onClick={() => setNewMentor({...newMentor, availability: [...newMentor.availability, { date: '', time: '' }]})} 
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      className="text-sm text-primary-cyan hover:text-cyan-300 font-medium"
                     >
                       + Add Slot
                     </button>
@@ -431,7 +431,7 @@ const AllInstructors = () => {
                           const newAvail = newMentor.availability.map((s, i) => i === idx ? { ...s, date: e.target.value } : s);
                           setNewMentor({...newMentor, availability: newAvail});
                         }}
-                        className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+                        className="w-full px-3 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white transition-all text-sm [color-scheme:dark]"
                       />
                       <input
                         type="time"
@@ -440,7 +440,7 @@ const AllInstructors = () => {
                           const newAvail = newMentor.availability.map((s, i) => i === idx ? { ...s, time: e.target.value } : s);
                           setNewMentor({...newMentor, availability: newAvail});
                         }}
-                        className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+                        className="w-full px-3 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white transition-all text-sm [color-scheme:dark]"
                       />
                       {newMentor.availability.length > 1 && (
                         <button 
@@ -449,7 +449,7 @@ const AllInstructors = () => {
                             const newAvail = newMentor.availability.filter((_, i) => i !== idx);
                             setNewMentor({...newMentor, availability: newAvail});
                           }} 
-                          className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-1.5 text-critical hover:text-red-400 hover:bg-white/5 rounded-lg transition-colors"
                         >
                           <X className="w-5 h-5" />
                         </button>
@@ -463,14 +463,14 @@ const AllInstructors = () => {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors"
+                  className="flex-1 px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
+                  className="flex-1 px-4 py-2 bg-primary-cyan hover:bg-cyan-300 text-[#07121D] rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
                 >
                   {isCreating ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -486,13 +486,13 @@ const AllInstructors = () => {
 
       {/* Edit Mentor Modal */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gray-50/50">
-              <h2 className="text-xl font-bold text-gray-800">Edit Mentor</h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#030712]/90 backdrop-blur-sm">
+          <div className="bg-surface rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-white/10 animate-in fade-in zoom-in duration-200">
+            <div className="flex justify-between items-center p-6 border-b border-white/10 bg-surface2">
+              <h2 className="text-xl font-bold text-white">Edit Mentor</h2>
               <button 
                 onClick={() => setIsEditModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-slate-400 hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -501,36 +501,36 @@ const AllInstructors = () => {
             <form onSubmit={handleUpdateMentor} className="p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
                   <input
                     type="text"
                     value={editMentor.name}
                     onChange={(e) => setEditMentor({...editMentor, name: e.target.value})}
                     placeholder="Enter full name"
                     required
-                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white placeholder-slate-500 transition-all"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Email Address</label>
                   <input
                     type="email"
                     value={editMentor.email}
                     onChange={(e) => setEditMentor({...editMentor, email: e.target.value})}
                     placeholder="Enter email address"
                     required
-                    className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white placeholder-slate-500 transition-all"
                   />
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Availability Slots</label>
+                    <label className="block text-sm font-medium text-slate-300">Availability Slots</label>
                     <button 
                       type="button" 
                       onClick={() => setEditMentor({...editMentor, availability: [...editMentor.availability, { date: '', time: '' }]})} 
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      className="text-sm text-primary-cyan hover:text-cyan-300 font-medium"
                     >
                       + Add Slot
                     </button>
@@ -544,7 +544,7 @@ const AllInstructors = () => {
                           const newAvail = editMentor.availability.map((s, i) => i === idx ? { ...s, date: e.target.value } : s);
                           setEditMentor({...editMentor, availability: newAvail});
                         }}
-                        className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+                        className="w-full px-3 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white transition-all text-sm [color-scheme:dark]"
                       />
                       <input
                         type="time"
@@ -553,7 +553,7 @@ const AllInstructors = () => {
                           const newAvail = editMentor.availability.map((s, i) => i === idx ? { ...s, time: e.target.value } : s);
                           setEditMentor({...editMentor, availability: newAvail});
                         }}
-                        className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+                        className="w-full px-3 py-2 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan text-white transition-all text-sm [color-scheme:dark]"
                       />
                       {editMentor.availability.length > 1 && (
                         <button 
@@ -562,7 +562,7 @@ const AllInstructors = () => {
                             const newAvail = editMentor.availability.filter((_, i) => i !== idx);
                             setEditMentor({...editMentor, availability: newAvail});
                           }} 
-                          className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-1.5 text-critical hover:text-red-400 hover:bg-white/5 rounded-lg transition-colors"
                         >
                           <X className="w-5 h-5" />
                         </button>
@@ -576,14 +576,14 @@ const AllInstructors = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
-                  className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors"
+                  className="flex-1 px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
+                  className="flex-1 px-4 py-2 bg-primary-cyan hover:bg-cyan-300 text-[#07121D] rounded-xl font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
                 >
                   {isUpdating ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

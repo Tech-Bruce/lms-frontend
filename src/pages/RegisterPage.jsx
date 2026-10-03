@@ -21,17 +21,17 @@ const RegisterPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#070B14] pt-28 flex items-center justify-center p-4 sm:p-8 relative overflow-hidden text-white font-sans">
+    <main className="min-h-screen bg-background pt-32 pb-16 px-4 sm:px-8 flex flex-col relative overflow-hidden text-text-main font-sans">
       {/* Ambient Orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute -left-40 top-1/3 h-[600px] w-[600px] rounded-full bg-blue-600/[0.08] blur-[120px]" />
         <div className="absolute right-0 -bottom-20 h-[600px] w-[600px] rounded-full bg-cyan-500/[0.08] blur-[120px]" />
       </div>
 
-      <div className="max-w-6xl w-full bg-[#0A111E]/80 backdrop-blur-xl border border-white/[0.08] rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[650px]">
+      <div className="max-w-6xl w-full mx-auto my-auto bg-surface/80 backdrop-blur-xl border border-white/[0.08] rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden relative z-10 min-h-[600px]">
         
         {/* Left Side: Branding Content */}
-        <div className="md:w-5/12 p-10 md:p-14 flex flex-col justify-center bg-gradient-to-br from-blue-900/10 to-[#0A111E] border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden">
+        <div className="md:w-5/12 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-primary-blue/10 to-surface border-b md:border-b-0 md:border-r border-white/5 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-400" />
           
           <div className="relative z-10">
@@ -41,11 +41,11 @@ const RegisterPage = () => {
             
             <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-[1.1]">
               Start Your <br/>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">Journey</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-cyan to-primary-blue">Journey</span>
             </h2>
             
-            <p className="text-slate-400 text-lg leading-relaxed mb-8">
-              Join thousands of students mastering cybersecurity. Gain access to premium courses, mentorship, and a thriving community.
+            <p className="text-text-muted text-lg leading-relaxed mb-8">
+              Build practical defensive skills through structured learning and hands-on investigations.
             </p>
 
             <div className="flex flex-col gap-3">
@@ -64,7 +64,7 @@ const RegisterPage = () => {
         </div>
 
         {/* Right Side: Form */}
-        <div className="md:w-7/12 p-10 md:p-14 flex flex-col justify-center bg-[#070C15]/50">
+        <div className="md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-surface2/50">
           <div className="max-w-md w-full mx-auto">
             <h3 className="text-2xl font-bold text-white mb-2">Create Account</h3>
             <p className="text-slate-400 mb-8 text-sm">Fill in your details below to join the brigade.</p>
@@ -151,7 +151,7 @@ const RegisterPage = () => {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-400 transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] mt-2"
+                className="w-full py-3.5 px-4 bg-primary-cyan text-background font-bold rounded-xl hover:bg-cyan-300 transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,217,255,0.2)] hover:shadow-[0_0_25px_rgba(37,217,255,0.3)] mt-2"
               >
                 Create Account <FiUserPlus className="text-lg" />
               </button>

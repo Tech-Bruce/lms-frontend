@@ -90,8 +90,8 @@ export default function AllStudents() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">🎓 All Students</h1>
+    <div className="min-h-screen bg-background p-6">
+      <h1 className="text-3xl font-bold mb-6 text-white">🎓 All Students</h1>
 
       {/* 🔎 Search + Course Filter controls */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
@@ -103,7 +103,7 @@ export default function AllStudents() {
             setSearch(e.target.value);
             setCurrentPage(1);
           }}
-          className="w-full md:w-1/3 px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+          className="w-full md:w-1/3 px-4 py-2 bg-background border border-white/10 rounded-lg shadow-sm focus:ring focus:ring-primary-cyan focus:outline-none text-white placeholder-slate-500"
         />
 
         <select
@@ -112,7 +112,7 @@ export default function AllStudents() {
             setCourseFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="w-full md:w-1/4 px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+          className="w-full md:w-1/4 px-4 py-2 bg-background border border-white/10 rounded-lg shadow-sm focus:ring focus:ring-primary-cyan focus:outline-none text-white [&>option]:bg-surface"
         >
           <option value="All">All Courses</option>
           {allCourses.map((course, i) => (
@@ -125,7 +125,7 @@ export default function AllStudents() {
 
       {loading && (
         <div className="flex items-center justify-center h-40">
-          <p className="text-gray-500 animate-pulse">Loading students...</p>
+          <p className="text-slate-400 animate-pulse">Loading students...</p>
         </div>
       )}
       {error && (
@@ -133,7 +133,7 @@ export default function AllStudents() {
       )}
 
       {!loading && !error && paginatedStudents.length === 0 && (
-        <p className="text-gray-500 text-center">No students found</p>
+        <p className="text-text-muted text-center">No students found</p>
       )}
 
       {/* student cards */}
@@ -141,14 +141,14 @@ export default function AllStudents() {
         {paginatedStudents.map((student) => (
           <div
             key={student._id}
-            className="bg-white border rounded-2xl shadow-sm hover:shadow-md transition duration-200"
+            className="bg-surface border border-white/10 rounded-2xl shadow-sm hover:shadow-md transition duration-200"
           >
-            <div className="p-5 border-b">
-              <h2 className="text-lg font-semibold text-gray-800">
+            <div className="p-5 border-b border-white/10">
+              <h2 className="text-lg font-semibold text-white">
                 {student.name}
               </h2>
-              <p className="text-sm text-gray-600">{student.email}</p>
-              <span className="inline-block mt-2 px-3 py-1 text-xs font-medium text-white bg-blue-500 rounded-full">
+              <p className="text-sm text-text-muted">{student.email}</p>
+              <span className="inline-block mt-2 px-3 py-1 text-xs font-medium text-white bg-primary-blue rounded-full">
                 {student.role}
               </span>
             </div>
@@ -156,7 +156,7 @@ export default function AllStudents() {
             <div className="p-5">
               <button
                 onClick={() => toggleExpand(student._id)}
-                className="w-full text-left text-sm font-medium text-blue-600 hover:underline focus:outline-none"
+                className="w-full text-left text-sm font-medium text-primary-cyan hover:underline focus:outline-none"
               >
                 {expanded[student._id]
                   ? "▼ Hide Enrolled Courses"
@@ -170,32 +170,32 @@ export default function AllStudents() {
                       {student.courses.map((course, i) => (
                         <li
                           key={i}
-                          className="border rounded-xl p-3 bg-gray-50 hover:bg-gray-100 transition"
+                          className="border border-white/5 rounded-xl p-3 bg-surface2 hover:bg-white/5 transition"
                         >
-                          <p className="font-medium text-gray-800">
+                          <p className="font-medium text-white">
                             {course.title}
                           </p>
-                          <p className="text-xs text-gray-600">
+                          <p className="text-xs text-text-muted">
                             {course.category} • {course.status}
                           </p>
                           <div className="flex justify-between items-center mt-2">
-                            <span className="text-xs text-gray-600">
+                            <span className="text-xs text-slate-300">
                               Payment:{" "}
                               <span
                                 className={
                                   course.paymentStatus === "Paid"
-                                    ? "text-green-600 font-medium"
-                                    : "text-red-600 font-medium"
+                                    ? "text-success font-medium"
+                                    : "text-critical font-medium"
                                 }
                               >
                                 {course.paymentStatus}
                               </span>
                             </span>
-                            <span className="text-xs text-gray-600">
+                            <span className="text-xs text-slate-300">
                               {course.progress}% progress
                             </span>
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-text-muted mt-1">
                             Completed: {course.completed} • Enrolled:{" "}
                             {course.enrolledAt}
                           </p>
@@ -203,7 +203,7 @@ export default function AllStudents() {
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-gray-400 text-sm mt-2">
+                    <p className="text-slate-500 text-sm mt-2">
                       No courses enrolled
                     </p>
                   )}
@@ -220,17 +220,17 @@ export default function AllStudents() {
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded-lg bg-white shadow-sm disabled:opacity-50"
+            className="px-3 py-1 border border-white/10 rounded-lg bg-surface text-white shadow-sm disabled:opacity-50 hover:bg-white/5"
           >
             Prev
           </button>
-          <span className="text-gray-700 font-medium">
+          <span className="text-slate-300 font-medium">
             Page {currentPage} of {totalPages}
           </span>
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 border rounded-lg bg-white shadow-sm disabled:opacity-50"
+            className="px-3 py-1 border border-white/10 rounded-lg bg-surface text-white shadow-sm disabled:opacity-50 hover:bg-white/5"
           >
             Next
           </button>

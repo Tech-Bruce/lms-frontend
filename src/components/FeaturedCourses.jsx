@@ -5,11 +5,11 @@ import {
   useSpring,
   useTransform,
   useMotionTemplate,
-  useReducedMotion,
 } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiLock, FiArrowRight, FiShield } from 'react-icons/fi';
+import { FiArrowRight } from 'react-icons/fi';
 import { VIDEOS } from '../constants/videos';
+import CourseCard from './CourseCard';
 
 /* ------------------------------------------------------------------ */
 /*  Styles (fonts + keyframes) – no extra dependencies or config      */
@@ -25,6 +25,10 @@ const css = `
 @keyframes fc-float  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-28px); } }
 @keyframes fc-drift  { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.15); } }
 @keyframes fc-shine  { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
+@keyframes fc-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% - 2rem)); } }
+
+.animate-marquee { animation: fc-marquee 30s linear infinite; }
+.pause-on-hover:hover .animate-marquee { animation-play-state: paused; }
 
 .fc-floor {
   background-image:
@@ -126,75 +130,6 @@ const Background = () => (
 );
 
 /* ------------------------------------------------------------------ */
-/*  Course card with mouse-driven 3D tilt                              */
-/* ------------------------------------------------------------------ */
-const CourseCard = ({ course, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: 'easeOut' }}
-      className="h-full relative group"
-    >
-      {/* Background shadow layer that reveals on hover */}
-      <div className="absolute inset-0 rounded-[28px] bg-gradient-to-br from-cyan-400 to-blue-600 opacity-0 group-hover:opacity-100 blur-sm transition-all duration-500 group-hover:translate-x-3 group-hover:translate-y-3"></div>
-      
-      {/* Decorative backplate border that stays behind */}
-      <div className="absolute inset-0 rounded-[28px] border border-cyan-500/50 bg-[#05060d] opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-4 group-hover:translate-y-4"></div>
-
-      {/* The Front Card that lifts up */}
-      <div className="relative h-full flex flex-col overflow-hidden rounded-[27px] bg-[#0a0d18]/90 backdrop-blur-xl border border-white/10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2 z-10 group-hover:border-cyan-400/50">
-        
-        {/* Media Section */}
-        <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#101830] to-[#0a0d18]">
-          {course.thumbnail ? (
-            <img
-              src={course.thumbnail}
-              alt={course.title}
-              loading="lazy"
-              className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-110"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-400/10 shadow-[0_0_40px_-8px_rgba(34,211,238,.6)]">
-                <FiLock className="h-8 w-8 text-cyan-300" />
-              </div>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0d18] via-[#0a0d18]/30 to-transparent" />
-          {/* Light sweep on hover */}
-          <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 group-hover:[animation:fc-shine_1.1s_ease-out]" />
-          <span className="absolute bottom-4 left-5 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/25 bg-[#05060d]/90 px-3 py-1 text-xs font-semibold text-cyan-200 backdrop-blur-md">
-            <FiShield className="h-3 w-3" />
-            {course.category}
-          </span>
-        </div>
-
-        {/* Body Section */}
-        <div className="flex flex-1 flex-col gap-3 p-6 z-20">
-          <h3 className="fc-display text-xl font-bold leading-snug text-white transition-colors duration-300 group-hover:text-cyan-200 md:text-[22px]">
-            {course.title}
-          </h3>
-          <p className="line-clamp-3 text-sm leading-relaxed text-slate-400">{course.description}</p>
-        </div>
-
-        {/* Footer Section */}
-        <div className="relative z-20 mt-auto flex items-center justify-between gap-4 border-t border-white/5 p-6">
-          <div className="fc-display text-2xl font-extrabold tracking-tight text-white">₹{course.price}</div>
-          <Link
-            to={`/courses/${course._id}`}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 py-3 text-sm font-semibold text-[#04060d] shadow-[0_8px_30px_-8px_rgba(34,211,238,.7)] transition-all duration-300 hover:shadow-[0_12px_40px_-6px_rgba(34,211,238,.95)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0d18]"
-          >
-            View details
-          </Link>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
 /*  Loading skeleton                                                   */
 /* ------------------------------------------------------------------ */
 const Skeleton = () => (
@@ -238,10 +173,41 @@ const FeaturedCourses = ({ courses }) => {
 
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10 xl:gap-12 w-full mt-12">
-          {courses && courses.length > 0
-            ? courses.slice(0, 4).map((course, i) => <CourseCard key={course._id} course={course} index={i} />)
-            : [...Array(4)].map((_, i) => <Skeleton key={i} />)}
+        <div className="relative w-full overflow-hidden pause-on-hover mt-12 py-8 -mx-4 px-4 sm:mx-0 sm:px-0 mask-image-edges">
+          {/* Fading edges for the marquee */}
+          <div className="absolute inset-y-0 left-0 w-8 sm:w-24 bg-gradient-to-r from-[#05060d] to-transparent z-20 pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-8 sm:w-24 bg-gradient-to-l from-[#05060d] to-transparent z-20 pointer-events-none"></div>
+          
+          <div className="flex w-max gap-8 animate-marquee">
+            {/* Set 1 */}
+            <div className="flex gap-8">
+              {courses && courses.length > 0
+                ? courses.map((course, i) => (
+                    <div key={`${course._id}-${i}`} className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0 group/card">
+                      <CourseCard course={course} index={i} />
+                    </div>
+                  ))
+                : [...Array(6)].map((_, i) => (
+                    <div key={i} className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0">
+                      <Skeleton />
+                    </div>
+                  ))}
+            </div>
+            {/* Set 2 (Duplicate for loop) */}
+            <div className="flex gap-8">
+              {courses && courses.length > 0
+                ? courses.map((course, i) => (
+                    <div key={`dup-${course._id}-${i}`} className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0 group/card">
+                      <CourseCard course={course} index={i} />
+                    </div>
+                  ))
+                : [...Array(6)].map((_, i) => (
+                    <div key={`dup-${i}`} className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0">
+                      <Skeleton />
+                    </div>
+                  ))}
+            </div>
+          </div>
         </div>
 
         <motion.div
