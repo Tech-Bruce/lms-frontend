@@ -25,7 +25,7 @@ const css = `
 @keyframes fc-float  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-28px); } }
 @keyframes fc-drift  { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.15); } }
 @keyframes fc-shine  { from { transform: translateX(-120%) skewX(-20deg); } to { transform: translateX(320%) skewX(-20deg); } }
-@keyframes fc-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% - 2rem)); } }
+@keyframes fc-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 .animate-marquee { animation: fc-marquee 30s linear infinite; }
 .pause-on-hover:hover .animate-marquee { animation-play-state: paused; }
@@ -167,7 +167,7 @@ const FeaturedCourses = ({ courses }) => {
           </div>
 
           <h2 className="fc-display bg-gradient-to-b from-white via-white to-slate-400 bg-clip-text text-4xl font-extrabold leading-[1.1] tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
-            Enterprise-Grade <br className="hidden sm:block" /> Security Tracks
+            Learn what defenders  <br className="hidden sm:block" /> <span className="text-cyan-400">Actually use</span>
           </h2>
 
 
@@ -178,9 +178,9 @@ const FeaturedCourses = ({ courses }) => {
           <div className="absolute inset-y-0 left-0 w-8 sm:w-24 bg-gradient-to-r from-[#05060d] to-transparent z-20 pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-8 sm:w-24 bg-gradient-to-l from-[#05060d] to-transparent z-20 pointer-events-none"></div>
           
-          <div className="flex w-max gap-8 animate-marquee">
+          <div className="flex w-max animate-marquee">
             {/* Set 1 */}
-            <div className="flex gap-8">
+            <div className="flex gap-8 pr-8">
               {courses && courses.length > 0
                 ? courses.map((course, i) => (
                     <div key={`${course._id}-${i}`} className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0 group/card">
@@ -194,7 +194,7 @@ const FeaturedCourses = ({ courses }) => {
                   ))}
             </div>
             {/* Set 2 (Duplicate for loop) */}
-            <div className="flex gap-8">
+            <div className="flex gap-8 pr-8">
               {courses && courses.length > 0
                 ? courses.map((course, i) => (
                     <div key={`dup-${course._id}-${i}`} className="w-[300px] sm:w-[350px] md:w-[380px] flex-shrink-0 group/card">

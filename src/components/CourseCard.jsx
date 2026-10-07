@@ -34,7 +34,7 @@ const CourseCard = ({ course, index }) => {
           <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#101830] to-[#0a0d18]">
             {course.thumbnail ? (
               <img
-                src={course.thumbnail}
+                src={course.thumbnail.startsWith('http') ? course.thumbnail : `${import.meta.env.VITE_API_UPLOAD_URL || 'http://localhost:8000/uploads'}/course/${course.thumbnail}`}
                 alt={course.title}
                 loading="lazy"
                 className="h-full w-full object-cover opacity-90 transition-transform duration-700 ease-out group-hover:scale-110"

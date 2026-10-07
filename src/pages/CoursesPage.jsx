@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import { FiArrowRight, FiBookOpen, FiStar, FiClock } from 'react-icons/fi';
-import imgCinematic from "../assets/Cinematic .png";
+import imgMidnightGlass from "../assets/Midnight glass research network.png";
 import CourseCard from '../components/CourseCard';
 
 const CoursesPage = () => {
@@ -27,14 +27,15 @@ const CoursesPage = () => {
   return (
     <div className="min-h-screen bg-background text-text-main relative overflow-hidden">
       {/* Hero Section */}
-      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+      <div className="relative overflow-hidden  flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
         <div className="absolute inset-0 z-0">
-          <img 
-            src={imgCinematic} 
-            alt="Academy Background" 
-            className="absolute inset-0 w-full h-full object-cover object-center" 
+          <img
+            src={imgMidnightGlass}
+            alt="Academy Background"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-sm"></div>
+          {/* Subtle gradient overlay to keep text readable without heavily obscuring the image */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/90 via-[#030712]/40 to-[#030712]/10"></div>
           {/* Glowing orbs */}
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -46,16 +47,16 @@ const CoursesPage = () => {
               <FiBookOpen className="w-4 h-4 text-primary-cyan" />
               <span>Cyber Security Academy</span>
             </div>
-            
+
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight text-white">
               Master Elite <br className="hidden md:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-cyan to-primary-blue">
                 Defensive Tactics.
               </span>
             </h1>
-            
+
             <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
-              Elevate your skills from foundational concepts to advanced practical operations. Train in realistic SOC environments and master the methodologies deployed by top-tier cybersecurity professionals.
+              Structured learning designed to take you from fundamentals to practical defensive skills.
             </p>
           </div>
         </div>
@@ -79,24 +80,7 @@ const CoursesPage = () => {
           </div>
         )}
 
-        {/* CTA Banner */}
-        {!isLoading && courses.length > 0 && (
-          <div className="mt-24 relative rounded-3xl overflow-hidden border border-primary-blue/20 bg-surface2 p-10 md:p-14 text-center">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-blue/10 to-primary-cyan/10" />
-            <div className="relative z-10 flex flex-col items-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready for your first mission?</h2>
-              <p className="text-text-muted mb-8 max-w-xl text-lg">
-                Work with alerts, logs, endpoints, and threat intelligence in a real defensive environment.
-              </p>
-              <Link
-                to="/missions"
-                className="px-8 py-4 rounded-xl text-background bg-primary-cyan hover:bg-cyan-300 shadow-[0_0_20px_rgba(37,217,255,0.3)] transition-all text-sm font-bold tracking-wider uppercase"
-              >
-                Explore Missions
-              </Link>
-            </div>
-          </div>
-        )}
+        
 
       </div>
     </div>

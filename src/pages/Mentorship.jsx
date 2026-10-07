@@ -180,14 +180,14 @@ const StudentMentorship = () => {
   };
 
   return (
-    <main className="min-h-screen bg-background text-text-main pb-20 relative overflow-hidden">
+    <main className=" bg-background text-text-main pb-20 relative overflow-hidden">
       {/* Hero Section */}
-      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+      <div className="relative overflow-hidden flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
         <div className="absolute inset-0 z-0">
           <img 
             src={imgLuminous} 
             alt="Mentorship Background" 
-            className="absolute inset-0 w-full h-full object-cover object-center" 
+            className="absolute inset-0 w-full  object-cover object-center" 
           />
           <div className="absolute inset-0 bg-gray-950/30"></div>
           {/* Glowing orbs */}

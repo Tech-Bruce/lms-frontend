@@ -51,15 +51,13 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <div 
-      className="py-24 md:py-32 relative bg-cover bg-center bg-no-repeat bg-fixed"
-      style={{ backgroundImage: `url(${bgImage})` }}
-    >
-      {/* Heavy overlay to ensure content is readable against the background image while keeping the texture */}
-      <div className="absolute inset-0 bg-[#030712]/60 pointer-events-none"></div>
-
-      {/* Radial glow in the center for depth */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+    <div className="py-24 md:py-32 relative bg-background overflow-hidden border-t border-white/5">
+      {/* Background Mesh and Glows */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[800px] h-[600px] bg-cyan-900/20 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3 w-[600px] h-[600px] bg-blue-900/20 blur-[120px] rounded-full"></div>
+      </div>
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         <motion.div
@@ -69,18 +67,22 @@ const FeaturesSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-24 space-y-6"
         >
-          <div className="inline-block px-5 py-2 bg-black/60 backdrop-blur-md border border-cyan-500/30 rounded-full shadow-2xl">
-            <span className="text-cyan-400 font-black text-xs uppercase tracking-[0.25em]">Why Choose the Brigade</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 backdrop-blur-md border border-cyan-500/30 rounded-full shadow-2xl">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <span className="text-cyan-400 font-bold text-xs uppercase tracking-[0.2em]">Why Choose the Brigade</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tight drop-shadow-xl">
-            The Blueprint of Modern <br className="hidden sm:block" /> Cyber Defense
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.1]">
+            The Blueprint of <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+              Modern Cyber Defense
+            </span>
           </h2>
-          <p className="max-w-3xl text-gray-300 mx-auto text-lg sm:text-xl font-medium leading-relaxed drop-shadow-md">
-            We focus strictly on the practical command line skills, security architectures, and compliance models required in the field.
+          <p className="max-w-2xl text-gray-400 mx-auto text-lg md:text-xl font-medium leading-relaxed">
+            We focus strictly on practical command line skills, security architectures, and realistic attack vectors required in the field.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.name}
@@ -88,20 +90,21 @@ const FeaturesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="group relative bg-white/[0.02] backdrop-blur-2xl rounded-3xl p-8 lg:p-10 border border-white/10 hover:border-cyan-500/50 transition-all duration-500 shadow-2xl hover:shadow-[0_10px_40px_rgba(34,211,238,0.15)] flex flex-col h-full"
+              whileHover={{ y: -5 }}
+              className="group relative bg-surface/50 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 shadow-xl flex flex-col h-full overflow-hidden"
             >
-              {/* Internal top ambient glow on hover */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-0 bg-cyan-500/20 blur-[50px] group-hover:h-32 transition-all duration-700 rounded-full"></div>
+              {/* Internal glow */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute -inset-px bg-gradient-to-b from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"></div>
               
               <div className="relative z-10 flex flex-col h-full">
-                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-black/40 border border-white/10 text-cyan-400 mb-8 group-hover:bg-cyan-500 group-hover:text-black group-hover:border-transparent transition-all duration-500 shadow-inner">
+                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-6 group-hover:scale-110 group-hover:bg-cyan-400 group-hover:text-background transition-all duration-300 shadow-inner">
                   {feature.icon}
                 </div>
-                <h3 className="text-2xl font-black text-white mb-4 tracking-tight group-hover:text-cyan-300 transition-colors duration-300">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-3 tracking-tight group-hover:text-cyan-400 transition-colors duration-300">
                   {feature.name}
                 </h3>
-                <p className="text-gray-400 text-base leading-relaxed font-medium group-hover:text-gray-300 transition-colors duration-300 flex-1">
+                <p className="text-gray-400 text-sm md:text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300 flex-1">
                   {feature.description}
                 </p>
               </div>

@@ -14,6 +14,9 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import Blog from './pages/Blog';
 import Mentorship from './pages/Mentorship';
+import MissionsPage from './pages/MissionsPage';
+import LearningPathsPage from './pages/LearningPathsPage';
+import CertificationsPage from './pages/CertificationsPage';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -57,6 +60,9 @@ function AppContent() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/mentorship" element={<Mentorship />} />
+          <Route path="/missions" element={<MissionsPage />} />
+          <Route path="/learning-paths" element={<LearningPathsPage />} />
+          <Route path="/certifications" element={<CertificationsPage />} />
 
           {/* Authentication */}
           <Route path="/login" element={<LoginPage />} />

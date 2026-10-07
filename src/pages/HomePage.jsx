@@ -148,19 +148,19 @@ const HomePage = () => {
       {/* Pop-up Form */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9 }}
             className="bg-gray-900 border border-cyan-500/40 rounded-2xl shadow-2xl shadow-cyan-500/25 w-full max-w-lg max-h-[92vh] overflow-hidden relative"
           >
-            <button 
+            <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 bg-gray-800 hover:bg-gray-700 p-2 rounded-full border border-gray-700"
             >
               <FiX className="w-5 h-5" />
             </button>
-            
+
             <div className="p-6 md:p-8 overflow-y-auto max-h-[92vh] scrollbar-thin">
               <div className="mb-6 flex items-center space-x-3">
                 <div className="p-2.5 bg-cyan-500/10 rounded-lg border border-cyan-500/30 text-cyan-400">
@@ -171,9 +171,9 @@ const HomePage = () => {
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider">Cybersecurity Gateway Portal</p>
                 </div>
               </div>
-              
+
               <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent mb-6"></div>
-              
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -201,7 +201,7 @@ const HomePage = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-gray-300 mb-1.5 text-xs font-semibold uppercase tracking-wider">Email Address</label>
                   <input
@@ -214,7 +214,7 @@ const HomePage = () => {
                     className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-white text-sm transition-all"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-gray-300 mb-1.5 text-xs font-semibold uppercase tracking-wider">Phone Number</label>
                   <input
@@ -227,7 +227,7 @@ const HomePage = () => {
                     className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-white text-sm transition-all"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-gray-300 mb-1.5 text-xs font-semibold uppercase tracking-wider">Brief Professional Bio / Background</label>
                   <textarea
@@ -240,7 +240,7 @@ const HomePage = () => {
                     className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-white text-sm transition-all"
                   ></textarea>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-gray-300 mb-1.5 text-xs font-semibold uppercase tracking-wider">City</label>
@@ -270,7 +270,7 @@ const HomePage = () => {
                     </select>
                   </div>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold rounded-lg transition-all duration-300 mt-2 shadow-lg shadow-cyan-500/20 uppercase tracking-widest text-xs"
@@ -284,19 +284,19 @@ const HomePage = () => {
       )}
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+      <div className="relative overflow-hidden min-h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
         {/* Animated Cyber Grid */}
         <div className="absolute inset-0 z-0">
           {/* Looping Background Images */}
           <BackgroundSlider />
           {/* Dark overlay so text remains readable */}
           <div className="absolute inset-0 bg-gray-950/50"></div>
-          
+
           {/* Cyber Grid background removed as per request */}
           {/* Glowing orbs */}
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-          
+
           {[...Array(10)].map((_, i) => (
             <motion.div
               key={i}
@@ -327,26 +327,26 @@ const HomePage = () => {
               transition={{ duration: 0.8 }}
               className="flex flex-col text-left space-y-6 lg:space-y-8 lg:max-w-3xl mt-12 md:mt-0"
             >
-              <div className="inline-flex items-center space-x-2 bg-primary-cyan/10 border border-primary-cyan/30 rounded-full px-4 py-1.5 text-primary-cyan text-xs sm:text-sm font-semibold tracking-wider uppercase mb-2 w-max mx-0">
-                <FiShield className="w-4 h-4 text-primary-cyan" />
-                <span>HANDS-ON DEFENSIVE CYBERSECURITY</span>
+              <div className="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-1.5 text-cyan-400 text-xs sm:text-sm font-semibold tracking-widest uppercase mb-2 w-max mx-0 shadow-[0_0_15px_rgba(34,211,238,0.15)]">
+                <FiShield className="w-4 h-4 text-cyan-400" />
+                <span>The Path to a Secure Future</span>
               </div>
-              
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
-                Build the skills to <br className="hidden md:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-cyan to-primary-blue">
-                  defend what matters.
+
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1]">
+                Every alert tells a story <br className="hidden md:inline" />
+                <span className="text-cyan-500">
+                  Learn to investigate it.
                 </span>
               </h1>
-              
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 max-w-xl mx-0 leading-relaxed">
-                Every alert tells a story. Learn to investigate it.
+
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 max-w-2xl mx-0 leading-relaxed">
+                Build practical cybersecurity skills through realistic investigations, hands-on missions.
               </h2>
-              
-              <p className="text-sm sm:text-base md:text-lg text-text-muted max-w-2xl mx-0 leading-relaxed">
-                Build practical cybersecurity skills through realistic investigations, hands-on missions, threat hunting, detection engineering and incident response.
+
+              <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-0 leading-relaxed">
+                Guided learning designed for modern defenders
               </p>
-              
+
               <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 justify-start pt-6 md:pt-8 w-full sm:w-auto">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
@@ -356,7 +356,7 @@ const HomePage = () => {
                 >
                   Start Learning
                 </motion.button>
-                
+
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
@@ -370,40 +370,67 @@ const HomePage = () => {
                   </Link>
                 </motion.div>
               </div>
+              
             </motion.div>
+            
           </div>
+          {/* Stats Dashboard Banner */}
+          <motion.div 
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-12 lg:mt-16 relative z-10 py-8 bg-gray-900/40 border border-gray-800/80 backdrop-blur-md rounded-2xl shadow-[0_0_30px_rgba(34,211,238,0.05)] overflow-hidden w-full"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-500/5"></div>
+            <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center px-4 sm:px-6 lg:px-8">
+              <div>
+                <p className="text-3xl md:text-4xl font-extrabold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+                  <CountUp end={10} suffix="k+" />
+                </p>
+                <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-2 font-semibold">Students Trained</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-extrabold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+                  <CountUp end={95} suffix="%" />
+                </p>
+                <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-2 font-semibold">Success Rate</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-extrabold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+                  <CountUp end={150} suffix="+" />
+                </p>
+                <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-2 font-semibold">Virtual Sandboxes</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-extrabold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">24/7</p>
+                <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-2 font-semibold">Security Mentor Support</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Workflow/Methodology Section */}
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 z-10 relative w-full"
+          >
+            {[
+              { label: 'Learn', icon: FiBook },
+              { label: 'Investigate', icon: FiMonitor },
+              { label: 'Detect', icon: FiShield },
+              { label: 'Respond', icon: FiTerminal },
+            ].map((step, idx) => (
+              <div key={idx} className="flex items-center space-x-3 bg-gray-900/60 border border-cyan-500/20 backdrop-blur-md px-5 py-2.5 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.1)] hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-all duration-300">
+                <step.icon className="w-5 h-5 text-cyan-400" />
+                <span className="text-gray-200 font-bold tracking-wider uppercase text-xs sm:text-sm">{step.label}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
 
-      {/* Stats Dashboard Banner */}
-      <div className="relative z-10 py-8 bg-gray-900/60 border-y border-gray-800/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <p className="text-3xl md:text-4xl font-extrabold text-cyan-400">
-                <CountUp end={10} suffix="k+" />
-              </p>
-              <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-1">Students Trained</p>
-            </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-extrabold text-cyan-400">
-                <CountUp end={95} suffix="%" />
-              </p>
-              <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-1">Success Rate</p>
-            </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-extrabold text-cyan-400">
-                <CountUp end={150} suffix="+" />
-              </p>
-              <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-1">Virtual Sandboxes</p>
-            </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-extrabold text-cyan-400">24/7</p>
-              <p className="text-gray-400 text-xs md:text-sm uppercase tracking-widest mt-1">Security Mentor Support</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Featured Courses Section */}
       <FeaturedCourses courses={courses} />
@@ -421,7 +448,7 @@ const HomePage = () => {
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl max-h-[400px] bg-primary-cyan/5 blur-[120px] rounded-full"></div>
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwWiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9zdmc+')] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)] opacity-50"></div>
         </div>
-        
+
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -434,21 +461,21 @@ const HomePage = () => {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50"></div>
             <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary-cyan/20 blur-[60px] rounded-full"></div>
             <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-primary-blue/20 blur-[60px] rounded-full"></div>
-            
+
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-8">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                 <span className="text-cyan-400 font-semibold text-xs uppercase tracking-widest">Mission Control</span>
               </div>
-              
+
               <h2 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6 tracking-tight">
                 Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">secure</span> your future?
               </h2>
-              
+
               <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mb-10">
                 Gain immediate hands-on defense capabilities. Join the next operational class cohort of cybersecurity experts.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -459,7 +486,7 @@ const HomePage = () => {
                   <FiLock className="w-5 h-5" />
                   Access Secure Gateway
                 </motion.button>
-                
+
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

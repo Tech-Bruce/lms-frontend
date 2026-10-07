@@ -19,13 +19,34 @@ const CreateCourseForm = ({
     status: 'draft',
     thumbnail: null,
     featured: false,
-    isNav: false
+    isNav: false,
+    syllabus: ['']
   }, 
   editMode = false, 
   onClose = () => {}, 
   onSuccess = () => {},
 }) => {
-  const [formData, setFormData] = useState(initialValues);
+  const [formData, setFormData] = useState({
+    ...initialValues,
+    syllabus: initialValues.syllabus?.length > 0 ? initialValues.syllabus : ['']
+  });
+
+  const handleSyllabusChange = (index, value) => {
+    const newSyllabus = [...formData.syllabus];
+    newSyllabus[index] = value;
+    setFormData(prev => ({ ...prev, syllabus: newSyllabus }));
+  };
+
+  const handleAddSyllabus = () => {
+    setFormData(prev => ({ ...prev, syllabus: [...prev.syllabus, ''] }));
+  };
+
+  const handleRemoveSyllabus = (index) => {
+    setFormData(prev => ({ 
+      ...prev, 
+      syllabus: prev.syllabus.filter((_, i) => i !== index) 
+    }));
+  };
   const [preview, setPreview] = useState(
     initialValues.thumbnail ? `/uploads/${initialValues.thumbnail}` : null
   );
@@ -107,6 +128,10 @@ const CreateCourseForm = ({
       submitData.append('status', formData.status);
       submitData.append('featured', formData.featured);
       submitData.append('isNav', formData.isNav);
+      
+      // Filter out empty syllabus items and append
+      const cleanSyllabus = formData.syllabus?.filter(item => item.trim() !== '') || [];
+      submitData.append('syllabus', JSON.stringify(cleanSyllabus));
       
       // Append file if it exists and is a File object
       if (formData.thumbnail && formData.thumbnail instanceof File) {
@@ -261,6 +286,47 @@ const CreateCourseForm = ({
               </button>
             </div>
           )}
+        </div>
+
+        {/* Curriculum / Syllabus */}
+        <div className="md:col-span-2 mt-4 bg-white/5 border border-white/10 rounded-xl p-4">
+          <div className="flex justify-between items-center mb-4">
+            <label className="block text-sm font-semibold text-slate-200">Course Curriculum (Modules & Lessons)</label>
+            <button
+              type="button"
+              onClick={handleAddSyllabus}
+              className="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-bold rounded-lg hover:bg-cyan-500/30 transition-colors"
+            >
+              + Add Item
+            </button>
+          </div>
+          
+          <div className="space-y-3">
+            {formData.syllabus.map((item, index) => (
+              <div key={index} className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-gray-400 mt-1">
+                  {index + 1}
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    value={item}
+                    onChange={(e) => handleSyllabusChange(index, e.target.value)}
+                    placeholder="e.g., Module 1: Introduction to SOC Operations"
+                    className="w-full px-4 py-2 bg-background rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary-cyan transition-colors"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveSyllabus(index)}
+                  className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-critical/10 text-red-400 rounded-xl hover:bg-critical hover:text-white transition-colors"
+                  disabled={formData.syllabus.length === 1}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Checkboxes */}

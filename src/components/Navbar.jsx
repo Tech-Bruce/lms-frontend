@@ -120,7 +120,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           {/* Logo and Title */}
           <div
-            onClick={handleNavigate}
+            onClick={() => navigate("/")}
             className="group flex items-center space-x-3 cursor-pointer"
           >
             <div className="relative">
@@ -134,22 +134,23 @@ const Navbar = () => {
             </div>
             <div className="flex flex-col leading-none group-hover:text-cyan-300 transition-colors duration-300">
               <span className="text-lg md:text-xl font-black text-white tracking-tight">
-                Cyber Security
+                Cyber Security Brigade
               </span>
-              <span className="text-sm md:text-base font-bold text-cyan-400 tracking-wider">
-                Brigade
-              </span>
+
             </div>
           </div>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-1 text-sm">
-            <NavItem to="/">Home</NavItem>
-            <NavItem to="/about">About</NavItem>
+
             <NavItem to="/courses">Academy</NavItem>
-            <NavItem to="/blog">Community / Blog</NavItem>
+            <NavItem to="/missions">Missions</NavItem>
+            <NavItem to="/learning-paths">Learning path</NavItem>
+            <NavItem to="/certifications">Certifications</NavItem>
+            <NavItem to="/about">About</NavItem>
             <NavItem to="/mentorship">Mentorship</NavItem>
-            <NavItem to="/contact">Contact</NavItem>
+            <NavItem to="/blog">Blog</NavItem>
+
           </div>
 
           {/* Desktop Auth Section */}
@@ -261,13 +262,6 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              to="/about"
-              onClick={toggleMobileMenu}
-              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/about") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
-            >
-              About
-            </Link>
 
             {/* Mobile Courses Dropdown */}
             <div className={`px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/courses") ? 'bg-cyan-900/10 border border-cyan-500/10' : 'hover:bg-white/5'}`}>
@@ -277,9 +271,8 @@ const Navbar = () => {
               >
                 <span>Academy</span>
                 <svg
-                  className={`ml-1 h-4 w-4 transition-transform ${
-                    isCoursesDropdownOpen ? "rotate-180" : ""
-                  }`}
+                  className={`ml-1 h-4 w-4 transition-transform ${isCoursesDropdownOpen ? "rotate-180" : ""
+                    }`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -309,11 +302,32 @@ const Navbar = () => {
             </div>
 
             <Link
-              to="/blog"
+              to="/missions"
               onClick={toggleMobileMenu}
-              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/blog") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/missions") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
-              Community / Blog
+              Missions
+            </Link>
+            <Link
+              to="/learning-paths"
+              onClick={toggleMobileMenu}
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/learning-paths") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
+            >
+              Learning path
+            </Link>
+            <Link
+              to="/certifications"
+              onClick={toggleMobileMenu}
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/certifications") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
+            >
+              Certifications
+            </Link>
+            <Link
+              to="/about"
+              onClick={toggleMobileMenu}
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/about") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
+            >
+              About
             </Link>
             <Link
               to="/mentorship"
@@ -323,11 +337,11 @@ const Navbar = () => {
               Mentorship
             </Link>
             <Link
-              to="/contact"
+              to="/blog"
               onClick={toggleMobileMenu}
-              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/contact") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/blog") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
-              Contact
+              Blog
             </Link>
 
             {/* Mobile Auth Section */}
@@ -388,7 +402,8 @@ const Navbar = () => {
       )}
 
       {/* Add these styles for animations */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes fadeIn {
           from {
             opacity: 0;

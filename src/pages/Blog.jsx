@@ -81,51 +81,52 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background pb-16 relative overflow-hidden text-text-main">
       {/* Hero Section */}
-      <div className="relative overflow-hidden h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
+      <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <img 
             src={imgMidnight} 
             alt="Blog Background" 
-            className="absolute inset-0 w-full h-full object-cover object-center" 
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-40 mix-blend-screen" 
           />
-          <div className="absolute inset-0 bg-gray-950/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent"></div>
           {/* Glowing orbs */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="flex flex-col text-left space-y-6 lg:space-y-8 lg:max-w-3xl mt-8 md:mt-0">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary-cyan/20 bg-primary-cyan/[0.07] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary-cyan w-max">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary-cyan shadow-[0_0_12px_#25D9FF]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col items-center text-center">
+          <div className="flex flex-col items-center space-y-6 lg:space-y-8 max-w-3xl mt-8 md:mt-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-cyan-300 backdrop-blur-md shadow-[0_0_20px_rgba(34,211,238,0.15)]">
+              <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee] animate-pulse" />
               Cyber Security Brigade
             </div>
             
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight">
               Knowledge & <br className="hidden md:inline" />
-              <span className="bg-gradient-to-r from-primary-cyan via-sky-400 to-primary-blue bg-clip-text text-transparent">Insights</span>
+              <span className="bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(34,211,238,0.3)]">Insights</span>
             </h1>
             
-            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl leading-relaxed">
               Explore professional guides, dynamic security reports, and training articles authored by our experts.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10 pt-16">
 
         {/* Filter Controls Panel */}
-        <div className="bg-surface rounded-2xl border border-white/[0.09] p-4 sm:p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl backdrop-blur-md">
+        <div className="bg-[#050B14]/80 backdrop-blur-xl rounded-2xl border border-white/10 p-4 sm:p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl shadow-cyan-900/10">
           {/* Search */}
           <div className="relative w-full md:max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
               placeholder="Search publications..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-background border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-cyan/50 focus:border-primary-cyan transition-all duration-200 text-white placeholder-slate-500"
+              className="w-full pl-12 pr-4 py-3 bg-[#0A1122] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 text-white placeholder-slate-500"
             />
           </div>
 
@@ -143,13 +144,13 @@ const Blog = () => {
                 <button
                   key={type.id}
                   onClick={() => setSelectedType(type.id)}
-                  className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 border ${
+                  className={`flex items-center space-x-1.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
                     active
-                      ? "bg-primary-cyan/10 text-primary-cyan border-primary-cyan/30 shadow-[0_0_15px_rgba(37,217,255,0.1)]"
-                      : "bg-white/5 text-slate-400 border-transparent hover:text-white hover:bg-white/10"
+                      ? "bg-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.4)] border border-cyan-400"
+                      : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-transparent"
                   }`}
                 >
-                  {Icon && <Icon className="w-3.5 h-3.5" />}
+                  {Icon && <Icon className="w-4 h-4" />}
                   <span>{type.label}</span>
                 </button>
               );
@@ -187,8 +188,12 @@ const Blog = () => {
               return (
                 <div
                   key={post._id}
-                  className="flex flex-col bg-surface border border-white/[0.09] rounded-3xl overflow-hidden hover:border-primary-cyan/30 hover:bg-white/[0.035] hover:-translate-y-1.5 transition-all duration-300 group shadow-lg"
+                  className="group relative flex flex-col bg-[#050B14]/60 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-cyan-500/40 hover:-translate-y-1.5 hover:shadow-[0_15px_40px_rgba(34,211,238,0.1)] transition-all duration-500"
                 >
+                  {/* Subtle Hover Gradient Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/10 to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                  
+                  <div className="relative z-10 flex flex-col h-full">
                   {/* Media Content Area */}
                   {post.type === "poster" && post.fileUrl && (
                     <div className="relative overflow-hidden h-52 bg-[#050810]">
@@ -268,13 +273,14 @@ const Blog = () => {
                       {post.content && (
                         <button
                           onClick={() => setActivePost(post)}
-                          className="inline-flex items-center justify-center p-2.5 rounded-xl bg-white/5 hover:bg-primary-cyan hover:text-background border border-white/10 text-slate-300 transition-all duration-300"
+                          className="inline-flex items-center justify-center p-2.5 rounded-xl bg-cyan-950/40 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 border border-cyan-500/50 hover:border-transparent text-cyan-400 hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]"
                           title="Read Full Post"
                         >
                           <ArrowRight className="w-4 h-4" />
                         </button>
                       )}
                     </div>
+                  </div>
                   </div>
                 </div>
               );
