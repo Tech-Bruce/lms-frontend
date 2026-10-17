@@ -6,21 +6,21 @@ import api from '../api';
 import imgHeroBg from '../assets/Orbital .png';
 
 const CertificationsPage = () => {
-  const [courses, setCourses] = useState([]);
+  const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchCertifications = async () => {
       try {
-        const response = await api.get('/courses');
-        setCourses(response.data);
+        const response = await api.get('/certifications');
+        setCertifications(response.data);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error('Error fetching certifications:', error);
       } finally {
         setLoading(false);
       }
     };
-    fetchCourses();
+    fetchCertifications();
   }, []);
 
   return (
@@ -86,20 +86,20 @@ const CertificationsPage = () => {
             <div className="flex justify-center items-center py-20">
               <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
-          ) : courses.length === 0 ? (
+          ) : certifications.length === 0 ? (
             <div className="text-center py-20 text-gray-400">
               No certifications currently available.
             </div>
           ) : (
             <div className="space-y-6">
-              {courses.map((course, index) => {
+              {certifications.map((cert, index) => {
                 // Determine a nice badge color based on index
                 const colors = ['border-orange-300/50 text-orange-200', 'border-purple-400/50 text-purple-300', 'border-yellow-400/50 text-yellow-300', 'border-blue-400/50 text-blue-300'];
                 const badgeStyle = colors[index % colors.length];
                 
-                // Generic checkmark features if course doesn't have any
-                const features = course.features?.length > 0 
-                  ? course.features.slice(0, 4) 
+                // Generic checkmark features if cert doesn't have any
+                const features = cert.skillsAssessed?.length > 0 
+                  ? cert.skillsAssessed.slice(0, 4) 
                   : ['Alert triage', 'Log investigation', 'Threat intelligence', 'Incident documentation'];
 
                 return (
@@ -108,7 +108,7 @@ const CertificationsPage = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    key={course._id}
+                    key={cert._id}
                     className="group relative bg-[#050B14]/60 backdrop-blur-xl border border-white/10 rounded-2xl p-5 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 lg:gap-8 hover:border-cyan-500/40 hover:shadow-[0_0_40px_rgba(34,211,238,0.1)] transition-all duration-500 overflow-hidden"
                   >
                     
@@ -124,30 +124,19 @@ const CertificationsPage = () => {
                         
                         <div className="absolute inset-0 bg-white/5 rounded-xl lg:border border-white/10 transform lg:rotate-3 group-hover:rotate-6 transition-transform duration-500"></div>
                         <div className={`absolute inset-0 bg-[#050B14] rounded-xl border-2 ${badgeStyle} flex items-center justify-center overflow-hidden shadow-xl lg:shadow-2xl`}>
-                          {course.thumbnail ? (
-                            <>
-                              <img
-                                src={course.thumbnail.startsWith('http') ? course.thumbnail : `${import.meta.env.VITE_API_UPLOAD_URL || 'http://localhost:8000/uploads'}/course/${course.thumbnail}`}
-                                alt={course.title}
-                                className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                            </>
-                          ) : (
                             <span className="font-bold text-xs sm:text-sm lg:text-xl leading-tight text-center px-1">
                               CB<br/>CERT
                             </span>
-                          )}
                         </div>
                       </div>
 
                       {/* Info - Mobile Layout Title (Visible alongside badge on small screens) */}
                       <div className="flex-1 lg:hidden">
                         <h2 className="text-lg sm:text-xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors duration-300 line-clamp-2">
-                          {course.title}
+                          {cert.title}
                         </h2>
                         <p className="text-cyan-400 font-bold tracking-wide text-[10px] sm:text-xs uppercase opacity-90 line-clamp-1">
-                          {course.category}
+                          {cert.format || 'Practical Assessment'}
                         </p>
                       </div>
                     </div>
@@ -156,14 +145,14 @@ const CertificationsPage = () => {
                     <div className="flex-1 z-10 flex flex-col justify-center">
                       <div className="hidden lg:block">
                         <h2 className="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors duration-300">
-                          {course.title}
+                          {cert.title}
                         </h2>
                         <p className="text-cyan-400 font-bold tracking-wide text-xs uppercase mb-3 opacity-90">
-                          {course.category}
+                          {cert.format || 'Practical Assessment'}
                         </p>
                       </div>
                       <p className="text-gray-400 text-sm leading-relaxed max-w-2xl group-hover:text-gray-300 transition-colors duration-300 line-clamp-3 lg:line-clamp-none">
-                        {course.description || "Demonstrate your ability to triage, investigate, and analyze security events using real-world tools and scenarios."}
+                        {cert.overview || "Demonstrate your ability to triage, investigate, and analyze security events using real-world tools and scenarios."}
                       </p>
                     </div>
 
@@ -183,17 +172,17 @@ const CertificationsPage = () => {
                     <div className="flex-shrink-0 w-full lg:w-48 flex flex-col gap-4 z-10 mt-2 lg:mt-0 pt-4 lg:pt-0 border-t border-white/5 lg:border-none">
                       <div className="flex justify-between items-center text-xs text-gray-400">
                         <div>
-                          <span className="block text-gray-500 mb-0.5">Level:</span>
-                          <span className="font-semibold text-gray-300">{course.level || 'Foundation'}</span>
+                          <span className="block text-gray-500 mb-0.5">Duration:</span>
+                          <span className="font-semibold text-gray-300">{cert.duration || '2 Hours'}</span>
                         </div>
                         <div>
-                          <span className="block text-gray-500 mb-0.5">Assessment:</span>
-                          <span className="font-semibold text-gray-300">Practical</span>
+                          <span className="block text-gray-500 mb-0.5">Status:</span>
+                          <span className={`font-semibold ${cert.status === 'Active' ? 'text-green-400' : 'text-yellow-400'}`}>{cert.status || 'Active'}</span>
                         </div>
                       </div>
                       
                       <Link
-                        to={`/courses/${course._id}`}
+                        to={`/certifications/${cert._id}`}
                         className="w-full bg-cyan-950/40 border border-cyan-500/50 text-cyan-400 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 hover:text-white hover:border-transparent font-semibold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
                       >
                         <span>View Certification</span>

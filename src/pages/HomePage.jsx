@@ -325,29 +325,33 @@ const HomePage = () => {
               initial={{ y: 25, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col text-left space-y-6 lg:space-y-8 lg:max-w-3xl mt-12 md:mt-0"
+              className="flex flex-col text-left space-y-4 lg:space-y-5 lg:max-w-3xl"
             >
               <div className="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-1.5 text-cyan-400 text-xs sm:text-sm font-semibold tracking-widest uppercase mb-2 w-max mx-0 shadow-[0_0_15px_rgba(34,211,238,0.15)]">
                 <FiShield className="w-4 h-4 text-cyan-400" />
-                <span>The Path to a Secure Future</span>
+                <span>Hands on defensive cybersecueity</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1]">
-                Every alert tells a story <br className="hidden md:inline" />
+              <h1 className="text-4xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-[1.1]">
+                Every alert tells  <br className="hidden md:inline" />
+                <span className="font-black tracking-tight leading-[1.1]">
+                  a story
+                </span>
+                <br className="hidden md:inline" />
                 <span className="text-cyan-500">
                   Learn to investigate it.
                 </span>
               </h1>
 
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 max-w-2xl mx-0 leading-relaxed">
+              <h2 className="text-lg sm:text-xl md:text-lg font-bold text-gray-300 max-w-2xl leading-relaxed">
                 Build practical cybersecurity skills through realistic investigations, hands-on missions.
               </h2>
 
-              <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-0 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-2xl leading-relaxed">
                 Guided learning designed for modern defenders
               </p>
 
-              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 justify-start pt-6 md:pt-8 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 justify-start pt-4 w-full sm:w-auto">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
@@ -370,16 +374,16 @@ const HomePage = () => {
                   </Link>
                 </motion.div>
               </div>
-              
+
             </motion.div>
-            
+
           </div>
           {/* Stats Dashboard Banner */}
-          <motion.div 
+          <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-12 lg:mt-16 relative z-10 py-8 bg-gray-900/40 border border-gray-800/80 backdrop-blur-md rounded-2xl shadow-[0_0_30px_rgba(34,211,238,0.05)] overflow-hidden w-full"
+            className="mt-6 lg:mt-8 relative z-10 py-8 bg-gray-900/40 border border-gray-800/80 backdrop-blur-md rounded-2xl shadow-[0_0_30px_rgba(34,211,238,0.05)] overflow-hidden w-full"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-500/5"></div>
             <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center px-4 sm:px-6 lg:px-8">
@@ -409,11 +413,11 @@ const HomePage = () => {
           </motion.div>
 
           {/* Workflow/Methodology Section */}
-          <motion.div 
+          <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8 flex flex-wrap justify-center gap-4 md:gap-6 z-10 relative w-full"
+            className="mt-4 flex flex-wrap justify-center gap-4 md:gap-6 z-10 relative w-full"
           >
             {[
               { label: 'Learn', icon: FiBook },
@@ -430,7 +434,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      
+
 
       {/* Featured Courses Section */}
       <FeaturedCourses courses={courses} />

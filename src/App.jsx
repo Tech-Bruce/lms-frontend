@@ -17,6 +17,7 @@ import Mentorship from './pages/Mentorship';
 import MissionsPage from './pages/MissionsPage';
 import LearningPathsPage from './pages/LearningPathsPage';
 import CertificationsPage from './pages/CertificationsPage';
+import CertificationDetailPage from './pages/CertificationDetailPage';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -25,6 +26,7 @@ import CourseDetailPage from './pages/CourseDetailPage';
 
 import Adminblog from './pages/Admin/adminblog';
 import AdminBookings from './pages/Admin/AdminBookings';
+import AdminCertifications from './pages/Admin/AdminCertifications';
 
 import ProfilePage from './pages/ProfilePage';
 import InstructorDashboard from './pages/InstructorDashboard';
@@ -41,6 +43,10 @@ import Learning from './pages/student/Learning';
 import MentorDashboard from './pages/Instructor/MentorshipDashboard';
 import AllStudents from './pages/Admin/AllStudents';
 import Allinstructors from './pages/Admin/Allinstructors';
+import AdminTaskManagement from './pages/Admin/AdminTaskManagement';
+import ModulesPage from './pages/ModulesPage';
+import ModuleDetailPage from './pages/ModuleDetailPage';
+import RoomTasksPage from './pages/RoomTasksPage';
 
 
 
@@ -63,6 +69,7 @@ function AppContent() {
           <Route path="/missions" element={<MissionsPage />} />
           <Route path="/learning-paths" element={<LearningPathsPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
+          <Route path="/certifications/:id" element={<CertificationDetailPage />} />
 
           {/* Authentication */}
           <Route path="/login" element={<LoginPage />} />
@@ -76,6 +83,11 @@ function AppContent() {
           <Route path="/modules/:moduleId/lessons/create" element={<LessonFormPage />} />
           <Route path="/modules/:moduleId/lessons/:lessonId/edit" element={<LessonFormPage />} />
           <Route path="/courses/:courseId/learning" element={<Learning />} />
+          {/* Modules & Interactive Tasks (Cybrixen Style) */}
+          <Route path="/modules-page" element={<ModulesPage />} />
+          <Route path="/modules" element={<ModulesPage />} />
+          <Route path="/modules/:courseId" element={<ModuleDetailPage />} />
+          <Route path="/rooms/:courseId/:chapterId" element={<RoomTasksPage />} />
           {/* Profile / Instructor */}
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/InstructorDashboard" element={<InstructorDashboard />} />
@@ -86,10 +98,12 @@ function AppContent() {
             <Route index element={<AdminDashboardPage />} />
             <Route path="instructors" element={<InstructorDetails />} />
             <Route path="courses" element={<AdminCourseManagement />} />
+            <Route path="tasks" element={<AdminTaskManagement />} />
             <Route path="blogs" element={<Adminblog />} />
             <Route path="allstudents" element={<AllStudents />} />
             <Route path="allinstructors" element={<Allinstructors />} />
             <Route path="bookings" element={<AdminBookings />} />
+            <Route path="certifications" element={<AdminCertifications />} />
           </Route>
 
 

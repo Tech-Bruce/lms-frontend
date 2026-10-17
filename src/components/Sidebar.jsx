@@ -10,6 +10,7 @@ import {
   LogOut, 
   ShieldAlert,
   CalendarCheck,
+  CheckSquare,
   X
 } from "lucide-react";
 
@@ -39,6 +40,11 @@ const Sidebar = ({ onClose }) => {
       icon: BookOpen,
     },
     {
+      label: "Task & Curriculum",
+      path: "/admin/tasks",
+      icon: CheckSquare,
+    },
+    {
       label: "Blog Management",
       path: "/admin/blogs",
       icon: FileText,
@@ -57,6 +63,11 @@ const Sidebar = ({ onClose }) => {
       label: "Mentorship Bookings",
       path: "/admin/bookings",
       icon: CalendarCheck,
+    },
+    {
+      label: "Certifications",
+      path: "/admin/certifications",
+      icon: ShieldAlert,
     },
   ];
 

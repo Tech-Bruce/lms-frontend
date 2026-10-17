@@ -134,7 +134,8 @@ const Navbar = () => {
             </div>
             <div className="flex flex-col leading-none group-hover:text-cyan-300 transition-colors duration-300">
               <span className="text-lg md:text-xl font-black text-white tracking-tight">
-                Cyber Security Brigade
+                Cyber Security
+                 <span className="text-cyan-500"> Brigade</span>
               </span>
 
             </div>
@@ -144,6 +145,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-1 text-sm">
 
             <NavItem to="/courses">Academy</NavItem>
+            <NavItem to="/modules-page">Modules</NavItem>
             <NavItem to="/missions">Missions</NavItem>
             <NavItem to="/learning-paths">Learning path</NavItem>
             <NavItem to="/certifications">Certifications</NavItem>
@@ -301,6 +303,13 @@ const Navbar = () => {
               )}
             </div>
 
+            <Link
+              to="/modules-page"
+              onClick={toggleMobileMenu}
+              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/modules") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
+            >
+              Modules
+            </Link>
             <Link
               to="/missions"
               onClick={toggleMobileMenu}
