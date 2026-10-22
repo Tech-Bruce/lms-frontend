@@ -55,14 +55,20 @@ const Footer = () => {
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
             <div>
               <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                Platform <span className="w-8 h-px bg-cyan-500/50"></span>
+                Company <span className="w-8 h-px bg-cyan-500/50"></span>
               </h3>
               <ul className="space-y-4">
-                {['Home', 'Courses', 'Mentorship', 'Enterprise'].map((link) => (
-                  <li key={link}>
-                    <Link to="/" className="group text-gray-400 hover:text-cyan-300 transition-colors duration-300 flex items-center gap-2 font-medium">
+                {[
+                  { label: 'About Us', path: '/about' },
+                  { label: 'Missions', path: '/missions' },
+                  { label: 'Certifications', path: '/certifications' },
+                  { label: 'Mentorship', path: '/mentorship' },
+                  { label: 'Blog', path: '/blog' },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link to={item.path} className="group text-gray-400 hover:text-cyan-300 transition-colors duration-300 flex items-center gap-2 font-medium">
                       <FiArrowRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                      <span>{link}</span>
+                      <span>{item.label}</span>
                     </Link>
                   </li>
                 ))}
@@ -71,14 +77,19 @@ const Footer = () => {
 
             <div>
               <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                Support <span className="w-8 h-px bg-cyan-500/50"></span>
+                Platform <span className="w-8 h-px bg-cyan-500/50"></span>
               </h3>
               <ul className="space-y-4">
-                {['Help Center', 'API Docs', 'System Status', 'Contact Us'].map((link) => (
-                  <li key={link}>
-                    <Link to="/" className="group text-gray-400 hover:text-cyan-300 transition-colors duration-300 flex items-center gap-2 font-medium">
+                {[
+                  { label: 'Academy Courses', path: '/courses' },
+                  { label: 'Learning Paths', path: '/learning-paths' },
+                  { label: 'Modules & Rooms', path: '/modules-page' },
+                  { label: 'Contact Us', path: '/contact' },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link to={item.path} className="group text-gray-400 hover:text-cyan-300 transition-colors duration-300 flex items-center gap-2 font-medium">
                       <FiArrowRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                      <span>{link}</span>
+                      <span>{item.label}</span>
                     </Link>
                   </li>
                 ))}

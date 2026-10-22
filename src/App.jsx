@@ -15,9 +15,12 @@ import ContactPage from './pages/ContactPage';
 import Blog from './pages/Blog';
 import Mentorship from './pages/Mentorship';
 import MissionsPage from './pages/MissionsPage';
+import MissionDetailPage from './pages/MissionDetailPage';
 import LearningPathsPage from './pages/LearningPathsPage';
 import CertificationsPage from './pages/CertificationsPage';
 import CertificationDetailPage from './pages/CertificationDetailPage';
+
+import AdminMissions from './pages/Admin/AdminMissions';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -67,6 +70,7 @@ function AppContent() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/mentorship" element={<Mentorship />} />
           <Route path="/missions" element={<MissionsPage />} />
+          <Route path="/missions/:id" element={<MissionDetailPage />} />
           <Route path="/learning-paths" element={<LearningPathsPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
           <Route path="/certifications/:id" element={<CertificationDetailPage />} />
@@ -99,6 +103,7 @@ function AppContent() {
             <Route path="instructors" element={<InstructorDetails />} />
             <Route path="courses" element={<AdminCourseManagement />} />
             <Route path="tasks" element={<AdminTaskManagement />} />
+            <Route path="missions" element={<AdminMissions />} />
             <Route path="blogs" element={<Adminblog />} />
             <Route path="allstudents" element={<AllStudents />} />
             <Route path="allinstructors" element={<Allinstructors />} />

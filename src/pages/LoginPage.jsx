@@ -2,12 +2,24 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
-import { FiMail, FiLock, FiLogIn, FiShield } from 'react-icons/fi';
+import { FiMail, FiLock, FiLogIn, FiShield, FiX, FiKey, FiRefreshCw } from 'react-icons/fi';
+import api from '../api';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Forgot password modal state
+  const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
+  const [forgotStep, setForgotStep] = useState(1); // 1: Email request, 2: OTP + New Password
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetOtp, setResetOtp] = useState('');
+  const [resetNewPassword, setResetNewPassword] = useState('');
+  const [resetConfirmPassword, setResetConfirmPassword] = useState('');
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,6 +35,67 @@ const LoginPage = () => {
         else if (role === 'admin') navigate('/admin');
       }
     });
+  };
+
+  // Step 1: Send OTP to email
+  const handleSendCode = async (e) => {
+    e.preventDefault();
+    if (!resetEmail.trim()) {
+      toast.error('Please enter your email address');
+      return;
+    }
+    try {
+      setIsSendingCode(true);
+      const res = await api.post('/auth/forgot-password', { email: resetEmail.trim() });
+      toast.success(res.data?.msg || 'Verification code sent to your email!');
+      setForgotStep(2);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.msg || 'Failed to send verification code.');
+    } finally {
+      setIsSendingCode(false);
+    }
+  };
+
+  // Step 2: Verify OTP and reset password
+  const handleResetSubmit = async (e) => {
+    e.preventDefault();
+    if (!resetOtp.trim()) {
+      toast.error('Please enter the 6-digit verification code');
+      return;
+    }
+    if (!resetNewPassword) {
+      toast.error('Please enter a new password');
+      return;
+    }
+    if (resetNewPassword !== resetConfirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+    if (resetNewPassword.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+    try {
+      setIsResettingPassword(true);
+      const res = await api.post('/auth/reset-password', {
+        email: resetEmail.trim(),
+        otp: resetOtp.trim(),
+        newPassword: resetNewPassword
+      });
+      toast.success(res.data?.msg || 'Password reset successfully! Please sign in.');
+      setForm((prev) => ({ ...prev, email: resetEmail.trim(), password: '' }));
+      setIsForgotModalOpen(false);
+      setForgotStep(1);
+      setResetOtp('');
+      setResetNewPassword('');
+      setResetConfirmPassword('');
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.msg || 'Failed to reset password. Please check your verification code.');
+    } finally {
+      setIsResettingPassword(false);
+    }
   };
 
   return (
@@ -80,6 +153,7 @@ const LoginPage = () => {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    value={form.email}
                     required
                     onChange={handleChange}
                     className="w-full pl-11 pr-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all duration-200 text-white placeholder-slate-600"
@@ -101,6 +175,7 @@ const LoginPage = () => {
                     name="password"
                     type="password"
                     autoComplete="current-password"
+                    value={form.password}
                     required
                     onChange={handleChange}
                     className="w-full pl-11 pr-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all duration-200 text-white placeholder-slate-600"
@@ -121,9 +196,19 @@ const LoginPage = () => {
                     Remember me
                   </label>
                 </div>
-                <a href="#" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors">
+                
+                {/* Working Forgot Password Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setResetEmail(form.email || '');
+                    setForgotStep(1);
+                    setIsForgotModalOpen(true);
+                  }}
+                  className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors focus:outline-none"
+                >
                   Forgot password?
-                </a>
+                </button>
               </div>
 
               <button
@@ -144,6 +229,158 @@ const LoginPage = () => {
         </div>
 
       </div>
+
+      {/* Forgot Password Modal */}
+      {isForgotModalOpen && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
+          <div className="bg-[#091022] border border-cyan-500/40 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+            <button
+              onClick={() => setIsForgotModalOpen(false)}
+              className="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-800/60 hover:bg-slate-700 transition-colors"
+            >
+              <FiX className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+                <FiKey className="w-6 h-6 text-cyan-400" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white">Reset Password</h3>
+                <p className="text-xs text-cyan-400 font-semibold tracking-wider">
+                  {forgotStep === 1 ? "Step 1 of 2: Verify Identity" : "Step 2 of 2: Set New Password"}
+                </p>
+              </div>
+            </div>
+
+            {forgotStep === 1 ? (
+              <form onSubmit={handleSendCode} className="space-y-5">
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Enter your registered account email. We will dispatch a secure 6-digit verification code to authorize your password reset.
+                </p>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <FiMail className="text-slate-500" />
+                    </div>
+                    <input
+                      type="email"
+                      required
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="w-full pl-10 pr-4 py-3 bg-[#050914] border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-500 text-white text-sm"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSendingCode}
+                  className="w-full py-3.5 px-4 bg-cyan-500 hover:bg-cyan-400 text-[#030712] font-black rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 text-sm mt-2"
+                >
+                  {isSendingCode ? (
+                    <>
+                      <FiRefreshCw className="animate-spin text-base" />
+                      <span>Sending Verification Code...</span>
+                    </>
+                  ) : (
+                    <span>Send Verification Code</span>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleResetSubmit} className="space-y-4">
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Enter the 6-digit verification code dispatched to <strong className="text-cyan-400">{resetEmail}</strong> and your new password.
+                </p>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                    6-Digit Verification Code
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    maxLength={6}
+                    value={resetOtp}
+                    onChange={(e) => setResetOtp(e.target.value)}
+                    placeholder="123456"
+                    className="w-full px-4 py-2.5 bg-[#050914] border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-500 text-center font-mono text-xl tracking-widest text-cyan-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                    New Password
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <FiLock className="text-slate-500" />
+                    </div>
+                    <input
+                      type="password"
+                      required
+                      placeholder="Min. 6 characters"
+                      value={resetNewPassword}
+                      onChange={(e) => setResetNewPassword(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 bg-[#050914] border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-500 text-white text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                    Confirm New Password
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                      <FiLock className="text-slate-500" />
+                    </div>
+                    <input
+                      type="password"
+                      required
+                      placeholder="Repeat new password"
+                      value={resetConfirmPassword}
+                      onChange={(e) => setResetConfirmPassword(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 bg-[#050914] border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-500 text-white text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2 space-y-3">
+                  <button
+                    type="submit"
+                    disabled={isResettingPassword}
+                    className="w-full py-3 px-4 bg-cyan-500 hover:bg-cyan-400 text-[#030712] font-black rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 text-sm"
+                  >
+                    {isResettingPassword ? (
+                      <>
+                        <FiRefreshCw className="animate-spin text-base" />
+                        <span>Updating Password...</span>
+                      </>
+                    ) : (
+                      <span>Reset Password</span>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setForgotStep(1)}
+                    className="w-full text-center text-xs text-slate-400 hover:text-cyan-400 transition-colors"
+                  >
+                    ← Change Email or Resend Code
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 };

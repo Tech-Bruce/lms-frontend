@@ -11,6 +11,7 @@ import {
   ShieldAlert,
   CalendarCheck,
   CheckSquare,
+  Crosshair,
   X
 } from "lucide-react";
 
@@ -43,6 +44,11 @@ const Sidebar = ({ onClose }) => {
       label: "Task & Curriculum",
       path: "/admin/tasks",
       icon: CheckSquare,
+    },
+    {
+      label: "Mission Management",
+      path: "/admin/missions",
+      icon: Crosshair,
     },
     {
       label: "Blog Management",

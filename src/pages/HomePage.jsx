@@ -23,39 +23,9 @@ import { useEffect, useState, useRef } from 'react';
 import api from '../api';
 import { VIDEOS } from '../constants/videos';
 import imgCinematic from "../assets/Cinematic .png";
-import imgOrbital from "../assets/Orbital .png";
-import imgLuminous from "../assets/Luminous .png";
 import FeaturedCourses from '../components/FeaturedCourses';
 import WhoBenefits from '../components/WhoBenefits';
 import FeaturesSection from '../components/FeaturesSection';
-
-const BackgroundSlider = () => {
-  const images = [imgLuminous, imgCinematic];
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <>
-      {images.map((img, index) => (
-        <motion.div
-          key={img}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: index === currentIndex ? 1 : 0 }}
-          transition={{ duration: 1.5 }}
-          className="absolute inset-0 w-full h-full"
-        >
-          <img src={img} alt="Cybersecurity Background" className="w-full h-full object-cover object-center" />
-        </motion.div>
-      ))}
-    </>
-  );
-};
 const CountUp = ({ end, duration = 2, suffix = "" }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -287,8 +257,14 @@ const HomePage = () => {
       <div className="relative overflow-hidden min-h-screen flex items-center pt-28 md:pt-32 pb-16 border-b border-gray-900/80">
         {/* Animated Cyber Grid */}
         <div className="absolute inset-0 z-0">
-          {/* Looping Background Images */}
-          <BackgroundSlider />
+          {/* Hero Banner Background */}
+          <div className="absolute inset-0 w-full h-full">
+            <img
+              src={imgCinematic}
+              alt="Cybersecurity Background"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
           {/* Dark overlay so text remains readable */}
           <div className="absolute inset-0 bg-gray-950/50"></div>
 

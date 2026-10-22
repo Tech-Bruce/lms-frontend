@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FiChevronDown, FiCompass, FiLayers } from "react-icons/fi";
 import logo from "../assets/log.png";
 import api from "../api";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +10,7 @@ import { logout } from "../redux/authSlice";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCoursesDropdownOpen, setIsCoursesDropdownOpen] = useState(false);
+  const [isLearningsMobileOpen, setIsLearningsMobileOpen] = useState(false);
   const [courses, setCourses] = useState([]);
 
   const dropdownRef = useRef(null);
@@ -60,6 +62,7 @@ const Navbar = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
     setIsCoursesDropdownOpen(false);
+    setIsLearningsMobileOpen(false);
   };
 
   const toggleCoursesDropdown = () => {
@@ -98,6 +101,8 @@ const Navbar = () => {
     if (path === "/") return location.pathname === "/";
     return location.pathname.startsWith(path);
   };
+
+  const isLearningsActive = isActive("/learning-paths") || isActive("/modules-page");
 
   const NavItem = ({ to, children }) => {
     const active = isActive(to);
@@ -145,16 +150,88 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-1 text-sm">
 
             <NavItem to="/courses">Academy</NavItem>
-            <NavItem to="/modules-page">Modules</NavItem>
+
+            {/* Learnings Hover Dropdown */}
+            <div className="relative group/learnings py-2">
+              <div className="relative px-4 py-2 flex items-center justify-center gap-1.5 cursor-pointer">
+                {isLearningsActive && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full blur opacity-40"></div>
+                )}
+                <div
+                  className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                    isLearningsActive
+                      ? 'bg-[#030712]/60 border border-cyan-500/50'
+                      : 'group-hover/learnings:bg-white/10'
+                  }`}
+                ></div>
+                <span
+                  className={`relative z-10 font-semibold transition-colors duration-300 ${
+                    isLearningsActive
+                      ? 'text-primary-cyan drop-shadow-[0_0_8px_rgba(37,217,255,0.8)]'
+                      : 'text-gray-200 group-hover/learnings:text-white'
+                  }`}
+                >
+                  Learnings
+                </span>
+                <FiChevronDown
+                  className={`relative z-10 w-3.5 h-3.5 transition-transform duration-300 ${
+                    isLearningsActive
+                      ? 'text-primary-cyan'
+                      : 'text-gray-400 group-hover/learnings:text-white'
+                  } group-hover/learnings:rotate-180`}
+                />
+              </div>
+
+              {/* Hover Dropdown Menu */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-64 invisible opacity-0 -translate-y-1 group-hover/learnings:visible group-hover/learnings:opacity-100 group-hover/learnings:translate-y-0 transition-all duration-200 ease-out z-50 pointer-events-none group-hover/learnings:pointer-events-auto">
+                <div className="bg-[#0a0d18]/95 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-2 shadow-2xl shadow-cyan-950/60 ring-1 ring-white/10">
+                  <Link
+                    to="/learning-paths"
+                    className={`flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 group/item ${
+                      isActive("/learning-paths")
+                        ? "bg-cyan-500/15 border border-cyan-500/30 text-cyan-300"
+                        : "hover:bg-white/5 text-gray-300 hover:text-white border border-transparent"
+                    }`}
+                  >
+                    <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover/item:border-cyan-400/50 group-hover/item:bg-cyan-500/20 transition-colors">
+                      <FiCompass className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-sm leading-tight">Learning Path</span>
+                      <span className="text-[11px] text-gray-400 group-hover/item:text-gray-300 mt-0.5">
+                        Roadmaps & structured tracks
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    to="/modules-page"
+                    className={`flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 group/item mt-1 ${
+                      isActive("/modules-page")
+                        ? "bg-cyan-500/15 border border-cyan-500/30 text-cyan-300"
+                        : "hover:bg-white/5 text-gray-300 hover:text-white border border-transparent"
+                    }`}
+                  >
+                    <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 group-hover/item:border-cyan-400/50 group-hover/item:bg-cyan-500/20 group-hover/item:text-cyan-300 transition-colors">
+                      <FiLayers className="w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-sm leading-tight">Modules</span>
+                      <span className="text-[11px] text-gray-400 group-hover/item:text-gray-300 mt-0.5">
+                        Hands-on practical labs
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             <NavItem to="/missions">Missions</NavItem>
-            <NavItem to="/learning-paths">Learning path</NavItem>
             <NavItem to="/certifications">Certifications</NavItem>
-            <NavItem to="/about">About</NavItem>
             <NavItem to="/mentorship">Mentorship</NavItem>
             <NavItem to="/blog">Blog</NavItem>
-
           </div>
-
+          
           {/* Desktop Auth Section */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
@@ -303,13 +380,37 @@ const Navbar = () => {
               )}
             </div>
 
-            <Link
-              to="/modules-page"
-              onClick={toggleMobileMenu}
-              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/modules") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
-            >
-              Modules
-            </Link>
+            {/* Mobile Learnings Dropdown */}
+            <div className={`px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isLearningsActive ? 'bg-cyan-900/10 border border-cyan-500/10' : 'hover:bg-white/5'}`}>
+              <button
+                onClick={() => setIsLearningsMobileOpen(!isLearningsMobileOpen)}
+                className={`w-full text-left flex justify-between items-center ${isLearningsActive ? 'text-cyan-300' : 'text-gray-300'}`}
+              >
+                <span>Learnings</span>
+                <FiChevronDown
+                  className={`ml-1 h-4 w-4 transition-transform duration-200 ${isLearningsMobileOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              {isLearningsMobileOpen && (
+                <div className="pl-4 mt-3 space-y-2 border-l-2 border-cyan-500/30 ml-2">
+                  <Link
+                    to="/learning-paths"
+                    onClick={toggleMobileMenu}
+                    className={`block py-2 transition-colors duration-200 text-sm font-medium ${isActive("/learning-paths") ? 'text-cyan-300' : 'text-gray-400 hover:text-cyan-300'}`}
+                  >
+                    Learning Path
+                  </Link>
+                  <Link
+                    to="/modules-page"
+                    onClick={toggleMobileMenu}
+                    className={`block py-2 transition-colors duration-200 text-sm font-medium ${isActive("/modules-page") ? 'text-cyan-300' : 'text-gray-400 hover:text-cyan-300'}`}
+                  >
+                    Modules
+                  </Link>
+                </div>
+              )}
+            </div>
+
             <Link
               to="/missions"
               onClick={toggleMobileMenu}
@@ -318,25 +419,11 @@ const Navbar = () => {
               Missions
             </Link>
             <Link
-              to="/learning-paths"
-              onClick={toggleMobileMenu}
-              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/learning-paths") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
-            >
-              Learning path
-            </Link>
-            <Link
               to="/certifications"
               onClick={toggleMobileMenu}
               className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/certifications") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
             >
               Certifications
-            </Link>
-            <Link
-              to="/about"
-              onClick={toggleMobileMenu}
-              className={`block px-4 py-3 rounded-xl transition-all duration-200 font-semibold ${isActive("/about") ? 'bg-cyan-900/30 border border-cyan-500/30 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.15)]' : 'text-gray-300 hover:bg-white/5 hover:text-white'}`}
-            >
-              About
             </Link>
             <Link
               to="/mentorship"
